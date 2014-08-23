@@ -8,9 +8,10 @@
 module.exports = {
 
 	dashboard: function(req, res) {
-		console.log("admin view ");
+		console.log(req.session.passport);
 		res.view({
-			layout: 'admin/layoutAdmin.ejs'
+			layout: 'admin/layoutAdmin.ejs',
+			 user: req.session.passport.me
 		});
 
 	},

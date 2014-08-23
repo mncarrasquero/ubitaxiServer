@@ -11,6 +11,6 @@ module.exports = function unauthorized (opts) {
   var req = this.req;
   var res = this.res;
 
-  return res.redirect('/');
+  return res.redirect('/login');
 
 };

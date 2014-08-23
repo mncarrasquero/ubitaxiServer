@@ -7,12 +7,10 @@ module.exports.routes = {
 	},
 
 	'/dashboard': 'AdminController.dashboard',
+	'get /signup': 'UserController.signup',
 
 	'get /login': {
 		view: 'user/login'
-	},
-	'get /signup': {
-		view: 'user/signup'
 	},
 	'/welcome': {
 		view: 'user/welcome'

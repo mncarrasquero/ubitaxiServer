@@ -157,7 +157,11 @@ function _extendReq(req) {
         req[property] = null;
         return done(err);
       }
+
       req._passport.session.user = obj;
+      req._passport.session.me = user;
+
+     
       done();
     });
   };
