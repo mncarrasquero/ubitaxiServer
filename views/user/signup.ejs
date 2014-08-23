@@ -1,0 +1,81 @@
+
+
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>  
+	<meta charset="utf-8" />
+	<title>Scale | Web Application</title>
+	<meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	<link rel="stylesheet" href="linker/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="linker/css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="linker/css/font-awesome.min.css" type="text/css" />
+	<link rel="stylesheet" href="linker/css/icon.css" type="text/css" />
+	<link rel="stylesheet" href="linker/css/font.css" type="text/css" />
+	<link rel="stylesheet" href="linker/css/app.css" type="text/css" />  
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+    <![endif]-->
+</head>
+<body class="">
+	<section id="content" class="m-t-lg wrapper-md animated fadeInDown">
+		<div class="container aside-xl">
+			<a class="navbar-brand block" href="#">Ubitaxi</a>
+			<section class="m-b-lg">
+				<header class="wrapper text-center">
+					<strong></strong>
+				</header>
+				<form action="/signup" method="post">
+					<div class="list-group">
+						<div class="list-group-item">
+							<input name="username" placeholder="username" class="form-control no-border">
+						</div>
+						<div class="list-group-item">
+							<input name="email" type="email" placeholder="Email" class="form-control no-border">
+						</div>
+						<div class="list-group-item">
+							<input  name="password" type="password" placeholder="Password" class="form-control no-border">
+						</div>
+						<div class="list-group-item">
+							<select name="role" class="form-control">
+								 <option value="" disabled selected>Que tipo de usuario es ?</option>
+								<option value="admin">Administrador</option>
+								<option value="operador">Operador del sistema</option>
+							</select>
+						</div>
+
+
+
+
+
+
+					</div>
+				
+					<button type="submit" class="btn btn-lg btn-primary btn-block">Registrar</button>
+					<div class="line line-dashed"></div>
+					<p class="text-muted text-center"><small>Ya posees una cuenta?</small></p>
+					<a href="/login" class="btn btn-lg btn-default btn-block">Inicia sesion</a>
+				</form>
+			</section>
+		</div>
+	</section>
+	<!-- footer -->
+	<footer id="footer">
+		<div class="text-center padder clearfix">
+			<p>
+				<small>Ubitaxi Admin software &copy; 2015</small>
+			</p>
+		</div>
+	</footer>
+	<!-- / footer -->
+	<script src="linker/js/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="linker/js/bootstrap.js"></script>
+	<!-- App -->
+	<script src="linker/js/app.js"></script>  
+	<script src="linker/js/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="linker/js/app.plugin.js"></script>
+</body>
+</html>
