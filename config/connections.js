@@ -58,12 +58,14 @@ module.exports.connections = {
   ***************************************************************************/
   someMongodbServer: {
     adapter: 'sails-mongo',
-    host: 'localhost',
-    port: 27017,
-    // user: 'username',
-    // password: 'password',
-    // database: 'your_mongo_db_name_here'
+    host: 'ds045027.mongolab.com',
+    port: 45027,
+     user: 'ubiAdmin',
+     password: 'm19177230.',
+     database: 'ubitaxi'
   },
+
+  //ds045027.mongolab.com:45027/ubitaxi
 
   /***************************************************************************
   *                                                                          *

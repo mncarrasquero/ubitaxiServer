@@ -8,7 +8,15 @@
 module.exports = {
 
 	dashboard: function(req, res) {
-		console.log(req.session.passport);
+		
+		res.view({
+			layout: 'admin/layoutAdmin.ejs',
+			 user: req.session.passport.me
+		});
+
+	},
+	createDriver: function(req, res) {
+		
 		res.view({
 			layout: 'admin/layoutAdmin.ejs',
 			 user: req.session.passport.me

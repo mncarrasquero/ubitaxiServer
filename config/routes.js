@@ -7,7 +7,16 @@ module.exports.routes = {
 	},
 
 	'/dashboard': 'AdminController.dashboard',
+
+	'/file/upload': 'FileController.upload',
+	'/file/index': 'FileController.index',
+
+	'get /createDriver': 'AdminController.createDriver',
+	'post /createDriver': 'DriverController.create',
 	'get /signup': 'UserController.signup',
+
+
+	
 
 	'get /login': {
 		view: 'user/login'

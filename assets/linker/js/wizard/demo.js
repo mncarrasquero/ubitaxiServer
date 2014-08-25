@@ -1,51 +1,70 @@
-+function ($) {
+var values = [];
 
-  $(function(){
+function cambioDatos() {
+  $('.form-control').each(function() {
+    values[this.name] = this.value;
+
+    $('#confirm_' + this.name).html(this.value);
+  });
+}
+
+
+//set
+
+
++ function($) {
+
+
+
+  $(function() {
+
+
 
     $('#wizardform').bootstrapWizard({
       'tabClass': 'nav nav-tabs',
       'onNext': function(tab, navigation, index) {
-        var valid = false;
-        $('[data-required="true"]', $( $(tab.html()).attr('href') )).each(function(){
-          return (valid = $(this).parsley( 'validate' ));
+        var valid = true;
+        $('[data-required="true"]', $($(tab.html()).attr('href'))).each(function() {
+          return (valid = $(this).parsley('validate'));
         });
         return valid;
       },
       onTabClick: function(tab, navigation, index) {
-        return false;
+        return true;
       },
       onTabShow: function(tab, navigation, index) {
         var $total = navigation.find('li').length;
-        var $current = index+1;
-        var $percent = ($current/$total) * 100;
-        $('#wizardform').find('.progress-bar').css({width:$percent+'%'});
+        var $current = index + 1;
+        var $percent = ($current / $total) * 100;
+        cambioDatos();
+        $('#wizardform').find('.progress-bar').css({
+          width: $percent + '%'
+        });
       }
     });
 
 
-    var ranNum = Math.floor((Math.random()*50)+1);
-    var info = $('#gi'), num='';
+    var ranNum = Math.floor((Math.random() * 50) + 1);
+    var info = $('#gi'),
+      num = '';
     var count = 0;
-    $('#gn').on('keydown', function(){info.text('.')});
+    $('#gn').on('keydown', function() {
+      info.text('.')
+    });
     $('#guessform').bootstrapWizard({
       'tabClass': 'nav nav-tabs',
-      'onNext': function(tab, navigation, index) {        
+      'onNext': function(tab, navigation, index) {
         var answer = $('#gn').val();
-        num = num +' '+ answer;
+        num = num + ' ' + answer;
         count++;
-        if(answer > ranNum)
-        {
+        if (answer > ranNum) {
           info.text("Guess lower!");
           return false;
-        }
-        else if(answer < ranNum)
-        {
+        } else if (answer < ranNum) {
           info.text("Guess higher!!");
           return false;
-        }
-        else if(answer==ranNum)
-        {
-          ranNum = Math.floor((Math.random()*50)+1);
+        } else if (answer == ranNum) {
+          ranNum = Math.floor((Math.random() * 50) + 1);
           $('#answer').text(answer);
           $('#count').text(count);
           $('#num').text(num);
@@ -57,6 +76,6 @@
         return false;
       }
     });
-    
+
   });
 }(window.jQuery);

@@ -1,0 +1,197 @@
+ <link rel="stylesheet" href="linker/js/datepicker/datepicker.css" type="text/css" />
+ <link rel="stylesheet" href="linker/js/slider/slider.css" type="text/css" />
+ <link rel="stylesheet" href="linker/css/bootstrap-fileupload.css" type="text/css" />
+
+ <section class="vbox">
+  <section class="scrollable padder">
+    <div class="m-b-md">
+      <h3 class="m-b-none">Nuevo Conductor</h3>
+    </div>
+    <div class="row">
+      <div class="col-sm-7">
+        <form id="wizardform" method="post"  enctype="multipart/form-data" action="/createDriver">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <ul class="nav nav-tabs font-bold">
+                <li><a href="#step1" data-toggle="tab">Datos personales</a></li>
+                <li><a href="#step2" data-toggle="tab">Datos del vehiculo</a></li>
+                <li><a href="#step3" data-toggle="tab">Confirmación</a></li>
+              </ul>
+            </div>
+            <div class="panel-body">
+              <p>Asegurate de verificar los datos del conductor. antes de insertarlos en la base de datos, tambien  recortar la foto a un tamaño de 100x100 px y una calidad optima</p>
+              <div class="line line-lg"></div>
+              <h4>Validacion de formulario</h4>
+              <div class="progress progress-xs m-t-md">
+                <div class="progress-bar bg-success"></div>
+              </div>
+
+
+              <div class="tab-content">
+                <div class="tab-pane" id="step1">                            
+                  <p>Primer nombre:</p>
+                  <input value="Mario" name="name" type="text" class="form-control"  data-required="true"  >
+                  <p class="m-t">Primer apellido:</p>
+                  <input value="Carrasquero" name="lastname" type="text" class="form-control" data-trigger="change" data-required="true"  >
+
+
+                  <div class="control-group">
+                    <label class="control-label">Foto del conductor</label>
+                    <div class="controls">
+                      <div class="fileupload fileupload-new" data-provides="fileupload">
+
+                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                          <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                        </div>
+                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+
+                        <div>  
+
+                          <span class="btn btn-file"><span class=" btn btn-s-md btn-success fileupload-new">Selecciona un avatar</span>
+                          <span class="fileupload-exists btn btn-s-md btn-default">Cambiar</span>
+                          <input  name="avatar" type="file" class="default"></span>
+
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+
+
+                  <p class="m-t">Correo electronico:</p>
+                  <input value="mncarrasquero@gmail.com" name="email" type="email" class="form-control" data-trigger="change" data-required="true"  >
+                  <p class="m-t">Contraseña:</p>
+                  <input value="123123" name="password" type="text" class="form-control" data-trigger="change" data-required="true" >
+                  <p class="m-t">Numero celular:</p>
+                  <input  value="04146208056" name="phone" type="number" class="form-control" data-trigger="change" data-required="true"  >
+                  <p  class="m-t">Fecha de nacimiento:</p>
+                  <input value="03-05-1988" name="birthday" class="input-sm input-s datepicker-input form-control" size="16" type="text"  data-date-format="dd-mm-yyyy" >        
+                  <p class="m-t">Dirección de vivienda:</p>
+                  <input value="Av 92 callle 77 casa 77-07 barrio raul lenis" name="addres" type="text" class="form-control" data-trigger="change" data-required="true"  >
+                  <p class="m-t">Ciudad:</p>
+                  <input value="maracaibo" name="city" type="text" class="form-control" data-trigger="change" data-required="true"  >
+                  <p class="m-t">Estado:</p>
+                  <input value="zulia" name="state" type="text" class="form-control" data-trigger="change" data-required="true"  >
+                  <p class="m-t">Pais:</p>
+                  <input value="venezuela" name="country" type="text" class="form-control" data-trigger="change" data-required="true"  >
+                </div>
+                <div class="tab-pane" id="step2">
+
+                  <p>Marca:</p>
+                  <input value="toyota" name="car-brand" type="text" class="form-control" data-trigger="change" data-required="true">
+                  <p>Modelo:</p>
+                  <input value="yaris" name="car-model" type="text" class="form-control" data-trigger="change" data-required="true">
+                  <p>Año:</p>
+                  <input value="2007" name="car-year" type="number" class="form-control" data-trigger="change" data-required="true">
+                  <p>Color:</p>
+                  <input value="negro" name="car-color" type="text" class="form-control" data-trigger="change" data-required="true">
+                  <p>Typo de vehiculo:</p>
+
+                  <select name="car-type" class="form-control m-b" >
+                    <option value="sedan">Sedan</option>
+                    <option value="hatchbach">Hatchbach</option>
+                    <option value="pickup">pickup</option>
+                    <option value="suv">suv</option>
+                    <option value="van">van</option>
+                  </select>
+
+
+                  <p>Puertas:</p>
+                  <input value="4" name="car-door" type="number" class="form-control" data-trigger="change" data-required="false">
+                  <p>Cantidad de pasajeros:</p>
+                  <input value="4" name="car-cap" type="number" class="form-control" data-trigger="change" data-required="false">
+
+                  <p>Placas del vehiculo:</p>
+                  <input value="vcn29t" name="car-plate" type="text" class="form-control" data-trigger="change" data-required="true">
+                  <p>Serial del vehiculo:</p>
+                  <input value="cddf5d8d582345s5x25z" name="car-serial" type="text" class="form-control" data-trigger="change" data-required="true">
+
+                  <p>Propietario del vehiculo:</p>
+                  <input value="hernesto mejia "name="car-owner" type="text" class="form-control" data-trigger="change" data-required="true">
+
+                  <p>Calificacion de la inspección del vehiculo:</p>
+                  <input name="car-rating" class="slider slider-horizontal form-control" type="text" value="" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" data-slider-orientation="horizontal" >
+
+
+
+                </div>
+                <div class="tab-pane" id="step3">
+
+                  <section class="scrollable wrapper">            
+
+                    <div class="well m-t">
+                      <div class="row">
+                        <div class="col-xs-7">
+                          <strong>Conductor:</strong>
+                          <h4> <span id="confirm_name"></span><span id="confirm_lastname"></span></h4> 
+                          <p>
+                            <i class="i i-mail2">&nbsp</i><span id="confirm_email"></span><br>
+                            <i class="fa fa-lock">&nbsp  &nbsp</i><span id="confirm_password"></span><br>
+                            <i class="i i-phone">&nbsp</i><span id="confirm_phone"></span><br>
+                            <i class="fa fa-calendar">&nbsp </i>  <span id="confirm_birthday"></span><br>
+                            <i class="i i-mail2">&nbsp</i><span id="confirm_addres"></span><br>
+                          </p>
+                        </div>
+                        <div class="col-xs-5">
+                          <strong>Vehiculo:</strong>
+                          <br>
+                          <p>
+                            Marca: <span id="confirm_car-brand"></span><br>
+                            Modelo: <span id="confirm_car-model"></span> - <span id="confirm_car-year"></span><br>
+                            Color: <span id="confirm_car-color"></span><br>
+                            Placas: <span id="confirm_car-plate"></span><br>
+                            Serial: <span id="confirm_car-serial"></span><br>
+                          
+                           
+                          </p>
+                        </div>
+                      </div>
+                    </div>    
+                  </section>
+                  <button type="submit" class="btn btn-s-md btn-info">Enviar Registro</button>
+            
+
+
+
+                </div>
+                <ul class="pager wizard m-b-sm">
+                  <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                  <li class="previous"><a href="#">Previous</a></li>
+                  <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                  <li class="next"><a href="#">Next</a></li>
+                </ul>
+              </div>
+
+
+
+
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>              
+  </section>
+</section>
+
+
+
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<!--SCRIPTS END-->
+
+
+<% script('linker/js/bootstrap-fileupload.js') %>
+
+<% script('linker/js/slider/bootstrap-slider.js') %>
+<% script('linker/js/datepicker/bootstrap-datepicker.js') %>
+<% script('linker/js/parsley/parsley.min.js') %>
+<% script('linker/js/wizard/jquery.bootstrap.wizard.js') %>
+<% script('linker/js/wizard/demo.js') %>
+
+
+
+
+
+
