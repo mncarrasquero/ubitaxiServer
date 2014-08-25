@@ -27,28 +27,35 @@ module.exports = {
 
     //subir foto primero 
     var uploadFile = req.file('avatar');
-    var nombreArchivo = "";
-
+   
     //console.log("la extencion del arvhivo es : "+ path.extname(uploadFile.filename));
     function generateName(file) {}
 
     uploadFile.upload({  
       dirname: sails.config.appPath + "/assets/linker/drivers/",
       saveAs: generateName(uploadFile),
+      //maxBytes: 500
     }, function onUploadComplete(err, files) { // Files will be uploaded to ./assets/images
-      if (err) return res.serverError(err); // IF ERROR Return and send 500 error with error
-    nombreArchivo =  path.basename(files[0].fd); 
+     
+      if (err) {
+        return res.serverError(err);
+      } else{
+         var nombreArchivo =  path.basename(files[0].fd); 
+    crearDriver(nombreArchivo);
+      };
    
     });
-    console.log(nombreArchivo);
+
+
+function crearDriver(saveAs){
 
 
     Driver.create({
       name: req.param('name'),
       lastname: req.param('lastname'),
       email: req.param('email'),
-      picture: nombreArchivo,
-      dir_picture: "/assets/linker/drivers/",
+      picture: saveAs,
+      dir_picture: "linker/drivers/",
       password: req.param('password'),
       phone: req.param('phone'),
       birthday: req.param('birthday'),
@@ -102,7 +109,7 @@ module.exports = {
       }
     });
 
-
+  }
   },
 
 
