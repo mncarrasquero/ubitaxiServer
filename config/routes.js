@@ -12,6 +12,7 @@ module.exports.routes = {
 	'/file/index': 'FileController.index',
 
 	'get /createDriver': 'AdminController.createDriver',
+	'get /detailNewDriver': 'AdminController.detailNewDriver',
 	'post /createDriver': 'DriverController.create',
 	'get /signup': 'UserController.signup',
 

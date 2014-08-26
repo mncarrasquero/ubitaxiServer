@@ -1,23 +1,105 @@
 /**
-* Driver.js
-*
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
-*/
+ * Driver.js
+ *
+ * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @docs        :: http://sailsjs.org/#!documentation/models
+ */
 
 module.exports = {
+	schema: true,
+	attributes: {
+		isActive: {
+			type: 'boolean',
 
-  attributes: {
+		},
 
-    create : { type: 'string' },
+		name: {
+			type: 'string',
+			required: true
+		},
+		lastname: {
+			type: 'string',
+			required: true
+		},
+		email: {
+			type: 'email',
+			required: true,
+			unique: true
+		},
+		password: {
+			type: 'string',
+			required: true,
+			minLength: 5
 
-    login : { type: 'string' },
+		},
+		ci: {
+			type: 'string',
+			required: true,
+			unique: true
+		},
+		picture: {
+			type: 'string',
+			defaultsTo: 'a0.png'
 
-    index : { type: 'string' },
+		},
+		dir_picture: {
+			type: 'string',
+			defaultsTo: 'linker/drivers/'
 
-    edit : { type: 'string' },
+		},
+		phone: {
+			type: 'string',
+			required: true,
+		},
+		birthday: {
+			type: 'date'
 
-    view : { type: 'string' }
-  }
+		},
+		address: {
+			type: 'string',
+			required: true,
+		},
+		city: {
+			type: 'string',
+		},
+		state: {
+			type: 'string',
+		},
+		state: {
+			type: 'string',
+		},
+		rating: {
+			type: 'string',
+		},
+		point: {
+			type: 'string',
+		},
+		platform: {
+			type: 'string',
+			required: false
+		},
+		model: {
+			type: 'string',
+			required: false
+		},
+		uuid: {
+			type: 'string',
+			required: false
+		},
+
+		lastLogin: {
+			type: 'datetime',
+		},
+
+
+		lastPosition: {
+			type: 'json'
+		},
+		car: {
+			type: 'json'
+		},
+
+
+
+	}
 };
-
