@@ -24,6 +24,15 @@ module.exports = {
 
 	},
 
+		listDriver: function(req, res) {
+
+		res.view({
+			layout: 'admin/layoutAdmin.ejs',
+			user: req.session.passport.me
+		});
+
+	},
+
 	detailNewDriver: function(req, res) {
 		Driver.findOne({
 			id: req.param('id')

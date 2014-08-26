@@ -41,6 +41,10 @@ module.exports.policies = {
   },
    AdminController: {
     '*': 'isAuthenticated'
+  },
+  DriverController: {
+    '*': 'isAuthenticated'
+   
   }
 
 	// RabbitController: {

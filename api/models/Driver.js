@@ -98,6 +98,13 @@ module.exports = {
 		car: {
 			type: 'json'
 		},
+		toJSON: function() {
+			var obj = this.toObject();
+			// Remove the password object value
+			delete obj.password;
+			// return the new object without password
+			return obj;
+		}
 
 
 

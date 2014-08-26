@@ -19,7 +19,7 @@ migrate:"safe",
   *                                                                          *
   ***************************************************************************/
 
-  connection: 'someMongodbServer'
-  //connection: 'localDiskDb'
+  //connection: 'someMongodbServer'
+  connection: 'localDiskDb'
   
 };

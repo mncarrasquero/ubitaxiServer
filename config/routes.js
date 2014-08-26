@@ -13,6 +13,8 @@ module.exports.routes = {
 
 	'get /createDriver': 'AdminController.createDriver',
 	'get /detailNewDriver': 'AdminController.detailNewDriver',
+	'get /listDriver': 'AdminController.listDriver',
+
 	'post /createDriver': 'DriverController.create',
 	'get /signup': 'UserController.signup',
 
@@ -28,4 +30,8 @@ module.exports.routes = {
 	'post /login': 'UserController.login',
 	'post /signup': 'UserController.signup',
 	'/logout': 'UserController.logout',
+
+	//api en json resonse
+	'/api/listDrivers': 'DriverController.listDrivers',
+		
 };

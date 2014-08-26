@@ -41,17 +41,16 @@ module.exports = {
         return res.serverError(err);
       } else {
         console.log(files);
-       if (typeof files !== 'undefined' && files.length > 0) {
+        if (typeof files !== 'undefined' && files.length > 0) {
           var nombreArchivo = path.basename(files[0].fd);
           crearDriver(nombreArchivo);
         } else {
-         var nombreArchivo = "a0.png";
+          var nombreArchivo = "a0.png";
           crearDriver(nombreArchivo);
         }
 
 
 
-     
       };
 
     });
@@ -120,6 +119,28 @@ module.exports = {
       });
 
     }
+  },
+
+
+  /**
+   * `DriverController.listDrivers()`
+   */
+  listDrivers: function(req, res) {
+    Driver.find().exec(function(err, driver) {
+      if (err) {
+        return res.json({
+          status: false,
+
+        
+        });
+      } else {
+        return res.json({
+          status: true,
+          aaData: driver
+        });
+      }
+    });
+
   },
 
 
