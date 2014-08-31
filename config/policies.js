@@ -34,6 +34,7 @@ module.exports.policies = {
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
+  // '*': 'isAuthenticated',
   UserController: {
     '*': 'isAuthenticated',
     login: true,
@@ -43,7 +44,13 @@ module.exports.policies = {
     '*': 'isAuthenticated'
   },
   DriverController: {
-    '*': 'isAuthenticated'
+    '*': 'isAuthenticated',
+    loginDriver: true
+   
+  },
+    PassengerController: {  
+    create: true,
+    calcularPrecio: true,
    
   }
 

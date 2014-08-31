@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	schema: true,
+	schema:true,
 	attributes: {
 		isActive: {
 			type: 'boolean',

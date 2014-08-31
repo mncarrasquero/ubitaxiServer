@@ -33,5 +33,11 @@ module.exports.routes = {
 
 	//api en json resonse
 	'/api/listDrivers': 'DriverController.listDrivers',
+	'post /api/loginDriver': 'DriverController.loginDriver',
+	'post /api/passengerCreate': 'PassengerController.create',
+	'post /api/passengerLogin': 'PassengerController.login',
+	'post /api/calcularPrecio': 'PassengerController.calcularPrecio',
+
+	
 		
 };
