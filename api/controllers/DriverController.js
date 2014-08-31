@@ -9,24 +9,10 @@ var path = require('path');
 
 
 module.exports = {
-
-
-
   /**
-   * `DriverController.create()`
-   
-   
-   
-   
-   
-   
-   
-   
-   */
+   * `DriverController.create()`   */
   create: function(req, res) {
-
-    //subir foto primero 
-   
+    //subir foto primero   
 
     //console.log("la extencion del arvhivo es : "+ path.extname(uploadFile.filename));
     function generateName(file) {}
@@ -39,8 +25,6 @@ module.exports = {
             error: "DB Error"
           });
         } 
-
-   
 
         else if (usr ) {
           res.json({
