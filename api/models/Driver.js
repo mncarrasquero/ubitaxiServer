@@ -65,7 +65,7 @@ module.exports = {
 		state: {
 			type: 'string',
 		},
-		state: {
+		country: {
 			type: 'string',
 		},
 		rating: {
