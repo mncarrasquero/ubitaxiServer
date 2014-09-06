@@ -144,6 +144,7 @@ module.exports = {
 						Appversion: "1.1",
 						error: '',
 						mensaje: "Bienvenido",
+						data: user
 					});
 
 				} else {
@@ -153,6 +154,7 @@ module.exports = {
 						Appversion: "1.1",
 						error: 'X01',
 						mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
+						data: ""
 					});
 
 				};
@@ -163,6 +165,7 @@ module.exports = {
 						Appversion: "1.1",
 						error: 'X02',
 						mensaje: "Cuenta no existe",
+						data: ""
 					});
 			}
 		});
