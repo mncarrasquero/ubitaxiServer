@@ -45,7 +45,8 @@ module.exports.policies = {
   },
   DriverController: {
     '*': 'isAuthenticated',
-    loginDriver: true
+    loginDriver: true,
+    hayCondunctores: true,
    
   },
     PassengerController: {  

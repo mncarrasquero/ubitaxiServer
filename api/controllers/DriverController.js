@@ -20,103 +20,101 @@ module.exports = {
     Driver.findOne({
       email: req.param('email')
     }).exec(function(err, usr) {
-        if (err) {
-          res.send(500, {
-            error: "DB Error"
-          });
-        } 
+      if (err) {
+        res.send(500, {
+          error: "DB Error"
+        });
+      } else if (usr) {
+        res.json({
+          status: false,
+          code: "11001",
+          response: "Email duplicado",
 
-        else if (usr ) {
+        });
+      } else {
+        var uploadFile = req.file('avatar');
+        uploadFile.upload({
+          dirname: sails.config.appPath + "/assets/linker/drivers/",
+          saveAs: generateName(uploadFile),
+          //maxBytes: 500
+        }, function onUploadComplete(err, files) { // Files will be uploaded to ./assets/images
+
+          if (err) {
+            return res.serverError(err);
+          } else {
+            console.log(files);
+            if (typeof files !== 'undefined' && files.length > 0) {
+              var nombreArchivo = path.basename(files[0].fd);
+              crearDriver(nombreArchivo);
+            } else {
+              var nombreArchivo = "a0.png";
+              crearDriver(nombreArchivo);
+            }
+          };
+        });
+
+
+      }
+    });
+
+    function crearDriver(nombreArchivo) {
+      Driver.create({
+        isActive: true,
+        name: req.param('name'),
+        lastname: req.param('lastname'),
+        email: req.param('email'),
+        picture: nombreArchivo,
+        dir_picture: "linker/drivers/",
+        password: req.param('password'),
+        phone: req.param('phone'),
+        ci: req.param('ci'),
+        birthday: req.param('birthday'),
+        address: req.param('address'),
+        city: req.param('city'),
+        state: req.param('state'),
+        country: req.param('country'),
+        rating: 3,
+        point: 0,
+        lastLogin: "",
+        car: {
+          brand: req.param('car-brand'),
+          model: req.param('car-model'),
+          year: req.param('car-year'),
+          color: req.param('car-color'),
+          type: req.param('car-type'),
+          door: req.param('car-door'),
+          cap: req.param('car-cap'),
+          plate: req.param('car-plate'),
+          serial: req.param('car-serial'),
+          owner: req.param('car-owner'),
+          rating: req.param('car-rating'),
+        },
+
+        lastPosition: {
+          type: "Point",
+          status: "",
+          date: "",
+          coordinates: [parseFloat(-71), parseFloat(10)]
+        }
+      }, function driverCreated(error, driver) {
+        if (error) {
+          console.log(error);
           res.json({
             status: false,
             code: "11001",
-            response: "Email duplicado",
+            response: "Error al crear driver",
 
           });
+          // console.log("User NO created:", error);
         } else {
-          var uploadFile = req.file('avatar');
-          uploadFile.upload({
-            dirname: sails.config.appPath + "/assets/linker/drivers/",
-            saveAs: generateName(uploadFile),
-            //maxBytes: 500
-          }, function onUploadComplete(err, files) { // Files will be uploaded to ./assets/images
-
-            if (err) {
-              return res.serverError(err);
-            } else {
-              console.log(files);
-              if (typeof files !== 'undefined' && files.length > 0) {
-                var nombreArchivo = path.basename(files[0].fd);
-                crearDriver(nombreArchivo);
-              } else {
-                var nombreArchivo = "a0.png";
-                crearDriver(nombreArchivo);
-              }
-            };
-          });
+          //req.session.user = user;
+          //res.send(user);
+          console.log("User created:", driver);
+          return res.redirect('/detailNewDriver?id=' + driver.id);
 
 
-          }
-        });
-
-          function crearDriver(nombreArchivo) {
-            Driver.create({
-              isActive: true,
-              name: req.param('name'),
-              lastname: req.param('lastname'),
-              email: req.param('email'),
-              picture: nombreArchivo,
-              dir_picture: "linker/drivers/",
-              password: req.param('password'),
-              phone: req.param('phone'),
-              ci: req.param('ci'),
-              birthday: req.param('birthday'),
-              address: req.param('address'),
-              city: req.param('city'),
-              state: req.param('state'),
-              country: req.param('country'),
-              rating: 3,
-              point: 0,
-              lastLogin: "",
-              car: {
-                brand: req.param('car-brand'),
-                model: req.param('car-model'),
-                year: req.param('car-year'),
-                color: req.param('car-color'),
-                type: req.param('car-type'),
-                door: req.param('car-door'),
-                cap: req.param('car-cap'),
-                plate: req.param('car-plate'),
-                serial: req.param('car-serial'),
-                owner: req.param('car-owner'),
-                rating: req.param('car-rating'),
-              },
-
-              lastPosition: {
-                type: "Point",
-                status: "",
-                date: "",
-                coordinates: [parseFloat(-71), parseFloat(10)]
-              }
-            }, function driverCreated(error, driver) {
-              if (error) {
-                console.log(error);
-                res.json({
-                  status: false,
-                  code: "11001",
-                  response: "Error al crear driver",
-
-                });
-                // console.log("User NO created:", error);
-              } else {
-                //req.session.user = user;
-                //res.send(user);
-                console.log("User created:", driver);
-                return res.redirect('/detailNewDriver?id=' + driver.id);
-
-
-              }
-            });
+        }
+      });
 
 
 
@@ -177,12 +175,60 @@ module.exports = {
   },
 
   /**
-   * `DriverController.login()`
+   * `DriverController.hayCondunctores()`
    */
-  login: function(req, res) {
-    return res.json({
-      todo: 'login() is not implemented yet!'
+  hayCondunctores: function(req, res) {
+
+    //  console.log('DriverUbiController: action=geoProximity ');
+    //  console.log(' req.isSocket ', req.isSocket);
+    // console.log(' req.isAjax   ', req.isAjax);
+    // console.log(' req.isJson   ', req.isJson);
+
+    var lat = parseFloat(req.param('lat'));
+    var lng = parseFloat(req.param('lng'));
+    var maxDistance = parseInt(req.param('maxDistance')) || 2;
+    var limit = parseInt(req.param('limit')) || 3;
+    //  console.log('   lat         ', lat, typeof lat);
+    //  console.log('   lng         ', lng);
+    //  console.log('   maxDistance ', maxDistance, typeof maxDistance);
+    //  console.log('   limit       ', limit);
+
+    Driver.native(function(err, collection) {
+
+      collection.geoNear(lng, lat, {
+        maxDistance: 5 / 6378,
+        limit: limit,
+        // in meters
+        query: {
+          'lastPosition.status': 'disponible'
+        }, // allows filtering
+        distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
+        spherical: true
+      }, function(mongoErr, docs) {
+        if (mongoErr) {
+          console.error(mongoErr);
+          res.json({
+            status: false,
+          });
+        } else {
+          console.log('docs=', docs);
+          // res.send('proximity successful, got '+docs.results.length+' results.');
+          // res.json(docs.results);
+          if (docs.results.length == 0) {
+            res.json({
+              status: false,
+               response: docs.results
+            });
+          } else {
+            res.json({
+              status: true,
+              response: docs.results
+            });
+          };
+        }
+      });
     });
+
   },
 
 

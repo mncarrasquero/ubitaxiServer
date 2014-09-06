@@ -106,24 +106,72 @@ module.exports = {
 		var p2 = Math.round(base + parseFloat(tiempo1 * 1.5) + parseFloat(km));
 
 		p1 = Math.round(p1 / 10) * 10;
-	    p2 = Math.round(p2 / 10) * 10;
+		p2 = Math.round(p2 / 10) * 10;
 
-res.json({
-	status: true,
-	code: "",
-	response: "",
-	data: {
-		precio1: p1,
-		precio2: p2
+		res.json({
+			status: true,
+			code: "",
+			response: "",
+			data: {
+				precio1: p1,
+				precio2: p2
+			}
+		});
+		console.log("Calculando tarifa:");
+
+	},
+
+
+	chequeoPasajero: function(req, res) {
+
+		/*
+		 * en chequeo cuenta. se verifica el estatus del pasajero. y se cumple si hay conexion a internet
+		 * la respuesta es true con la data del pasajero. menos la clave. se busca con la informacion del id
+		 */
+
+		Passenger.findOne({
+			id: req.param('id')
+		}).exec(function(err, user) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (user) {
+				// si existe el usuario procedo a validar el estatus en el sistema
+				//si es bien devuelvo la data 
+				if (user.isActive == true) {
+					res.json({
+						status: true,
+						Appversion: "1.1",
+						error: '',
+						mensaje: "Bienvenido",
+					});
+
+				} else {
+					//si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
+					res.json({
+						status: false,
+						Appversion: "1.1",
+						error: 'X01',
+						mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
+					});
+
+				};
+			} else {
+				//si el id no corresponde responde error y procedo a hacer logout en la app
+				res.json({
+						status: false,
+						Appversion: "1.1",
+						error: 'X02',
+						mensaje: "Cuenta no existe",
+					});
+			}
+		});
+
+
+	},
+	chat: function(req, res) {
+
 	}
-});
-console.log("Calculando tarifa:");
 
-},
-
-
-chat: function(req, res) {
-
-}
-
-};[]
+};
+[]

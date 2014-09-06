@@ -37,7 +37,11 @@ module.exports.routes = {
 	'post /api/passengerCreate': 'PassengerController.create',
 	'post /api/passengerLogin': 'PassengerController.login',
 	'post /api/calcularPrecio': 'PassengerController.calcularPrecio',
-
+		//hay conductres api para passenger
+	'post /api/hayCondunctores': 'DriverController.hayCondunctores',
+	//chequeo de estatus de pasaro inicial 
+	'post /api/chequeoPasajero': 'PassengerController.chequeoPasajero',
+		
 	
 		
 };
