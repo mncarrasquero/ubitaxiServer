@@ -19,7 +19,6 @@ module.exports.routes = {
 	'get /signup': 'UserController.signup',
 
 
-	
 
 	'get /login': {
 		view: 'user/login'
@@ -37,11 +36,25 @@ module.exports.routes = {
 	'post /api/passengerCreate': 'PassengerController.create',
 	'post /api/passengerLogin': 'PassengerController.login',
 	'post /api/calcularPrecio': 'PassengerController.calcularPrecio',
-		//hay conductres api para passenger
+	//hay conductres api para passenger
 	'post /api/hayCondunctores': 'DriverController.hayCondunctores',
 	//chequeo de estatus de pasaro inicial 
 	'post /api/chequeoPasajero': 'PassengerController.chequeoPasajero',
-		
-	
-		
+
+	//evento crear cancelar preguntar
+	'/createEvent': {
+		controller: 'event',
+		action: 'create'
+	},
+	'/cancelSearch': {
+		controller: 'event',
+		action: 'cancelSearch'
+	},
+	'/myEvent': {
+		controller: 'event',
+		action: 'myEvent'
+	},
+
+
+
 };
