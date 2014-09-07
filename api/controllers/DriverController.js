@@ -196,12 +196,13 @@ module.exports = {
     Driver.native(function(err, collection) {
 
       collection.geoNear(lng, lat, {
-        maxDistance: 5 / 6378,
+        maxDistance: 145 / 6378,
         limit: limit,
         // in meters
         query: {
           'lastPosition.status': 'disponible'
-        }, // allows filtering
+        },
+        name: true, // allows filtering
         distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
         spherical: true
       }, function(mongoErr, docs) {
@@ -217,12 +218,19 @@ module.exports = {
           if (docs.results.length == 0) {
             res.json({
               status: false,
-               response: docs.results
+              //response: docs.results
             });
           } else {
+            var nuevoArray = [];
+            for (var i = 0; i < docs.results.length; i++) {
+              nuevoArray.push(docs.results[i].obj.lastPosition.coordinates);
+
+            }
+
+
             res.json({
               status: true,
-              response: docs.results
+              response:  nuevoArray
             });
           };
         }
