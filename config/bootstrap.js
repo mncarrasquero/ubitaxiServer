@@ -8,8 +8,49 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-
+var moment = require('moment');
 module.exports.bootstrap = function(cb) {
 
-  cb();
+	setInterval(function() {
+
+	
+var objFecha = new Date();
+var milisegundos = objFecha.getTime();
+// Restar 5 minutos . 
+objFecha.setTime( milisegundos - (5 * 60000) );
+
+		//date.toISOString(); //"2011-12-19T15:28:46.493Z"
+		
+
+		Event.native(function(err, collection) {
+			collection.update({
+					isActive: true,
+					status: 1,
+					createdAt : {"$lte": new Date(objFecha.toISOString())}
+
+				}, {
+					'$set': {
+						isActive: false,
+						status: 5
+					}
+				},
+
+				{
+					multi: true,
+					safe: true
+				},
+				function(err) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log("Revisando eventos expirados  " +objFecha.toISOString());
+
+					}
+				}
+			);
+		});
+
+
+	}, 5000);
+	cb();
 };
