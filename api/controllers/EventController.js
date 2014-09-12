@@ -69,29 +69,19 @@ module.exports = {
 		 * 7 completado
 		 * 8 aceptado por un taxista
 		 */
-
-
-
 		Event.findOne()
 			.where({
 				id: req.param('id')
 			})
 			.exec(function(err, evento) {
-
-
 				if (evento == null) {
 					res.json({
 						status: false,
 						code: "404",
 						response: "Evento no existe",
-
 					});
-
 				} else {
-
-
 					switch (evento.status) {
-
 						case 1:
 							res.json({
 								status: true,
@@ -169,36 +159,25 @@ module.exports = {
 
 
 	cancelSearch: function(req, res, next) {
-
 		Event.findOne({
 			id: req.param('id'),
 			passengerId: req.param('passengerId'),
-
-
 		}).exec(function findOneCB(err, found) {
 			if (err) {} else {
-
 				if (found) {
-
 					if (found.status == 1) {
-
 						Event.update({
 							id: req.param('id')
 						}, {
 							status: 3,
 							isActive: false
 						}).exec(function afterwards(err, updated) {
-
 							if (err) {
 								// handle error here- e.g. `res.serverError(err);`
 								return;
 							}
-
 							console.log('Updated user to have name ' + updated[0].id);
 						});
-
-
-
 						res.json({
 							status: true,
 							code: "909",
@@ -207,13 +186,11 @@ module.exports = {
 						});
 					} else {
 						//aqui es si el evento tiene otro estatus diferente a 1 q es buscando taxi
-
 						if (found.status == 5) {
 							res.json({
 								status: true,
 								code: "1006",
 								response: "evento ya cancelado por el parka",
-
 							});
 							return;
 						};
@@ -221,8 +198,7 @@ module.exports = {
 							res.json({
 								status: true,
 								code: "1006",
-								response: "evento ya cancelado por ti " ,
-
+								response: "evento ya cancelado por ti ",
 							});
 							return;
 						};
@@ -251,6 +227,104 @@ module.exports = {
 		// We found Jessie
 		// Don't forget to handle your error
 
-	}
+	},
+
+
+
+	eventSearch: function(req, res) {
+
+		var lat = parseFloat(req.param('lat'));
+		var lng = parseFloat(req.param('lng'));
+		var idDriver = parseFloat(req.param('id'));
+		var maxDistance = parseInt(req.param('maxDistance')) || 2;
+		var limit = parseInt(req.param('limit')) || 50;
+		//  console.log('   lat         ', lat, typeof lat);
+		//  console.log('   lng         ', lng);
+		//  console.log('   maxDistance ', maxDistance, typeof maxDistance);
+		//  console.log('   limit       ', limit);
+
+		//Validar que driver este activo 
+
+		Driver.findOne({
+			id: req.param('id')
+		}).exec(function(err, user) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (user) {
+				// si existe el usuario procedo a validar el estatus en el sistema
+				//si es bien devuelvo la data 
+				if (user.isActive == true) {
+					//el usuariu esta actuvo y validado
+					Event.native(function(err, collection) {
+
+						collection.geoNear(lng, lat, {
+							maxDistance: 5 / 6378,
+							limit: limit,
+							// in meters
+							query: {
+								//'lastPosition.status': 'disponible'
+							},
+							name: true, // allows filtering
+							distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
+							spherical: true
+						}, function(mongoErr, docs) {
+							if (mongoErr) {
+								console.error(mongoErr);
+								res.json({
+									status: false,
+								});
+							} else {
+								//console.log('docs=', docs);
+								// res.send('proximity successful, got '+docs.results.length+' results.');
+								// res.json(docs.results);
+								if (docs.results.length == 0) {
+									res.json({
+
+										status: true,
+										qty: docs.results.length,
+										//response: docs.results
+									});
+								} else {
+									res.json({
+										status: true,
+										qty: docs.results.length,
+										response: docs.results
+									});
+
+
+								};
+							}
+						});
+					});
+
+
+
+				} else {
+					//si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
+					res.json({
+						status: false,
+						Appversion: "1.1",
+						error: 'X007',
+						mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
+						data: ""
+					});
+
+				};
+			} else {
+				//si el id no corresponde responde error y procedo a hacer logout en la app
+				res.json({
+					status: false,
+					Appversion: "1.1",
+					error: 'X03',
+					mensaje: "Upppps... al parecer estamos presentando un problema tecnico pronto lo repararemos gracias.",
+					data: ""
+				});
+			}
+		});
+
+
+
+	},
 
 };
