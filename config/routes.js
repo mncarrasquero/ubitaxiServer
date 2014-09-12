@@ -46,7 +46,8 @@ module.exports.routes = {
 		controller: 'event',
 		action: 'create'
 	},
-	'/cancelSearch': {
+
+	'post /api/cancelSearch': {
 		controller: 'event',
 		action: 'cancelSearch'
 	},

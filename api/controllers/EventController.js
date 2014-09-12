@@ -78,7 +78,7 @@ module.exports = {
 			})
 			.exec(function(err, evento) {
 
-		
+
 				if (evento == null) {
 					res.json({
 						status: false,
@@ -171,9 +171,81 @@ module.exports = {
 	cancelSearch: function(req, res, next) {
 
 		Event.findOne({
-			id: req.param('id')
+			id: req.param('id'),
+			passengerId: req.param('passengerId'),
+
+
 		}).exec(function findOneCB(err, found) {
-			console.log('We found ' + found);
+			if (err) {} else {
+
+				if (found) {
+
+					if (found.status == 1) {
+
+						Event.update({
+							id: req.param('id')
+						}, {
+							status: 3,
+							isActive: false
+						}).exec(function afterwards(err, updated) {
+
+							if (err) {
+								// handle error here- e.g. `res.serverError(err);`
+								return;
+							}
+
+							console.log('Updated user to have name ' + updated[0].id);
+						});
+
+
+
+						res.json({
+							status: true,
+							code: "909",
+							response: JSON.stringify(found),
+
+						});
+					} else {
+						//aqui es si el evento tiene otro estatus diferente a 1 q es buscando taxi
+
+						if (found.status == 5) {
+							res.json({
+								status: true,
+								code: "1006",
+								response: "evento ya cancelado por el parka",
+
+							});
+							return;
+						};
+						if (found.status == 3) {
+							res.json({
+								status: true,
+								code: "1006",
+								response: "evento ya cancelado por ti " ,
+
+							});
+							return;
+						};
+
+						res.json({
+							status: false,
+							code: "1005",
+							response: "esperar que pregunte el askMyevent",
+
+						});
+
+					};
+				} else {
+					res.json({
+						status: false,
+						code: "1004",
+						response: "este evento no existe",
+
+					});
+				};
+
+			};
+
 		});
 
 		// We found Jessie
