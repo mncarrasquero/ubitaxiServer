@@ -263,6 +263,10 @@ module.exports = {
 							}, {
 								status: 8,
 								isActive: true
+								dataDriver:{
+									driverName : driver.name,
+									driverLastname : driver.lastname
+								}
 							}).exec(function afterwards(err, updated) {
 
 								if (err) {
@@ -272,7 +276,8 @@ module.exports = {
 
 								res.json({
 									status: true,
-									mensaje: driver
+									mensaje: "avento asignado",
+									response: evento
 								});
 								//console.log('Updated user to have name ' + updated[0].name);
 							});
