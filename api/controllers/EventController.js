@@ -240,7 +240,7 @@ module.exports = {
 			}, 500);
 			if (evento) {
 				//evaluar el estatus del evento
-				if (evento.status == 1) {
+				if (evento.status = 1) {
 					//evento esta disponible
 					//buscar datos del taxista solicitante
 					Driver.findOne({
@@ -251,38 +251,30 @@ module.exports = {
 						}, 500);
 						if (driver) {
 							//procedemos a actualizar el registro de evento agregando los datos del conductor.
-							Event.native(function(err, collection) {
-								collection.update({
-										//isActive: true,
-										id: evento._id
-
-									}, {
-										'$set': {
-											isActive: false,
-											status: 8,
-											eventLocation: {
+							/*
+					eventLocation: {
 												type: "Point",
 												coordinates: [parseFloat(driver.lastPosition.coordinates[0]), parseFloat(driver.lastPosition.coordinates[1])]
-											},
-										}
-									},
+											},*/
 
-									{
 
-										//safe: true
-									},
-									function(err) {
-										if (err) {
-											console.log(err);
-										} else {
-											res.json({
-												status: true,
-												mensaje: evento
-											});
+							Event.update({
+								id: req.param('id')
+							}, {
+								status: 8,
+								isActive: true
+							}).exec(function afterwards(err, updated) {
 
-										}
-									}
-								);
+								if (err) {
+									// handle error here- e.g. `res.serverError(err);`
+									return;
+								}
+
+								res.json({
+									status: true,
+									mensaje: driver
+								});
+								//console.log('Updated user to have name ' + updated[0].name);
 							});
 
 
