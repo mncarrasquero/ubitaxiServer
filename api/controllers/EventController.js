@@ -262,7 +262,7 @@ module.exports = {
 								id: req.param('id')
 							}, {
 								status: 8,
-								isActive: true
+								isActive: true,
 								dataDriver:{
 									driverName : driver.name,
 									driverLastname : driver.lastname
