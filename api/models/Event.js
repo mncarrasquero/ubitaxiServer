@@ -108,37 +108,14 @@ beforeUpdate: function(values, cb){
 			type: 'string',
 			required: false
 		},
+			dataDriver: {
+			type: 'json',
+		},
+			gpsDriverLocation: {
+			type: 'json',
+		},
 
 
-
-		driverId: {
-			type: 'string',
-			required: false
-		},
-		driverName: {
-			type: 'string',
-			required: false
-		},
-		driverLastname: {
-			type: 'string',
-			required: false
-		},
-		driverPhonenumber: {
-			type: 'string',
-			required: false
-		},
-		driverCarModel: {
-			type: 'string',
-			required: false
-		},
-		driverCarPlate: {
-			type: 'string',
-			required: false
-		},
-		driverCarColor: {
-			type: 'string',
-			required: false
-		},
 
 
 

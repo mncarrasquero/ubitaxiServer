@@ -22,7 +22,7 @@ module.exports = {
 			},
 			gpsPassengerLocation: {
 				type: "Point",
-				eventAccGps: req.param('EventAccGps'),
+				eventAccGps: req.param('PassengerAccGps'),
 				coordinates: [parseFloat(req.param('EventLngGps')), parseFloat(req.param('EventLatGps'))]
 			},
 			eventDestinoName: req.param('EventDestinoName'),
@@ -227,6 +227,25 @@ module.exports = {
 
 		// We found Jessie
 		// Don't forget to handle your error
+
+	},
+
+	eventQuest: function(req, res) {
+		//evaluar si el evento esta disponible
+		Event.findOne({
+			id: req.param('id')
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+				res.json({
+					status: true,
+					response: evento
+				});
+
+			}
+		});
 
 	},
 
