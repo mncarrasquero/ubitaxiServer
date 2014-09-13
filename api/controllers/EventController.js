@@ -254,7 +254,7 @@ module.exports = {
 							Event.native(function(err, collection) {
 								collection.update({
 										//isActive: true,
-										id: req.param('id')
+										id: evento._id
 
 									}, {
 										'$set': {
