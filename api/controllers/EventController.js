@@ -32,6 +32,7 @@ module.exports = {
 			passengerName: req.param('passengerName'),
 			passengerLastname: req.param('passengerLastname'),
 			passengerPhonenumber: req.param('passengerPhonenumber'),
+			passengerKarma: req.param('passengerKarma'),
 		}, function passengerCreated(error, evento) {
 			if (error) {
 				res.json({

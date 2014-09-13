@@ -30,6 +30,10 @@ beforeUpdate: function(values, cb){
 			type: 'json',
 		},
 
+		eventPrice: {
+			type: 'json',
+		},
+
 		
 		eventPriori: {
 			type: 'string',
@@ -77,6 +81,11 @@ beforeUpdate: function(values, cb){
 		eventAccGps: {
 			type: 'float',
 			required: false
+		},
+		
+		passengerKarma: {
+			type: 'json'
+			//defaultsTo: true
 		},
 		eventLocation: {
 			type: 'json'
