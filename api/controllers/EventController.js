@@ -23,7 +23,7 @@ module.exports = {
 			gpsPassengerLocation: {
 				type: "Point",
 				eventAccGps: req.param('PassengerAccGps'),
-				coordinates: [parseFloat(req.param('EventLngGps')), parseFloat(req.param('EventLatGps'))]
+				coordinates: [parseFloat(req.param('PassengerLngGps')), parseFloat(req.param('PassengerLatGps'))]
 			},
 			eventDestinoName: req.param('EventDestinoName'),
 			eventDestinoCoordinate: [parseFloat(req.param('EventDestinoLng')), parseFloat(req.param('EventDestinoLat'))],
