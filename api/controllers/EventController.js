@@ -239,11 +239,58 @@ module.exports = {
 				error: 'DB error'
 			}, 500);
 			if (evento) {
-				res.json({
-					status: true,
-					response: evento
-				});
+				//evaluar el estatus del evento
+				if (evento.status = 1) {
+					//evento esta disponible
+					//buscar datos del taxista solicitante
+					Driver.findOne({
+						id: req.param('driverId')
+					}).exec(function(err, driver) {
+						if (err) res.json({
+							error: 'DB error'
+						}, 500);
+						if (driver) {
+							//procedemos a actualizar el registro de evento agregando los datos del conductor.
+							Event.update({
+								id: req.param('id')
+							}, {
+								status: 8
+							})
+								.exec(function(err, updateEvent) {
+									res.json({
+										status: true,
+										mensaje: updateEvent
+									});
+								});
 
+
+
+						} else {
+							res.json({
+								status: false,
+								mensaje: "Upps ocurrio un error"
+							});
+						};
+					});
+
+				} else {
+					//evento no esta disponible
+					res.json({
+						status: false,
+						error: "x206",
+						mensaje: "Evento no disponible"
+					});
+				};
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
 			}
 		});
 
