@@ -424,7 +424,7 @@ module.exports = {
 
 		Event.findOne({
 			id: eventId,
-			dataDriver.idDriver: idDriver 
+			
 		}).exec(function(err, evento) {
 			if (err) res.json({
 				error: 'DB error'
