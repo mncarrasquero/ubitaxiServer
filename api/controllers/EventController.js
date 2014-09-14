@@ -424,7 +424,9 @@ module.exports = {
 
 		Event.findOne({
 			id: eventId,
-			dataDriver.driverId: idDriver
+			dataDriver: {
+				driverId: idDriver
+			}
 		}).exec(function(err, evento) {
 			if (err) res.json({
 				error: 'DB error'
@@ -460,17 +462,15 @@ module.exports = {
 				};
 				if (evento.status != 8) {
 					//x209 servicio cancelado sin penalizacion
-						res.json({
-							status: true,
-							error: "x209",
-							mensaje: "Servicio cancelado"
-						});
+					res.json({
+						status: true,
+						error: "x209",
+						mensaje: "Servicio cancelado"
+					});
 
 
 
 				};
-
-
 
 
 
