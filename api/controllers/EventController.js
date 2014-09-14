@@ -59,17 +59,6 @@ module.exports = {
 
 	myEvent: function(req, res, next) {
 
-		/*
-		 * status del evento
-		 * 1 busqueda de taxis  -- 909
-		 * 2 cancelado pasajero -- 910
-		 * 3 cancelada busqueda por pasajero -- 911
-		 * 4 cancelado por taxista  -- 912
-		 * 5 cancelado por parka  -- 913
-		 * 6 cancelado por sistema  -- 914
-		 * 7 completado
-		 * 8 aceptado por un taxista
-		 */
 		Event.findOne()
 			.where({
 				id: req.param('id')
@@ -279,7 +268,7 @@ module.exports = {
 								gpsDriverLocation: {
 									type: "Point",
 									date: new Date(),
-							    	coordinates: [parseFloat(driver.lastPosition.coordinates[0]), parseFloat(driver.lastPosition.coordinates[1])]
+									coordinates: [parseFloat(driver.lastPosition.coordinates[0]), parseFloat(driver.lastPosition.coordinates[1])]
 								},
 							}).exec(function afterwards(err, updated) {
 
@@ -427,4 +416,87 @@ module.exports = {
 
 	},
 
+
+	cancelEventDriver: function(req, res) {
+		eventId: req.param('eventId');
+		idDriver: req.param('idDriver');
+		razonCancel: req.param('razonCancel');
+
+		Event.findOne({
+			id: eventId,
+			dataDriver.driverId: idDriver
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+
+				if (evento.status == 8) {
+					//estado 8 aceptado por un taxista.
+					// procedo hacer un update en el evento.
+
+					//x208 servicio cancelado CON penalizacion DE 5 MINUTOS
+					Event.update({
+						id: eventId
+					}, {
+						status: 4,
+						isActive: false,
+						razonCancel: razonCancel
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
+							status: true,
+							error: "x208",
+							mensaje: "Servicio cancelado"
+						});
+					});
+
+
+
+				};
+				if (evento.status != 8) {
+					//x209 servicio cancelado sin penalizacion
+						res.json({
+							status: true,
+							error: "x209",
+							mensaje: "Servicio cancelado"
+						});
+
+
+
+				};
+
+
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
+			}
+		});
+
+	}
+
 };
+
+
+/*
+ * status del evento
+ * 1 busqueda de taxis  -- 909
+ * 2 cancelado pasajero -- 910
+ * 3 cancelada busqueda por pasajero -- 911
+ * 4 cancelado por taxista  -- 912
+ * 5 cancelado por parka  -- 913
+ * 6 cancelado por sistema  -- 914
+ * 7 completado
+ * 8 aceptado por un taxista
+ */

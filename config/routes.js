@@ -51,6 +51,13 @@ module.exports.routes = {
 		action: 'eventQuest'
 	},
 
+	 'post /api/cancelEventDriver': {
+		controller: 'event',
+		action: 'cancelEventDriver'
+	},
+
+
+
 	'post /api/cancelSearch': {
 		controller: 'event',
 		action: 'cancelSearch'

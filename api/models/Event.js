@@ -50,6 +50,12 @@ beforeUpdate: function(values, cb){
 			type: 'integer',
 			defaultsTo: "1"
 		},
+		razonCancel: {
+			type: 'string',			
+		},
+
+
+		
 		eventCalle: {
 			type: 'string',
 			required: false
