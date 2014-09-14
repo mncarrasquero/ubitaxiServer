@@ -434,6 +434,8 @@ module.exports = {
 			if (evento) {
 
 				if (evento.status == 8) {
+
+					console.log("un taxista va a cancerlar un servicio");
 					//estado 8 aceptado por un taxista.
 					// procedo hacer un update en el evento.
 
