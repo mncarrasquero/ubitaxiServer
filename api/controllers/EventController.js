@@ -418,9 +418,9 @@ module.exports = {
 
 
 	cancelEventDriver: function(req, res) {
-		eventId: req.param('eventId');
-		idDriver: req.param('idDriver');
-		razonCancel: req.param('razonCancel');
+		var eventId: req.param('eventId');
+		var idDriver: req.param('idDriver');
+		var razonCancel: req.param('razonCancel');
 
 		Event.findOne({
 			id: eventId,
