@@ -240,7 +240,7 @@ module.exports = {
 			}, 500);
 			if (evento) {
 				//evaluar el estatus del evento
-				if (evento.status = 1) {
+				if (evento.status == 1) {
 					//evento esta disponible
 					//buscar datos del taxista solicitante
 					Driver.findOne({
@@ -263,10 +263,24 @@ module.exports = {
 							}, {
 								status: 8,
 								isActive: true,
-								dataDriver:{
-									driverName : driver.name,
-									driverLastname : driver.lastname
-								}
+								dataDriver: {
+									driverId: driver.id,
+									driverName: driver.name,
+									driverLastname: driver.lastname,
+									driverPhone: driver.phone,
+									driverPicture: driver.dir_picture + driver.picture,
+									carBrand: driver.car.brand,
+									carModel: driver.car.model,
+									carYear: driver.car.year,
+									carColor: driver.car.color,
+									carPlate: driver.car.plate,
+								},
+
+								gpsDriverLocation: {
+									type: "Point",
+									date: new Date(),
+							    	coordinates: [parseFloat(driver.lastPosition.coordinates[0]), parseFloat(driver.lastPosition.coordinates[1])]
+								},
 							}).exec(function afterwards(err, updated) {
 
 								if (err) {
