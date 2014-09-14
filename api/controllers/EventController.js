@@ -423,8 +423,8 @@ module.exports = {
 		var razonCancel = req.param('razonCancel');
 
 		Event.findOne({
-			id: eventId,
-			dataDriver.idDriver: idDriver 
+			id: eventId
+			
 		}).exec(function(err, evento) {
 			if (err) res.json({
 				error: 'DB error'
