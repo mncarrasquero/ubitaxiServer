@@ -56,6 +56,11 @@ module.exports.routes = {
 		action: 'cancelEventDriver'
 	},
 
+	 'post /api/yaLlego': {
+		controller: 'event',
+		action: 'yaLlego'
+	},
+
 
 
 	'post /api/cancelSearch': {

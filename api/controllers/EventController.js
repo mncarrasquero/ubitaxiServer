@@ -418,13 +418,13 @@ module.exports = {
 
 
 	cancelEventDriver: function(req, res) {
-		var eventId =  req.param('eventId');
+		var eventId = req.param('eventId');
 		var idDriver = req.param('idDriver');
 		var razonCancel = req.param('razonCancel');
 
 		Event.findOne({
 			id: eventId,
-			
+
 		}).exec(function(err, evento) {
 			if (err) res.json({
 				error: 'DB error'
@@ -433,7 +433,7 @@ module.exports = {
 
 				if (evento.status == 8) {
 
-					console.log("un taxista va a cancerlar un servicio");
+				
 					//estado 8 aceptado por un taxista.
 					// procedo hacer un update en el evento.
 
@@ -484,6 +484,74 @@ module.exports = {
 			}
 		});
 
+	},
+
+
+
+	yaLlego: function(req, res) {
+		var eventId = req.param('eventId');
+		var idDriver = req.param('idDriver');
+		Event.findOne({
+			id: eventId,
+
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+
+				if (evento.status == 8) {
+
+					
+					//estado 8 aceptado por un taxista.
+					// procedo hacer un update en el evento.
+
+					//x210 servicio marcado como ya llego a la ubicacion del conductor
+					Event.update({
+						id: eventId
+					}, {
+						status: 9,
+						isActive: true,
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
+							status: true,
+							error: "x210",
+							mensaje: "Servicio cancelado"
+						});
+					});
+
+
+
+				};
+				if (evento.status != 8) {
+					//x209 servicio cancelado sin penalizacion
+					res.json({
+						status: true,
+						error: "x209",
+						mensaje: "Servicio cancelado"
+					});
+
+
+
+				};
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
+			}
+		});
+
 	}
 
 };
@@ -499,4 +567,5 @@ module.exports = {
  * 6 cancelado por sistema  -- 914
  * 7 completado
  * 8 aceptado por un taxista
+ * 9 aceptado por un taxista
  */
