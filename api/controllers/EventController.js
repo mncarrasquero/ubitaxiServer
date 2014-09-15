@@ -678,7 +678,7 @@ module.exports = {
 							}).toArray(function(err, results) {
 								if (err) return res.serverError(err);
 								runtestunit.update({
-										_id: results[0]._id
+										id: eventId
 									}, {
 										$push: {
 											gpsDriverLocation: {
