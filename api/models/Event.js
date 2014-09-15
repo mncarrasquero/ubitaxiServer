@@ -124,7 +124,7 @@ beforeUpdate: function(values, cb){
 			type: 'json',
 		},
 			gpsDriverLocation: {
-			type: 'json',
+			type: 'array',
 		},
 
 

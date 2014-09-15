@@ -671,28 +671,22 @@ module.exports = {
 
 					} else {
 
-
-						Event.native(function(err, runtestunit) {
-							runtestunit.find({
-								id: eventId
-							}).toArray(function(err, results) {
-								if (err) return res.serverError(err);
-								runtestunit.update({
-										id: eventId
-									}, {
-										$push: {
-											gpsDriverLocation: {
-												type: "Point",
-												date: new Date(),
-												coordinates: [parseFloat(lng), parseFloat(lat)]
-											},
-										}
-									},
-									function(err, screenshots) {
-										if (err) sails.log.err(err)
-										else sails.log.info("Item pushed")
-									})
-							});
+						Event.update({
+							id: req.param('id')
+						}, {
+							'$push': {
+								gpsDriverLocation: {
+									type: "Point",
+									date: new Date(),
+									coordinates: [parseFloat(lng), parseFloat(lat)]
+								},
+							}
+						}).exec(function afterwards(err, updated) {
+							if (err) {
+								// handle error here- e.g. `res.serverError(err);`
+								return;
+							}
+							console.log('Updated user to have name ' + updated[0].id);
 						});
 
 
