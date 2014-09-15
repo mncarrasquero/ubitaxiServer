@@ -652,68 +652,71 @@ module.exports = {
 				id: eventId
 			})
 			.exec(function(err, evento) {
-				if (evento == null) {
-					res.json({
-						status: false,
-						code: "404",
-						response: "Evento no existe",
-					});
-				} else {
-
-					if (evento.status == 2) {
-
+					if (evento == null) {
 						res.json({
 							status: false,
-							code: "x915",
-							response: "Evento cancelado por el pasajero",
-
+							code: "404",
+							response: "Evento no existe",
 						});
-
 					} else {
 
-						Event.update({
-							id: eventId
-						}, {
-							$push: {
-								gpsDriverLocation: {
-									type: "Point",
-									date: new Date(),
-									coordinates: [parseFloat(lng), parseFloat(lat)]
-								},
-							}
-						}).exec(function afterwards(err, updated) {
-							if (err) {
-								// handle error here- e.g. `res.serverError(err);`
-								return;
-							}
-							console.log('Updated user to have name ' + updated[0].id);
-						});
+						if (evento.status == 2) {
+
+							res.json({
+								status: false,
+								code: "x915",
+								response: "Evento cancelado por el pasajero",
+
+							});
+
+						} else {
+
+							Event.update({
+									id: eventId
+								}, {
 
 
 
-					};
+									$push: {
+										gpsDriverLocation: [{
+												type: "Point",
+												date: new Date(),
+												coordinates: [parseFloat(lng), parseFloat(lat)
+												}],
+										}
+									}).exec(function afterwards(err, updated) {
+									if (err) {
+										// handle error here- e.g. `res.serverError(err);`
+										return;
+									}
+									console.log('Updated user to have name ' + updated[0].id);
+								});
 
-				};
-
-			});
 
 
-	},
+							};
+
+						};
+
+					});
+
+
+		},
 
 
 
-};
+	};
 
 
-/*
- * status del evento
- * 1 busqueda de taxis  -- 909
- * 2 cancelado pasajero -- 910
- * 3 cancelada busqueda por pasajero -- 911
- * 4 cancelado por taxista  -- 912
- * 5 cancelado por parka  -- 913
- * 6 cancelado por sistema  -- 914
- * 7 completado
- * 8 aceptado por un taxista
- * 9 ya el taxista llego
- */
+	/*
+	 * status del evento
+	 * 1 busqueda de taxis  -- 909
+	 * 2 cancelado pasajero -- 910
+	 * 3 cancelada busqueda por pasajero -- 911
+	 * 4 cancelado por taxista  -- 912
+	 * 5 cancelado por parka  -- 913
+	 * 6 cancelado por sistema  -- 914
+	 * 7 completado
+	 * 8 aceptado por un taxista
+	 * 9 ya el taxista llego
+	 */
