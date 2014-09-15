@@ -28,6 +28,17 @@ module.exports = {
 			eventDestinoName: req.param('EventDestinoName'),
 			eventDestinoCoordinate: [parseFloat(req.param('EventDestinoLng')), parseFloat(req.param('EventDestinoLat'))],
 			eventPrice: [req.param('EventPrecioBajo'), req.param('EventPrecioAlto')],
+			dataPriceEvent: {
+				type: "Normal",
+				min: 1.8,
+				km: 3.8,
+				base: 34,
+				extra: 0,
+				
+			},
+
+
+
 			passengerId: req.param('passengerId'),
 			passengerName: req.param('passengerName'),
 			passengerLastname: req.param('passengerLastname'),

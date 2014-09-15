@@ -33,6 +33,9 @@ beforeUpdate: function(values, cb){
 		eventPrice: {
 			type: 'json',
 		},
+		dataPriceEvent: {
+			type: 'json',
+		},
 
 		
 		eventPriori: {
