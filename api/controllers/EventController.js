@@ -34,7 +34,7 @@ module.exports = {
 				km: 3.8,
 				base: 34,
 				extra: 0,
-				
+
 			},
 
 
@@ -444,7 +444,7 @@ module.exports = {
 
 				if (evento.status == 8) {
 
-				
+
 					//estado 8 aceptado por un taxista.
 					// procedo hacer un update en el evento.
 
@@ -513,7 +513,7 @@ module.exports = {
 
 				if (evento.status == 8) {
 
-					
+
 					//estado 8 aceptado por un taxista.
 					// procedo hacer un update en el evento.
 
@@ -563,7 +563,83 @@ module.exports = {
 			}
 		});
 
+	},
+	completeEventDriver: function(req, res) {
+		var eventId = req.param('eventId');
+		var idDriver = req.param('idDriver');
+		var taximetroTotal = req.param('taximetroTotal');
+		var taximetroMin = req.param('taximetroMin');
+		var taximetroKm = req.param('taximetroKm');
+		Event.findOne({
+			id: eventId,
+
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+
+				if (evento.status == 8) {
+
+
+					//estado 8 aceptado por un taxista.
+					// procedo hacer un update en el evento.
+
+					//x210 servicio marcado como ya llego a la ubicacion del conductor
+					Event.update({
+						id: eventId
+					}, {
+						status: 7,
+						isActive: false,
+						dataTaximetro: {
+							taximetroTotal: taximetroTotal,
+							taximetroMin: taximetroMin,
+							taximetroKm: taximetroKm,
+						}
+
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
+							status: true,
+							error: "x210",
+							mensaje: "Servicio cancelado"
+						});
+					});
+
+
+
+				};
+				if (evento.status != 8) {
+					//x209 servicio cancelado sin penalizacion
+					res.json({
+						status: true,
+						error: "x209",
+						mensaje: "Servicio cancelado"
+					});
+
+
+
+				};
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
+			}
+		});
+
 	}
+
+
 
 };
 

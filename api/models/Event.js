@@ -36,6 +36,9 @@ beforeUpdate: function(values, cb){
 		dataPriceEvent: {
 			type: 'json',
 		},
+		dataTaximetro: {
+			type: 'json',
+		},
 
 		
 		eventPriori: {

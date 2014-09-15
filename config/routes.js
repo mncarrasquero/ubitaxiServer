@@ -46,22 +46,25 @@ module.exports.routes = {
 		controller: 'event',
 		action: 'create'
 	},
-	 'post /api/eventQuest': {
+	'post /api/eventQuest': {
 		controller: 'event',
 		action: 'eventQuest'
 	},
 
-	 'post /api/cancelEventDriver': {
+	'post /api/cancelEventDriver': {
 		controller: 'event',
 		action: 'cancelEventDriver'
 	},
 
-	 'post /api/yaLlego': {
+	'post /api/yaLlego': {
 		controller: 'event',
 		action: 'yaLlego'
 	},
 
-
+	'post /api/completeEventDriver': {
+		controller: 'event',
+		action: 'completeEventDriver'
+	},
 
 	'post /api/cancelSearch': {
 		controller: 'event',
