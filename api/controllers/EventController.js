@@ -159,6 +159,7 @@ module.exports = {
 	},
 
 
+
 	cancelSearch: function(req, res, next) {
 		Event.findOne({
 			id: req.param('id'),
@@ -578,8 +579,8 @@ module.exports = {
 				error: 'DB error'
 			}, 500);
 			if (evento) {
- 
-				if (evento.status == 8  ||  evento.status == 9  ) {
+
+				if (evento.status == 8 || evento.status == 9) {
 
 
 					//estado 8 aceptado por un taxista.
@@ -637,7 +638,73 @@ module.exports = {
 			}
 		});
 
-	}
+	},
+
+	myEventDriver: function(req, res, next) {
+		var eventId = req.param('eventId');
+		var idDriver = req.param('idDriver');
+		var lat = req.param('lat');
+		var lng = req.param('lng');
+
+
+		Event.findOne()
+			.where({
+				id: eventId
+			})
+			.exec(function(err, evento) {
+				if (evento == null) {
+					res.json({
+						status: false,
+						code: "404",
+						response: "Evento no existe",
+					});
+				} else {
+
+					if (evento.status == 2) {
+
+						res.json({
+							status: false,
+							code: "x915",
+							response: "Evento cancelado por el pasajero",
+
+						});
+
+					} else {
+
+
+						Event.native(function(err, runtestunit) {
+							runtestunit.find({
+								id: eventId
+							}).toArray(function(err, results) {
+								if (err) return res.serverError(err);
+								runtestunit.update({
+										_id: results[0]._id
+									}, {
+										$push: {
+											gpsDriverLocation: {
+												type: "Point",
+												date: new Date(),
+												coordinates: [parseFloat(lng), parseFloat(lat)]
+											},
+										}
+									},
+									function(err, screenshots) {
+										if (err) sails.log.err(err)
+										else sails.log.info("Item pushed")
+									})
+							});
+						});
+
+
+
+					};
+
+				};
+
+			});
+
+
+	},
 
 
 

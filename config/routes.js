@@ -81,6 +81,13 @@ module.exports.routes = {
 		action: 'myEvent'
 	},
 
+	'post /api/myEventDriver': {
+		controller: 'event',
+		action: 'myEventDriver'
+	},
+
+	
+
 
 
 };
