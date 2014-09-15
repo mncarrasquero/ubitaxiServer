@@ -578,8 +578,8 @@ module.exports = {
 				error: 'DB error'
 			}, 500);
 			if (evento) {
-
-				if (evento.status == 8) {
+ 
+				if (evento.status == 8  ||  evento.status == 9  ) {
 
 
 					//estado 8 aceptado por un taxista.
@@ -654,5 +654,5 @@ module.exports = {
  * 6 cancelado por sistema  -- 914
  * 7 completado
  * 8 aceptado por un taxista
- * 9 aceptado por un taxista
+ * 9 ya el taxista llego
  */
