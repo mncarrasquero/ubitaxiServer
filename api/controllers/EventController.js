@@ -674,7 +674,7 @@ module.exports = {
 						Event.update({
 							id: eventId
 						}, {
-							'$push': {
+							$push: {
 								gpsDriverLocation: {
 									type: "Point",
 									date: new Date(),
