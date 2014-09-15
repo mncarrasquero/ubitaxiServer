@@ -672,7 +672,7 @@ module.exports = {
 					} else {
 
 						Event.update({
-							id: req.param('id')
+							id: eventId
 						}, {
 							'$push': {
 								gpsDriverLocation: {
