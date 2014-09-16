@@ -251,13 +251,7 @@ module.exports = {
 							error: 'DB error'
 						}, 500);
 						if (driver) {
-							//procedemos a actualizar el registro de evento agregando los datos del conductor.
-							/*
-					eventLocation: {
-												type: "Point",
-												coordinates: [parseFloat(driver.lastPosition.coordinates[0]), parseFloat(driver.lastPosition.coordinates[1])]
-											},*/
-
+		
 
 							Event.update({
 								id: req.param('id')
@@ -277,15 +271,15 @@ module.exports = {
 									carPlate: driver.car.plate,
 								},
 
-								gpsDriverLocation: {
-									type: "Point",
-									date: new Date(),
-									coordinates: [parseFloat(driver.lastPosition.coordinates[0]), parseFloat(driver.lastPosition.coordinates[1])]
-								},
+							
 							}).exec(function afterwards(err, updated) {
 
 								if (err) {
-									// handle error here- e.g. `res.serverError(err);`
+									res.json({
+									status: false,
+									mensaje: "error DB",
+									response: err
+								});
 									return;
 								}
 
