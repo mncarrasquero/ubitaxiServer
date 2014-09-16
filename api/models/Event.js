@@ -18,7 +18,7 @@ beforeUpdate: function(values, cb){
     }
     return cb();
 },
-	schema: false,
+	schema: true,
 	attributes: {
 		eventLocation: {
 			type: 'json',
