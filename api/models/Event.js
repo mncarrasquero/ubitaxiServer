@@ -18,7 +18,7 @@ beforeUpdate: function(values, cb){
     }
     return cb();
 },
-	schema: true,
+	schema: false,
 	attributes: {
 		eventLocation: {
 			type: 'json',
@@ -123,8 +123,8 @@ beforeUpdate: function(values, cb){
 			dataDriver: {
 			type: 'json',
 		},
-			gpsDriverLocation: {
-			type: 'json',
+		gpsDriverLocation: {
+			type: 'array',
 		},
 
 

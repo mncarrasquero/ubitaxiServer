@@ -652,71 +652,87 @@ module.exports = {
 				id: eventId
 			})
 			.exec(function(err, evento) {
-					if (evento == null) {
+				if (evento == null) {
+					res.json({
+						status: false,
+						code: "404",
+						response: "Evento no existe",
+					});
+				} else {
+
+					if (evento.status == 2) {
+
 						res.json({
 							status: false,
-							code: "404",
-							response: "Evento no existe",
+							code: "x915",
+							response: "Evento cancelado por el pasajero",
+
 						});
+
 					} else {
 
-						if (evento.status == 2) {
-
-							res.json({
-								status: false,
-								code: "x915",
-								response: "Evento cancelado por el pasajero",
-
-							});
+						if (evento.gpsDriverLocation) {
+							var data = evento.gpsDriverLocation;
+							var newData = [{
+								date: new Date(),
+								lat: parseFloat(lat),
+								lng: parseFloat(lng),
+							}];
+							data.push(newData);
 
 						} else {
-
-							Event.update({
-									id: eventId
-								}, {
-
-
-
-									$push: {
-										gpsDriverLocation: [{
-												type: "Point",
-												date: new Date(),
-												coordinates: [parseFloat(lng), parseFloat(lat)
-												}],
-										}
-									}).exec(function afterwards(err, updated) {
-									if (err) {
-										// handle error here- e.g. `res.serverError(err);`
-										return;
-									}
-									console.log('Updated user to have name ' + updated[0].id);
-								});
-
-
-
-							};
+							var data = [{
+								date: new Date(),
+								lat: parseFloat(lat),
+								lng: parseFloat(lng),
+							}];
 
 						};
 
-					});
 
 
-		},
+						Event.update({
+							id: eventId
+						}, {
+							gpsDriverLocation: data
+						}).exec(function afterwards(err, updated) {
+							if (err) {
+								// handle error here- e.g. `res.serverError(err);`
+								return;
+							}
+							res.json({
+								status: true,
+								code: "",
+								response: evento,
+
+							});
+						});
 
 
 
-	};
+					};
+
+				};
+
+			});
 
 
-	/*
-	 * status del evento
-	 * 1 busqueda de taxis  -- 909
-	 * 2 cancelado pasajero -- 910
-	 * 3 cancelada busqueda por pasajero -- 911
-	 * 4 cancelado por taxista  -- 912
-	 * 5 cancelado por parka  -- 913
-	 * 6 cancelado por sistema  -- 914
-	 * 7 completado
-	 * 8 aceptado por un taxista
-	 * 9 ya el taxista llego
-	 */
+	},
+
+
+
+};
+
+
+/*
+ * status del evento
+ * 1 busqueda de taxis  -- 909
+ * 2 cancelado pasajero -- 910
+ * 3 cancelada busqueda por pasajero -- 911
+ * 4 cancelado por taxista  -- 912
+ * 5 cancelado por parka  -- 913
+ * 6 cancelado por sistema  -- 914
+ * 7 completado
+ * 8 aceptado por un taxista
+ * 9 ya el taxista llego
+ */
