@@ -665,12 +665,16 @@ module.exports = {
 
 					} else {
 
+						var flag = evento.status;
+
 						if (evento.gpsDriverLocation) {
+
 							var data = evento.gpsDriverLocation;
 							var newData = [{
 								date: new Date(),
 								lat: parseFloat(lat),
 								lng: parseFloat(lng),
+								flag: flag
 							}];
 							data.push(newData);
 
@@ -679,6 +683,7 @@ module.exports = {
 								date: new Date(),
 								lat: parseFloat(lat),
 								lng: parseFloat(lng),
+								flag: flag
 							}];
 
 						};
