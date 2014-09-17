@@ -235,6 +235,7 @@ module.exports = {
 		//evaluar si el evento esta disponible
 		Event.findOne({
 			id: req.param('id')
+
 		}).exec(function(err, evento) {
 			if (err) res.json({
 				error: 'DB error'
@@ -358,7 +359,8 @@ module.exports = {
 							limit: limit,
 							// in meters
 							query: {
-								//'lastPosition.status': 'disponible'
+								'status': 1,
+								'isActive': true,
 							},
 							name: true, // allows filtering
 							distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
