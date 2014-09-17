@@ -143,7 +143,8 @@ module.exports = {
 							res.json({
 								status: true,
 								code: "916",
-								response: "Eceptado por un taxista falta cargar data del taxista :D",
+								response: "Eceptado por un taxista ",
+								evento: evento
 
 							});
 							break;
