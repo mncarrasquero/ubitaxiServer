@@ -271,6 +271,10 @@ module.exports = {
 									carYear: driver.car.year,
 									carColor: driver.car.color,
 									carPlate: driver.car.plate,
+									lastPosition: {
+										lat: req.param('lat'),
+										lng: req.param('lng')
+									}
 								},
 
 							
