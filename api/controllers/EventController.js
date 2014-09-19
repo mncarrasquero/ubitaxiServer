@@ -140,6 +140,7 @@ module.exports = {
 							});
 							break;
 						case 8:
+
 							res.json({
 								status: true,
 								code: "916",
@@ -439,6 +440,82 @@ module.exports = {
 
 	},
 
+
+
+
+
+passengerCancel: function(req, res) {
+		var eventId = req.param('eventId');
+		var passengerId = req.param('passengerId');
+		var razonCancel = req.param('razonCancel');
+
+		Event.findOne({
+			id: eventId,
+
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+
+				if (evento.status == 8) {
+
+
+					//estado 8 aceptado por un taxista.
+					// procedo hacer un update en el evento.
+
+					//x208 servicio cancelado CON penalizacion DE 5 MINUTOS
+					Event.update({
+						id: eventId
+					}, {
+						status: 2,
+						isActive: false,
+						razonCancel: razonCancel
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
+							status: true,
+							error: "x208",
+							mensaje: "Servicio cancelado"
+						});
+					});
+
+
+
+				};
+				if (evento.status != 8) {
+					//x209 servicio cancelado sin penalizacion
+					res.json({
+						status: true,
+						error: "x209",
+						mensaje: "Servicio cancelado"
+					});
+
+
+
+				};
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
+			}
+		});
+
+	},
+
+
+
+	
 
 	cancelEventDriver: function(req, res) {
 		var eventId = req.param('eventId');
