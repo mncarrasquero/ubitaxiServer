@@ -150,7 +150,7 @@ module.exports = {
 							});
 							break;
 
-							case 9:
+						case 9:
 							res.json({
 								status: true,
 								code: "917",
@@ -264,7 +264,7 @@ module.exports = {
 							error: 'DB error'
 						}, 500);
 						if (driver) {
-		
+
 
 							Event.update({
 								id: req.param('id')
@@ -288,15 +288,15 @@ module.exports = {
 									}
 								},
 
-							
+
 							}).exec(function afterwards(err, updated) {
 
 								if (err) {
 									res.json({
-									status: false,
-									mensaje: "error DB",
-									response: err
-								});
+										status: false,
+										mensaje: "error DB",
+										response: err
+									});
 									return;
 								}
 
@@ -368,6 +368,32 @@ module.exports = {
 				//si es bien devuelvo la data 
 				if (user.isActive == true) {
 					//el usuariu esta actuvo y validado
+					//actualizo su posicion
+					Driver.update({
+						id: idDriver
+					}, {
+						eventLocation: {
+							type: "Point",
+							date: new Date(),
+							coordinates: [parseFloat(req.param('lng')), parseFloat(req.param('lat'))]
+						},
+
+
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
+							status: true,
+							error: "x208",
+							mensaje: "Servicio cancelado"
+						});
+					});
+
+					//fin de actualizar poscicion
+
 					Event.native(function(err, collection) {
 
 						collection.geoNear(lng, lat, {
@@ -442,9 +468,7 @@ module.exports = {
 
 
 
-
-
-passengerCancel: function(req, res) {
+	passengerCancel: function(req, res) {
 		var eventId = req.param('eventId');
 		var passengerId = req.param('passengerId');
 		var razonCancel = req.param('razonCancel');
@@ -514,8 +538,6 @@ passengerCancel: function(req, res) {
 	},
 
 
-
-	
 
 	cancelEventDriver: function(req, res) {
 		var eventId = req.param('eventId');
