@@ -56,7 +56,7 @@ module.exports.routes = {
 		action: 'cancelEventDriver'
 	},
 
-	
+
 	'post /api/passengerCancel': {
 		controller: 'event',
 		action: 'passengerCancel'
@@ -92,7 +92,6 @@ module.exports.routes = {
 		action: 'myEventDriver'
 	},
 
-	
 
 
 
