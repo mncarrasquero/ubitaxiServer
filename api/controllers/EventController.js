@@ -369,9 +369,9 @@ module.exports = {
 				if (user.isActive == true) {
 					//el usuariu esta actuvo y validado
 					//actualizo su posicion
-
+					console.log(req.param('id'));
 					Driver.update({
-						id: idDriver
+						id: req.param('id')
 					}, {
 						lastPosition: {
 							type: "Point",
