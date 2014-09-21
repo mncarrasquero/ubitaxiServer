@@ -347,7 +347,7 @@ module.exports = {
 
 		var lat = parseFloat(req.param('lat'));
 		var lng = parseFloat(req.param('lng'));
-		var idDriver = parseFloat(req.param('id'));
+		var idDriver = req.param('id');
 		var maxDistance = parseInt(req.param('maxDistance')) || 2;
 		var limit = parseInt(req.param('limit')) || 50;
 		//  console.log('   lat         ', lat, typeof lat);
@@ -369,7 +369,7 @@ module.exports = {
 				if (user.isActive == true) {
 					//el usuariu esta actuvo y validado
 					//actualizo su posicion
-					console.log(req.param('id'));
+					
 					Driver.update({
 						id: req.param('id')
 					}, {
@@ -386,7 +386,7 @@ module.exports = {
 							return;
 						}
 
-						console.log(updated);
+						
 					});
 
 					//fin de actualizar poscicion

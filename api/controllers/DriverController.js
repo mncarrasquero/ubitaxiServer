@@ -160,6 +160,22 @@ module.exports = {
           message: 'Usuario o clave invalidos'
         });
       } else {
+        Driver.update({
+          email: req.param('email'),
+          password: req.param('password')
+        }, {
+          lastLogin: new Date(),
+        }).exec(function afterwards(err, updated) {
+          if (err) {
+            // handle error here- e.g. `res.serverError(err);`
+            return;
+          }
+
+
+        });
+
+
+
         return res.json({
           status: true,
           data: driver
@@ -230,7 +246,7 @@ module.exports = {
 
             res.json({
               status: true,
-              response:  nuevoArray
+              response: nuevoArray
             });
           };
         }
