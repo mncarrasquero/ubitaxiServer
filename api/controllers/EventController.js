@@ -375,7 +375,7 @@ module.exports = {
 					}, {
 						lastPosition: {
 							type: "Point",
-							status: "disponible"
+							status: "disponible",
 							date: new Date(),
 							coordinates: [parseFloat(req.param('lng')), parseFloat(req.param('lat'))]
 						},
