@@ -806,7 +806,7 @@ module.exports = {
 						Event.update({
 							id: eventId
 						}, {
-							gpsDriverLocation: data
+							gpsDriverLocation: data[0]
 						}).exec(function afterwards(err, updated) {
 							if (err) {
 								// handle error here- e.g. `res.serverError(err);`
