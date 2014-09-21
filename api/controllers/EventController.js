@@ -369,6 +369,7 @@ module.exports = {
 				if (user.isActive == true) {
 					//el usuariu esta actuvo y validado
 					//actualizo su posicion
+					console.log( 'estoy tratandod e actualizar'+ req.param('lng'));
 					Driver.update({
 						id: idDriver
 					}, {
