@@ -369,7 +369,7 @@ module.exports = {
 				if (user.isActive == true) {
 					//el usuariu esta actuvo y validado
 					//actualizo su posicion
-					console.log( 'estoy tratandod e actualizar'+ req.param('lng'));
+
 					Driver.update({
 						id: idDriver
 					}, {
@@ -386,11 +386,7 @@ module.exports = {
 							return;
 						}
 
-						res.json({
-							status: true,
-							error: "x208",
-							mensaje: "Servicio cancelado"
-						});
+						console.log(updated);
 					});
 
 					//fin de actualizar poscicion
