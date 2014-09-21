@@ -372,7 +372,7 @@ module.exports = {
 					Driver.update({
 						id: idDriver
 					}, {
-						eventLocation: {
+						lastPosition: {
 							type: "Point",
 							date: new Date(),
 							coordinates: [parseFloat(req.param('lng')), parseFloat(req.param('lat'))]
