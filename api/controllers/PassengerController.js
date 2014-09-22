@@ -139,13 +139,78 @@ module.exports = {
 				// si existe el usuario procedo a validar el estatus en el sistema
 				//si es bien devuelvo la data 
 				if (user.isActive == true) {
-					res.json({
-						status: true,
-						Appversion: "1.1",
-						error: '',
-						mensaje: "Bienvenido",
-						data: user
+
+					//procedo a buscar si tiene algun evento creado... ene stado de activo...
+					Event.findOne({
+						passengerId: req.param('id'),
+						isActive: true
+					}).exec(function(err, evento) {
+						if (err) res.json({
+							error: 'DB error'
+						}, 500);
+						if (evento) {
+
+							if (evento.status == 1) {
+								//buscando taxi
+
+								res.json({
+								status: true,
+								Appversion: "1.1",
+								error: '',
+								mensaje: "Bienvenido",
+								data: user,
+								code: "e01",
+								evento: evento
+							});
+							};
+							if (evento.status == 8) {
+								//buscando taxi
+
+								res.json({
+								status: true,
+								Appversion: "1.1",
+								error: '',
+								mensaje: "Bienvenido",
+								data: user,
+								code: "e08",
+								evento: evento
+							});
+							};
+
+							if (evento.status == 9) {
+								//buscando taxi
+
+								res.json({
+								status: true,
+								Appversion: "1.1",
+								error: '',
+								mensaje: "Bienvenido",
+								data: user,
+								code: "e09",
+								evento: evento
+							});
+							};
+						
+
+
+
+						} else {
+							//no tiene eventos creados
+
+							res.json({
+								status: true,
+								Appversion: "1.1",
+								error: '',
+								mensaje: "Bienvenido",
+								code: "",
+								data: user
+							});
+
+
+						}
 					});
+
+
 
 				} else {
 					//si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
@@ -161,12 +226,12 @@ module.exports = {
 			} else {
 				//si el id no corresponde responde error y procedo a hacer logout en la app
 				res.json({
-						status: false,
-						Appversion: "1.1",
-						error: 'X02',
-						mensaje: "Cuenta no existe",
-						data: ""
-					});
+					status: false,
+					Appversion: "1.1",
+					error: 'X02',
+					mensaje: "Cuenta no existe",
+					data: ""
+				});
 			}
 		});
 
@@ -175,7 +240,6 @@ module.exports = {
 
 
 
-	
 	chat: function(req, res) {
 
 	}
