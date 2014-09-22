@@ -202,7 +202,7 @@ module.exports = {
 								Appversion: "1.1",
 								error: '',
 								mensaje: "Bienvenido",
-								code: "",
+								code: "e00",
 								data: user
 							});
 
