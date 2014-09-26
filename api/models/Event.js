@@ -39,7 +39,17 @@ beforeUpdate: function(values, cb){
 		dataTaximetro: {
 			type: 'json',
 		},
-
+		
+		coment: {
+			type: 'string',
+			required: false,
+			//defaultsTo: 1
+		},
+		exp: {
+			type: 'string',
+			required: false,
+			//defaultsTo: 1
+		},
 		
 		eventPriori: {
 			type: 'string',

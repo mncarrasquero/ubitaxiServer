@@ -606,6 +606,64 @@ module.exports = {
 
 	},
 
+		calificacionPasajero: function(req, res) {
+		var eventId = req.param('eventId');
+		var comentario = req.param('comentario');
+		var experiencia = req.param('experiencia');
+
+		Event.findOne({
+			id: eventId,
+
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+
+				if (evento.status != 1) {
+
+
+					
+					Event.update({
+						id: eventId
+					}, {
+						status: 7,
+						isActive: false,
+						coment: comentario,
+						exp: experiencia,
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
+							status: true,
+							error: "x208",
+							mensaje: "comentario Enviado"
+						});
+					});
+
+
+
+				};
+			
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
+			}
+		});
+
+	},
+
+
 
 
 	yaLlego: function(req, res) {
