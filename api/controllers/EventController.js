@@ -622,7 +622,7 @@ module.exports = {
 
 				if (evento.status != 1) {
 
-
+					console.log("resiviendo calificacion: " );
 					
 					Event.update({
 						id: eventId
