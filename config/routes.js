@@ -41,7 +41,7 @@ module.exports.routes = {
 	//chequeo de estatus de pasaro inicial 
 	'post /api/chequeoPasajero': 'PassengerController.chequeoPasajero',
 		//calificacion pasajero
-	'post /api/calificacionPasajero': 'PassengerController.calificacionPasajero',
+	'post /api/calificacionPasajero': 'EventController.calificacionPasajero',
 
 	//evento crear cancelar preguntar
 	'/createEvent': {
