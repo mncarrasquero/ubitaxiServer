@@ -163,6 +163,9 @@ module.exports = {
 								evento: evento
 							});
 							};
+
+				
+
 							if (evento.status == 8) {
 								//buscando taxi
 
@@ -176,6 +179,8 @@ module.exports = {
 								evento: evento
 							});
 							};
+
+
 
 							if (evento.status == 9) {
 								//buscando taxi

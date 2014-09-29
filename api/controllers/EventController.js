@@ -136,6 +136,7 @@ module.exports = {
 								status: true,
 								code: "915",
 								response: "Evento completado",
+								evento: evento
 
 							});
 							break;
