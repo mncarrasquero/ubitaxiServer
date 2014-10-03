@@ -680,7 +680,7 @@ taxiNollegoPasajero: function(req, res) {
 						id: eventId
 					}, {
 						status: 2,
-						razonCancel: "taxista no llego"
+						razonCancel: "taxista no llego",
 						isActive: false,
 					}).exec(function afterwards(err, updated) {
 						if (err) {
