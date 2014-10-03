@@ -148,6 +148,7 @@ module.exports = {
 								response: "Eceptado por un taxista ",
 								evento: evento
 
+
 							});
 							break;
 
@@ -663,7 +664,65 @@ module.exports = {
 		});
 
 	},
+taxiNollegoPasajero: function(req, res) {
+		var eventId = req.param('eventId');
+		
+		Event.findOne({
+			id: eventId,
+		}).exec(function(err, evento) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (evento) {
+					//evento q este en taxi ya llego
+				if (evento.status == 9) {					
+					Event.update({
+						id: eventId
+					}, {
+						status: 2,
+						razonCancel: "taxista no llego"
+						isActive: false,
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+						//211 servicio penalizado si lo vuelve hacer 
+						res.json({
+							status: true,
+							code: "x211",
+							mensaje: "Servicio cancelado"
+						});
+					});
 
+
+
+				};
+				if (evento.status != 8) {
+					//x209 servicio cancelado sin penalizacion
+					res.json({
+						status: true,
+						error: "x209",
+						mensaje: "Servicio cancelado"
+					});
+
+
+
+				};
+
+
+
+			} else {
+				//evento no existe
+				res.json({
+					status: false,
+					error: "x205",
+					mensaje: "Evento no existe"
+				});
+			}
+		});
+
+	},
 
 
 

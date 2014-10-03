@@ -42,6 +42,8 @@ module.exports.routes = {
 	'post /api/chequeoPasajero': 'PassengerController.chequeoPasajero',
 		//calificacion pasajero
 	'post /api/calificacionPasajero': 'EventController.calificacionPasajero',
+	'post /api/taxiNollegoPasajero': 'EventController.taxiNollegoPasajero',
+
 
 	//evento crear cancelar preguntar
 	'/createEvent': {
