@@ -611,6 +611,7 @@ module.exports = {
 		calificacionPasajero: function(req, res) {
 		var eventId = req.param('eventId');
 		var comentario = req.param('comentario');
+		comentario = comentario.replace(/(\r\n|\n|\r)/gm," ");
 		var experiencia = req.param('experiencia');
 
 		Event.findOne({
