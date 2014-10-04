@@ -665,8 +665,7 @@ module.exports = {
 
 	},
 taxiNollegoPasajero: function(req, res) {
-		var eventId = req.param('eventId');
-		
+		var eventId = req.param('eventId');		
 		Event.findOne({
 			id: eventId,
 		}).exec(function(err, evento) {

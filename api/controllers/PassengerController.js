@@ -5,6 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var ciudadesServicio = ["Maracaibo", "Cabimas"]
+
 module.exports = {
 	create: function(req, res, next) {
 		var email = req.param('email');
@@ -154,30 +156,32 @@ module.exports = {
 								//buscando taxi
 
 								res.json({
-								status: true,
-								Appversion: "1.1",
-								error: '',
-								mensaje: "Bienvenido",
-								data: user,
-								code: "e01",
-								evento: evento
-							});
+									status: true,
+									Appversion: "1.1",
+									error: '',
+									mensaje: "Bienvenido",
+									data: user,
+									code: "e01",
+									evento: evento,
+									ciudades: ciudadesServicio
+								});
 							};
 
-				
+
 
 							if (evento.status == 8) {
 								//buscando taxi
 
 								res.json({
-								status: true,
-								Appversion: "1.1",
-								error: '',
-								mensaje: "Bienvenido",
-								data: user,
-								code: "e08",
-								evento: evento
-							});
+									status: true,
+									Appversion: "1.1",
+									error: '',
+									mensaje: "Bienvenido",
+									data: user,
+									code: "e08",
+									evento: evento,
+									ciudades: ciudadesServicio
+								});
 							};
 
 
@@ -186,16 +190,16 @@ module.exports = {
 								//buscando taxi
 
 								res.json({
-								status: true,
-								Appversion: "1.1",
-								error: '',
-								mensaje: "Bienvenido",
-								data: user,
-								code: "e09",
-								evento: evento
-							});
+									status: true,
+									Appversion: "1.1",
+									error: '',
+									mensaje: "Bienvenido",
+									data: user,
+									code: "e09",
+									evento: evento,
+									ciudades: ciudadesServicio
+								});
 							};
-						
 
 
 
@@ -208,7 +212,8 @@ module.exports = {
 								error: '',
 								mensaje: "Bienvenido",
 								code: "e00",
-								data: user
+								data: user,
+								ciudades: ciudadesServicio
 							});
 
 
