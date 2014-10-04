@@ -97,6 +97,37 @@ module.exports = {
 		});
 	},
 
+	
+
+	ciudadNoDisponible: function(req, res, next) {
+
+
+				Ciudadnodisponible.create(req.params.all(), function passengerCreated(error, ciudad) {
+					if (error) {
+						res.json({
+							status: false,
+							response: "Error al crear la ciudad",
+
+						});
+						
+					} else {
+					
+						res.json({
+							status: true,
+							code: "",
+							response: "ciudad creado satisfactoriamente.",
+							data: ciudad
+						});
+				
+					}
+				});
+	
+
+	},
+
+
+
+
 	calcularPrecio: function(req, res, next) {
 
 		var kilometro = parseFloat("11.6");
@@ -119,7 +150,7 @@ module.exports = {
 				precio2: p2
 			}
 		});
-		console.log("Calculando tarifa:");
+		//console.log("Calculando tarifa:");
 
 	},
 

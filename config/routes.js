@@ -40,6 +40,11 @@ module.exports.routes = {
 	'post /api/hayCondunctores': 'DriverController.hayCondunctores',
 	//chequeo de estatus de pasaro inicial 
 	'post /api/chequeoPasajero': 'PassengerController.chequeoPasajero',
+
+	//chequeo de estatus de pasaro inicial 
+	'post /api/ciudadNoDisponible': 'PassengerController.ciudadNoDisponible',
+
+
 		//calificacion pasajero
 	'post /api/calificacionPasajero': 'EventController.calificacionPasajero',
 	'post /api/taxiNollegoPasajero': 'EventController.taxiNollegoPasajero',
