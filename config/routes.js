@@ -50,6 +50,8 @@ module.exports.routes = {
 	'post /api/taxiNollegoPasajero': 'EventController.taxiNollegoPasajero',
 
 
+	'post /api/testEmail': 'EventController.testEmail',
+
 	//evento crear cancelar preguntar
 	'/createEvent': {
 		controller: 'event',

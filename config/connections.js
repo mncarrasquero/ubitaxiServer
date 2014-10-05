@@ -19,7 +19,22 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.connections.html
  */
 
+
+
+
 module.exports.connections = {
+
+    // Mandrill
+  mandrillEmail: {
+    adapter: 'sails-mandrill',
+    apiKey: 'SkxqA6fV9H56kGZjEvVBkQ', // the api key for your mandrill account
+    from: {
+      name: 'Ubitaxi Venezuela',
+      email: 'no-reply@ubitaxi.net'
+    }
+  },
+
+
 
   /***************************************************************************
   *                                                                          *

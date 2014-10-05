@@ -10,14 +10,14 @@
  */
 
 module.exports.bootstrap = function(cb) {
-
+mandrill = require('node-mandrill')('SkxqA6fV9H56kGZjEvVBkQ');
 	setInterval(function() {
 
 	
 var objFecha = new Date();
 var milisegundos = objFecha.getTime();
 // Restar 5 minutos . 
-objFecha.setTime( milisegundos - (60 * 60000) );
+objFecha.setTime( milisegundos - (5 * 60000) );
 
 		//date.toISOString(); //"2011-12-19T15:28:46.493Z"
 		
@@ -51,6 +51,6 @@ objFecha.setTime( milisegundos - (60 * 60000) );
 		});
 
 
-	}, 6000000000000000);
+	}, 30000);
 	cb();
 };

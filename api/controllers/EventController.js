@@ -371,7 +371,7 @@ module.exports = {
 				if (user.isActive == true) {
 					//el usuariu esta actuvo y validado
 					//actualizo su posicion
-					
+
 					Driver.update({
 						id: req.param('id')
 					}, {
@@ -389,7 +389,7 @@ module.exports = {
 							return;
 						}
 
-						
+
 					});
 
 					//fin de actualizar poscicion
@@ -501,6 +501,28 @@ module.exports = {
 							return;
 						}
 
+						//send an e-mail to jim rubenstein
+						mandrill('/messages/send', {
+							message: {
+								to: [{
+									email: 'mncarrasquero@gmail.com',
+									name: 'Mario Carrasquero'
+								}],
+								from_email: 'hola@ubitaxi.net',
+								subject: "¿Ocurrió algun problema?",
+								text: "Estimado "+ evento.passengerName+",\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con conductor NOMBRE CONDUCTOR  FECHA.\nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\n\n Por favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
+							}
+						}, function(error, response) {
+							//uh oh, there was an error
+							if (error) console.log(JSON.stringify(error));
+							//everything's good, lets see what mandrill said
+							else console.log(response);
+						});
+
+						/// fin de send email por cancel
+
+
+
 						res.json({
 							status: true,
 							error: "x208",
@@ -608,10 +630,10 @@ module.exports = {
 
 	},
 
-		calificacionPasajero: function(req, res) {
+	calificacionPasajero: function(req, res) {
 		var eventId = req.param('eventId');
 		var comentario = req.param('comentario');
-		comentario = comentario.replace(/(\r\n|\n|\r)/gm," ");
+		comentario = comentario.replace(/(\r\n|\n|\r)/gm, " ");
 		var experiencia = req.param('experiencia');
 
 		Event.findOne({
@@ -625,8 +647,8 @@ module.exports = {
 
 				if (evento.status != 1) {
 
-					console.log("resiviendo calificacion: " );
-					
+					console.log("resiviendo calificacion: ");
+
 					Event.update({
 						id: eventId
 					}, {
@@ -650,7 +672,6 @@ module.exports = {
 
 
 				};
-			
 
 
 
@@ -665,8 +686,8 @@ module.exports = {
 		});
 
 	},
-taxiNollegoPasajero: function(req, res) {
-		var eventId = req.param('eventId');		
+	taxiNollegoPasajero: function(req, res) {
+		var eventId = req.param('eventId');
 		Event.findOne({
 			id: eventId,
 		}).exec(function(err, evento) {
@@ -674,8 +695,8 @@ taxiNollegoPasajero: function(req, res) {
 				error: 'DB error'
 			}, 500);
 			if (evento) {
-					//evento q este en taxi ya llego
-				if (evento.status == 9) {					
+				//evento q este en taxi ya llego
+				if (evento.status == 9) {
 					Event.update({
 						id: eventId
 					}, {
@@ -949,6 +970,32 @@ taxiNollegoPasajero: function(req, res) {
 
 
 	},
+
+
+
+	testEmail: function() {
+
+
+		//send an e-mail to jim rubenstein
+		mandrill('/messages/send', {
+			message: {
+				to: [{
+					email: 'mncarrasquero@gmail.com',
+					name: 'Mario Carrasquero'
+				}],
+				from_email: 'hola@ubitaxi.net',
+				subject: "¿Ocurrió algun problema?",
+				text: "Estimado Cliente,\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con conductor NOMBRE CONDUCTOR  FECHA.\nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\n\n Por favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
+			}
+		}, function(error, response) {
+			//uh oh, there was an error
+			if (error) console.log(JSON.stringify(error));
+			//everything's good, lets see what mandrill said
+			else console.log(response);
+		});
+
+
+	}
 
 
 
