@@ -505,18 +505,96 @@ module.exports = {
 							id: evento.passengerId,
 
 						}).exec(function(err, pasajero) {
+
+
 							//send an e-mail to jim rubenstein
+							var template_name = "serviciocanceladopasajero";
+							var template_content = [{
+								"name": "PASAJERO",
+								"content": "example content"
+							}];
+							var message = {
+								"html": "<p>Example HTML content</p>",
+								"text": "Example text content",
+								"subject": "¿Ocurrió algo inesperado?",
+								"from_email": "hola@ubitaxi.net",
+								"from_name": "Ubitaxi Venezuela",
+								"to": [{
+									"email": pasajero.email,
+									"name": pasajero.name +" "+ pasajero.lastName,
+									"type": "to"
+								}],
+								"headers": {
+									"Reply-To": "hola@ubitaxi.net"
+								},
+								"important": true,
+								"track_opens": true,
+								"track_clicks": null,
+								"auto_text": null,
+								"auto_html": null,
+								"inline_css": true,
+								"url_strip_qs": null,
+								"preserve_recipients": null,
+								"view_content_link": null,
+								//"bcc_address": "message.bcc_address@example.com",
+								"tracking_domain": null,
+								"signing_domain": null,
+								"return_path_domain": null,
+								"merge": true,
+								"global_merge_vars": [{
+										"name": "pasajero",
+										"content": pasajero.name +" "+ pasajero.lastName
+									}, {
+										"name": "fechaevento",
+										"content": "merge1 content"
+									}, {
+										"name": "drivername",
+										"content": "merge1 content"
+									}, {
+										"name": "eventoid",
+										"content": "merge1 content"
+									}, {
+										"name": "fecha1",
+										"content": "merge1 content"
+									}
+
+								],
+
+
+
+							};
+							var async = false;
+
+							mandrill_client.messages.sendTemplate({
+								"template_name": template_name,
+								"template_content": template_content,
+								"message": message,
+								"async": async,
+
+							}, function(result) {
+								console.log(result);
+
+							}, function(e) {
+								// Mandrill returns the error as an object with name and message keys
+								console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+								// A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+							});
+
+
+
+							//send an e-mail to jim rubenstein
+							/*
 							mandrill('/messages/send', {
 								message: {
 									to: [{
 										email: pasajero.email,
-										name: evento.passengerName + " "+ evento.passengerLastname
+										name: evento.passengerName + " " + evento.passengerLastname
 									}],
 									name: 'cancelServicio',
 									from_email: 'hola@ubitaxi.net',
 									from_name: 'Ubitaxi Venezuela',
 									subject: "¿Ocurrió algun problema?",
-									text: "   Estimado " + evento.passengerName +  ",\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con el conductor  "+ evento.dataDriver.driverName+" Fecha:  "+ moment(evento.createdAt).lang('es').zone('-0430').format('LLLL')   +".  identificador del servicio: " +evento.id + " \nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\nPor favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
+									text: "   Estimado " + evento.passengerName + ",\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con el conductor  " + evento.dataDriver.driverName + " Fecha:  " + moment(evento.createdAt).lang('es').zone('-0430').format('LLLL') + ".  identificador del servicio: " + evento.id + " \nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\nPor favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
 								}
 							}, function(error, response) {
 								//uh oh, there was an error
@@ -525,7 +603,8 @@ module.exports = {
 								else console.log(response);
 
 
-							});
+								});
+									*/
 
 							/// fin de send email por cancel
 
@@ -987,21 +1066,76 @@ module.exports = {
 
 
 		//send an e-mail to jim rubenstein
-		mandrill('/messages/send', {
-			message: {
-				to: [{
-					email: 'mncarrasquero@gmail.com',
-					name: 'Mario Carrasquero'
-				}],
-				from_email: 'hola@ubitaxi.net',
-				subject: "¿Ocurrió algun problema?",
-				text: "Estimado Cliente,\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con conductor NOMBRE CONDUCTOR  FECHA.\nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\n\n Por favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
-			}
-		}, function(error, response) {
-			//uh oh, there was an error
-			if (error) console.log(JSON.stringify(error));
-			//everything's good, lets see what mandrill said
-			else console.log(response);
+		var template_name = "serviciocanceladopasajero";
+		var template_content = [{
+			"name": "PASAJERO",
+			"content": "example content"
+		}];
+		var message = {
+			"html": "<p>Example HTML content</p>",
+			"text": "Example text content",
+			"subject": "¿Ocurrió algo inesperado?",
+			"from_email": "hola@ubitaxi.net",
+			"from_name": "Ubitaxi Venezuela",
+			"to": [{
+				"email": "mncarrasquero@gmail.com",
+				"name": "mario Carrasquero",
+				"type": "to"
+			}],
+			"headers": {
+				"Reply-To": "message.reply@example.com"
+			},
+			"important": true,
+			"track_opens": null,
+			"track_clicks": null,
+			"auto_text": null,
+			"auto_html": null,
+			"inline_css": true,
+			"url_strip_qs": null,
+			"preserve_recipients": null,
+			"view_content_link": null,
+			//"bcc_address": "message.bcc_address@example.com",
+			"tracking_domain": null,
+			"signing_domain": null,
+			"return_path_domain": null,
+			"merge": true,
+			"global_merge_vars": [{
+					"name": "pasajero",
+					"content": "merge1 content"
+				}, {
+					"name": "fechaevento",
+					"content": "merge1 content"
+				}, {
+					"name": "drivername",
+					"content": "merge1 content"
+				}, {
+					"name": "eventoid",
+					"content": "merge1 content"
+				}, {
+					"name": "fecha1",
+					"content": "merge1 content"
+				}
+
+			],
+
+
+
+		};
+		var async = false;
+
+		mandrill_client.messages.sendTemplate({
+			"template_name": template_name,
+			"template_content": template_content,
+			"message": message,
+			"async": async,
+
+		}, function(result) {
+			console.log(result);
+
+		}, function(e) {
+			// Mandrill returns the error as an object with name and message keys
+			console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+			// A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
 		});
 
 

@@ -10,7 +10,10 @@
  */
 
 module.exports.bootstrap = function(cb) {
-mandrill = require('node-mandrill')('SkxqA6fV9H56kGZjEvVBkQ');
+mandrill = require('mandrill-api/mandrill');
+mandrill_client = new mandrill.Mandrill('SkxqA6fV9H56kGZjEvVBkQ');
+
+
 moment = require('moment');
 
 
