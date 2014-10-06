@@ -512,9 +512,11 @@ module.exports = {
 										email: pasajero.email,
 										name: evento.passengerName + " "+ evento.passengerLastname
 									}],
+									name: 'cancelServicio',
 									from_email: 'hola@ubitaxi.net',
+									from_name: 'Ubitaxi Venezuela',
 									subject: "¿Ocurrió algun problema?",
-									text: "Estimado " + evento.passengerName +  ",\n   En Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con conductor  "+ evento.dataDriver.driverName+" Fecha:  "+ evento.createdAt+".  identificador del servicio: " +evento._id + " \nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\n\n Por favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
+									text: "   Estimado " + evento.passengerName +  ",\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con el conductor  "+ evento.dataDriver.driverName+" Fecha:  "+ evento.createdAt+".  identificador del servicio: " +evento.id + " \nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\n\n Por favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
 								}
 							}, function(error, response) {
 								//uh oh, there was an error
