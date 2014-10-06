@@ -11,6 +11,7 @@
 
 module.exports.bootstrap = function(cb) {
 mandrill = require('node-mandrill')('SkxqA6fV9H56kGZjEvVBkQ');
+moment = require('moment');
 	setInterval(function() {
 
 	
