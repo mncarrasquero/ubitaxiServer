@@ -543,19 +543,16 @@ module.exports = {
 								"merge": true,
 								"global_merge_vars": [{
 										"name": "pasajero",
-										"content": pasajero.name +" "+ pasajero.lastName
+										"content": pasajero.name
 									}, {
 										"name": "fechaevento",
-										"content": "merge1 content"
+										"content": moment(evento.createdAt).lang('es').zone('-0430').format('LLLL')
 									}, {
 										"name": "drivername",
-										"content": "merge1 content"
+										"content": evento.dataDriver.driverName
 									}, {
 										"name": "eventoid",
-										"content": "merge1 content"
-									}, {
-										"name": "fecha1",
-										"content": "merge1 content"
+										"content": evento.id 
 									}
 
 								],
