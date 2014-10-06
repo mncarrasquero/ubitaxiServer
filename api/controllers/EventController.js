@@ -553,7 +553,12 @@ module.exports = {
 									}, {
 										"name": "eventoid",
 										"content": evento.id 
+									}, {
+										"name": "lugar",
+										"content": evento.eventCalle 
 									}
+
+									
 
 								],
 
