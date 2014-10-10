@@ -18,7 +18,7 @@ module.exports.routes = {
 	'post /createDriver': 'DriverController.create',
 	'get /signup': 'UserController.signup',
 
-	'get /recoveryPass': 'UserController.recoveryPass',
+	'get /recoverypass': 'UserController.recoverypass',
 	'post /changepass': 'UserController.changepass',
 
 

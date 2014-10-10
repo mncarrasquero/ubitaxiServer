@@ -46,7 +46,7 @@ module.exports = {
                   return;
                 }
                   //descativo el token
-                 return res.view('user/recoveryPass', {expire: false, complete: true, email: req.param('email'), token: req.param('token')});
+                 return res.view('user/recoverypass', {expire: false, complete: true, email: req.param('email'), token: req.param('token')});
               });      
           
 
@@ -66,7 +66,7 @@ module.exports = {
           //si el id no corresponde responde error y procedo a hacer logout en la app
 
           console.log("usuario no existe");
-           return res.view('user/recoveryPass', {expire: true,  complete: false, email: req.param('email'), token: req.param('token')});
+           return res.view('user/recoverypass', {expire: true,  complete: false, email: req.param('email'), token: req.param('token')});
         }
       });
 
@@ -76,7 +76,7 @@ module.exports = {
 
   },
 
-  recoveryPass: function(req, res) {
+  recoverypass: function(req, res) {
 
     if (req.param('email') && req.param('token')) {
 
