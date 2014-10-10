@@ -111,6 +111,9 @@ module.exports = {
         required: false
       }
     },
+      passReset: {
+      type: 'json'
+    },
     taxiNoFavorito: {
       type: 'array',
       id: {

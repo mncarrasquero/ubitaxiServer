@@ -15,6 +15,7 @@ mandrill_client = new mandrill.Mandrill('SkxqA6fV9H56kGZjEvVBkQ');
 
 
 moment = require('moment');
+uuid = require('node-uuid');
 
 
 

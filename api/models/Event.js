@@ -45,7 +45,7 @@ beforeUpdate: function(values, cb){
 			required: false,
 			//defaultsTo: 1
 		},
-		exp: {
+		exp         : {
 			type: 'string',
 			required: false,
 			//defaultsTo: 1
@@ -112,6 +112,7 @@ beforeUpdate: function(values, cb){
 		eventLocation: {
 			type: 'json'
 		},
+	
 
 
 		passengerId: {

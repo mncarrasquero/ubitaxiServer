@@ -97,34 +97,33 @@ module.exports = {
 		});
 	},
 
-	
+
 
 	ciudadNoDisponible: function(req, res, next) {
 
 
-				Ciudadnodisponible.create(req.params.all(), function passengerCreated(error, ciudad) {
-					if (error) {
-						res.json({
-							status: false,
-							response: "Error al crear la ciudad",
+		Ciudadnodisponible.create(req.params.all(), function passengerCreated(error, ciudad) {
+			if (error) {
+				res.json({
+					status: false,
+					response: "Error al crear la ciudad",
 
-						});
-						
-					} else {
-					
-						res.json({
-							status: true,
-							code: "",
-							response: "ciudad creado satisfactoriamente.",
-							data: ciudad
-						});
-				
-					}
 				});
-	
+
+			} else {
+
+				res.json({
+					status: true,
+					code: "",
+					response: "ciudad creado satisfactoriamente.",
+					data: ciudad
+				});
+
+			}
+		});
+
 
 	},
-
 
 
 
@@ -281,8 +280,194 @@ module.exports = {
 
 
 
-	chat: function(req, res) {
+	olvidoPass: function(req, res) {
 
+		function sendEmailOlvidoPass(email, token) {
+			var url = "http://166.78.185.24:1337/recoverypass?email=" + email + "&token=" + token;
+			console.log("test de enviar email  \n" + url);
+
+			//send an e-mail to jim rubenstein
+			var template_name = "olvidoPass";
+			var template_content = [{
+				"name": "PASAJERO",
+				"content": "example content"
+			}];
+			var message = {
+				"html": "<p>Example HTML content</p>",
+				"text": "Example text content",
+				"subject": "Ubitaxi asistencia para contraseña",
+				"from_email": "no-reply@ubitaxi.net",
+				"from_name": "Ubitaxi Venezuela",
+				"to": [{
+					"email": email,
+					//"name": pasajero.name +" "+ pasajero.lastName,
+					"type": "to"
+				}],
+				"headers": {
+					"Reply-To": "no-reply@ubitaxi.net"
+				},
+				"important": true,
+				"track_opens": true,
+				"track_clicks": null,
+				"auto_text": null,
+				"auto_html": null,
+				"inline_css": true,
+				"url_strip_qs": true,
+				"preserve_recipients": null,
+				"view_content_link": null,
+				//"bcc_address": "message.bcc_address@example.com",
+				"tracking_domain": null,
+				"signing_domain": null,
+				"return_path_domain": null,
+				"merge": true,
+				"global_merge_vars": [{
+					"name": "url",
+					"content": url
+				}],
+			};
+			var async = false;
+
+			mandrill_client.messages.sendTemplate({
+				"template_name": template_name,
+				"template_content": template_content,
+				"message": message,
+				"async": async,
+
+			}, function(result) {
+				console.log(result);
+
+			}, function(e) {
+				// Mandrill returns the error as an object with name and message keys
+				console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+				// A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+			});
+
+
+
+		}
+
+		//en esta accion puede ocurrir  dos cosas
+		//el cliente solicita olvido de contraseña valido q existe el usuario 
+		//si existe valido q no tenga una solicitud abierta si no envio el correo 
+
+
+		Passenger.findOne({
+			email: req.param('email')
+		}).exec(function(err, user) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (user) {
+				// si existe el usuario procedo a validar el estatus en el sistema
+				//si es bien devuelvo la data 
+				if (user.isActive == true) {
+
+					//valido que no tenga un recuperar activo
+					if (typeof user.passReset !== 'undefined' && user.passReset !== null) {
+
+						//si existe valido q este activo
+						console.log("esta activo siguiente paso");
+						//si esta activo y la fecha es menor a 48 horas  no hago nada respondo q ya el correo esta enviado
+						var horas = moment().diff(user.passReset.created, 'hours');
+						if (user.passReset.isActive == true && horas < 24) {
+							console.log("el correo fue enviado ");
+							res.json({
+								status: true,
+								error: 'E01',
+								mensaje: "Revisa tu bandeja de entrada o la carpeta de spam",
+							});
+
+						}
+
+						if (horas > 24  || user.passReset.isActive == false) {
+
+							res.json({
+								status: true,
+								error: 'E02',
+								mensaje: "Te hemos enviado un email para recuperar tu contraseña",
+							});
+							var token = uuid.v4();
+							Passenger.update({
+								id: user.id
+							}, {
+								passReset: {
+									created: new Date(),
+									token: token,
+									isActive: true
+								}
+							}).exec(function afterwards(err, updated) {
+								if (err) {
+									return;
+								}
+								sendEmailOlvidoPass(user.email, token);
+							});
+
+						}
+
+					} else {
+						console.log("nuevo codigo de registro");
+						//si no creo uno nuevo
+						var token = uuid.v4();
+						Passenger.update({
+							id: user.id
+						}, {
+							passReset: {
+								created: new Date(),
+								token: token,
+								isActive: true
+							}
+
+						}).exec(function afterwards(err, updated) {
+							if (err) {
+								// handle error here- e.g. `res.serverError(err);`
+								return;
+							}
+							res.json({
+								status: true,
+								error: 'E02',
+								mensaje: "Te hemos enviado un email para recuperar tu contraseña",
+							});
+
+							sendEmailOlvidoPass(user.email, token);
+
+							//console.log('Updated user to have name ' + JSON.str updated[0].passReset);
+						});
+
+
+
+					};
+
+
+
+				} else {
+					//si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
+					res.json({
+						status: false,
+						Appversion: "1.1",
+						error: 'X01',
+						mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
+						data: ""
+					});
+
+				};
+			} else {
+				//si el id no corresponde responde error y procedo a hacer logout en la app
+				res.json({
+					status: false,
+					Appversion: "1.1",
+					error: 'X02',
+					mensaje: "Cuenta no existe",
+					data: ""
+				});
+			}
+		});
+
+
+
+	},
+
+	sendEmailOlvidoPass: function(req, res) {
+		console.log("test de enviar email");
 	}
 
 };

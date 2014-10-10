@@ -38,7 +38,9 @@ module.exports.policies = {
   UserController: {
     '*': 'isAuthenticated',
     login: true,
-    signup: true
+    signup: true,
+    recoveryPass: true,
+    changepass: true
   },
    AdminController: {
     '*': 'isAuthenticated'

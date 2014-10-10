@@ -18,6 +18,8 @@ module.exports.routes = {
 	'post /createDriver': 'DriverController.create',
 	'get /signup': 'UserController.signup',
 
+	'get /recoveryPass': 'UserController.recoveryPass',
+	'post /changepass': 'UserController.changepass',
 
 
 	'get /login': {
@@ -36,6 +38,10 @@ module.exports.routes = {
 	'post /api/passengerCreate': 'PassengerController.create',
 	'post /api/passengerLogin': 'PassengerController.login',
 	'post /api/calcularPrecio': 'PassengerController.calcularPrecio',
+
+	//olvido de contraseña pasajero 
+	
+	'post /api/olvidoPass': 'PassengerController.olvidoPass',
 	//hay conductres api para passenger
 	'post /api/hayCondunctores': 'DriverController.hayCondunctores',
 	//chequeo de estatus de pasaro inicial 
