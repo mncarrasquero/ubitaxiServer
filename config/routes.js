@@ -39,6 +39,11 @@ module.exports.routes = {
 	'post /api/passengerLogin': 'PassengerController.login',
 	'post /api/calcularPrecio': 'PassengerController.calcularPrecio',
 
+	'post /api/comentariosApp': 'PassengerController.comentariosApp',
+
+
+	
+
 	//olvido de contraseña pasajero 
 	
 	'post /api/olvidoPass': 'PassengerController.olvidoPass',

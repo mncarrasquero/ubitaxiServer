@@ -379,7 +379,7 @@ module.exports = {
 
 						}
 
-						if (horas > 24  || user.passReset.isActive == false) {
+						if (horas > 24 || user.passReset.isActive == false) {
 
 							res.json({
 								status: true,
@@ -466,8 +466,131 @@ module.exports = {
 
 	},
 
-	sendEmailOlvidoPass: function(req, res) {
-		console.log("test de enviar email");
+	comentariosApp: function(req, res) {
+				
+		function sendEmail(email, id, name, lastname, phonenomber, comentario) {
+			//send an e-mail to jim rubenstein
+			var template_name = "contacto";
+			var template_content = [{
+				"name": "PASAJERO",
+				"content": "example content"
+			}];
+		
+			var message = {
+				//"html": "<p>Example HTML content</p>",
+				//"text": "Example text content",
+				"subject": "Contacto via App",
+				"from_email": email,
+				"from_name": name,
+				"to": [{
+					"email": "support@ubitaxi1.zendesk.com",
+					//"name": pasajero.name +" "+ pasajero.lastName,
+					"type": "to"
+				}],
+				"headers": {
+					//"Reply-To": "no-reply@ubitaxi.net"
+				},
+				"important": true,
+				"track_opens": true,
+				"track_clicks": null,
+				"auto_text": null,
+				"auto_html": null,
+				"inline_css": true,
+				"url_strip_qs": true,
+				"preserve_recipients": null,
+				"view_content_link": null,
+				//"bcc_address": "message.bcc_address@example.com",
+				"tracking_domain": null,
+				"signing_domain": null,
+				"return_path_domain": null,
+				"merge": true,
+				"global_merge_vars": [
+				{
+					"name": "userid",
+					"content": id
+				},
+				{
+					"name": "nombre",
+					"content": name
+				},
+				{
+					"name": "apellido",
+					"content": lastname
+				},
+
+				{
+					"name": "telefono",
+					"content": phonenomber
+				},
+				{
+					"name": "email",
+					"content": email
+				},
+				{
+					"name": "comentario",
+					"content": comentario
+				}
+
+				],
+			};
+			var async = false;
+
+			mandrill_client.messages.sendTemplate({
+				"template_name": template_name,
+				"template_content": template_content,
+				"message": message,
+				"async": async,
+
+			}, function(result) {
+				console.log(result);
+
+			}, function(e) {
+				// Mandrill returns the error as an object with name and message keys
+				console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+				// A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+			});
+
+
+
+		}
+
+		//en esta accion puede ocurrir  dos cosas
+		//el cliente solicita olvido de contraseña valido q existe el usuario 
+		//si existe valido q no tenga una solicitud abierta si no envio el correo 
+
+
+		Passenger.findOne({
+			email: req.param('email')
+		}).exec(function(err, user) {
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (user) {
+				// si existe el usuario procedo a validar el estatus en el sistema
+				//si es bien devuelvo la data 
+				
+				sendEmail(user.email, user.id, user.name, user.lastName, user.phoneNumber, req.param('comentario') );
+
+				res.json({
+					status: true,
+					error: '',
+					mensaje: "Mensaje enviado",
+				});
+
+
+
+			} else {
+				//si el id no corresponde responde error y procedo a hacer logout en la app
+				res.json({
+					status: false,
+					Appversion: "1.1",
+					error: 'X02',
+					mensaje: "Cuenta no existe",
+					data: ""
+				});
+			}
+		});
+
 	}
 
 };
