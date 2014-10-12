@@ -467,7 +467,7 @@ module.exports = {
 	},
 
 	comentariosApp: function(req, res) {
-				
+
 		function sendEmail(email, id, name, lastname, phonenomber, comentario) {
 			//send an e-mail to jim rubenstein
 			var template_name = "contacto";
@@ -475,7 +475,7 @@ module.exports = {
 				"name": "PASAJERO",
 				"content": "example content"
 			}];
-		
+
 			var message = {
 				//"html": "<p>Example HTML content</p>",
 				//"text": "Example text content",
@@ -504,32 +504,27 @@ module.exports = {
 				"signing_domain": null,
 				"return_path_domain": null,
 				"merge": true,
-				"global_merge_vars": [
-				{
-					"name": "userid",
-					"content": id
-				},
-				{
-					"name": "nombre",
-					"content": name
-				},
-				{
-					"name": "apellido",
-					"content": lastname
-				},
+				"global_merge_vars": [{
+						"name": "userid",
+						"content": id
+					}, {
+						"name": "nombre",
+						"content": name
+					}, {
+						"name": "apellido",
+						"content": lastname
+					},
 
-				{
-					"name": "telefono",
-					"content": phonenomber
-				},
-				{
-					"name": "email",
-					"content": email
-				},
-				{
-					"name": "comentario",
-					"content": comentario
-				}
+					{
+						"name": "telefono",
+						"content": phonenomber
+					}, {
+						"name": "email",
+						"content": email
+					}, {
+						"name": "comentario",
+						"content": comentario
+					}
 
 				],
 			};
@@ -568,8 +563,8 @@ module.exports = {
 			if (user) {
 				// si existe el usuario procedo a validar el estatus en el sistema
 				//si es bien devuelvo la data 
-				
-				sendEmail(user.email, user.id, user.name, user.lastName, user.phoneNumber, req.param('comentario') );
+
+				sendEmail(user.email, user.id, user.name, user.lastName, user.phoneNumber, req.param('comentario'));
 
 				res.json({
 					status: true,
@@ -591,7 +586,43 @@ module.exports = {
 			}
 		});
 
+	},
+
+	ultimosServicios: function(req, res) {
+
+		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
+    	var limit = parseInt(req.param('limit')) || 5;
+
+		Event.find({
+			passengerId: req.param('passengerId')
+		}).limit(limit).exec(function(err, eventos) {
+
+
+
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (eventos) {
+				for (var i = eventos.length - 1; i >= 0; i--) {
+					delete eventos[i]["gpsDriverLocation"];
+				};
+				res.json({
+					status: true,
+					data: eventos
+				});
+
+
+			} else {
+				//si el id no corresponde responde error y procedo a hacer logout en la app
+				res.json({
+					status: false,
+					data: ""
+				});
+			}
+		});
+
+
+
 	}
 
 };
-[]

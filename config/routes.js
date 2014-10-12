@@ -41,6 +41,12 @@ module.exports.routes = {
 
 	'post /api/comentariosApp': 'PassengerController.comentariosApp',
 
+	
+	'post /api/ultimosServicios': 'PassengerController.ultimosServicios',
+	
+	
+	
+
 
 	
 
