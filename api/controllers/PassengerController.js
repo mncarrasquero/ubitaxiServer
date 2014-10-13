@@ -605,7 +605,7 @@ module.exports = {
 			if (eventos) {
 				for (var i = eventos.length - 1; i >= 0; i--) {
 					delete eventos[i]["gpsDriverLocation"];
-					if (eventos[i].status == 4 || eventos[i].status == 7 || eventos[i].status == 8 || eventos[i].status == 9 ) {
+					if (eventos[i].status != 4 || eventos[i].status != 7 || eventos[i].status != 8 || eventos[i].status != 9 ) {
 
 						delete eventos[i];
 
