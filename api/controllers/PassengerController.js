@@ -592,7 +592,7 @@ module.exports = {
 
 		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
     	var limit = parseInt(req.param('limit')) || 5;
-    	var data = {};
+    	
 		Event.find({
 			passengerId: req.param('passengerId')
 		}).limit(limit).exec(function(err, eventos) {
@@ -607,13 +607,13 @@ module.exports = {
 					delete eventos[i]["gpsDriverLocation"];
 					if (eventos[i].status == 4 || eventos[i].status == 7 || eventos[i].status == 8 || eventos[i].status == 9 ) {
 
-						data.push(eventos[i]);
+						delete eventos[i];
 
 					};
 				};
 				res.json({
 					status: true,
-					data: data
+					data: eventos
 				});
 
 
