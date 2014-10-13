@@ -43,6 +43,8 @@ module.exports.routes = {
 
 	
 	'post /api/ultimosServicios': 'PassengerController.ultimosServicios',
+
+	'post /api/reclamoAbusoApp': 'PassengerController.reclamoAbusoApp',
 	
 	
 	
