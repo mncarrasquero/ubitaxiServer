@@ -769,6 +769,43 @@ module.exports = {
 
 
 
+	},
+
+	detalleEvento: function(req, res) {
+
+		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
+		var limit = parseInt(req.param('limit')) || 0;
+
+		Event.find({
+			id: req.param('id')
+		}).limit(limit).sort({ createdAt: 'desc' }).exec(function(err, eventos) {
+
+
+
+			if (err) res.json({
+				error: 'DB error'
+			}, 500);
+			if (eventos) {
+			
+				res.json({
+					status: true,
+					data: eventos
+				});
+
+				
+
+
+			} else {
+				//si el id no corresponde responde error y procedo a hacer logout en la app
+				res.json({
+					status: false,
+					data: ""
+				});
+			}
+		});
+
+
+
 	}
 
 };
