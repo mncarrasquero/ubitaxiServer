@@ -726,7 +726,7 @@ module.exports = {
 
 		Event.find({
 			passengerId: req.param('passengerId')
-		}).limit(limit).exec(function(err, eventos) {
+		}).limit(limit).sort({ createdAt: 'desc' }).exec(function(err, eventos) {
 
 
 
