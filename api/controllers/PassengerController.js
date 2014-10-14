@@ -722,7 +722,7 @@ module.exports = {
 	ultimosServicios: function(req, res) {
 
 		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
-		var limit = parseInt(req.param('limit')) || 5;
+		var limit = parseInt(req.param('limit')) || 0;
 
 		Event.find({
 			passengerId: req.param('passengerId')
