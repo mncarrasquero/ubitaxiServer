@@ -129,9 +129,9 @@ module.exports = {
 
 	calcularPrecio: function(req, res, next) {
 
-		var kilometro = parseFloat("11.6");
-		var minuto = parseFloat("3.4");
-		var base = parseFloat("34");
+		var kilometro = parseFloat("10.5");
+		var minuto = parseFloat("4.0");
+		var base = parseFloat("39");
 		var tiempo1 = req.param('min') * minuto;
 		var km = kilometro + parseFloat(req.param('km'));
 		var p1 = Math.round(base + parseFloat(tiempo1) + parseFloat(km));
@@ -726,7 +726,9 @@ module.exports = {
 
 		Event.find({
 			passengerId: req.param('passengerId')
-		}).limit(limit).sort({ createdAt: 'desc' }).exec(function(err, eventos) {
+		}).limit(limit).sort({
+			createdAt: 'desc'
+		}).exec(function(err, eventos) {
 
 
 
@@ -774,26 +776,21 @@ module.exports = {
 	detalleEvento: function(req, res) {
 
 		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
-		var limit = parseInt(req.param('limit')) || 0;
+		var limit = 1;
 
-		Event.find({
+		Event.findOne({
 			id: req.param('id')
-		}).limit(limit).sort({ createdAt: 'desc' }).exec(function(err, eventos) {
-
-
+		}).exec(function(err, eventos) {
 
 			if (err) res.json({
 				error: 'DB error'
 			}, 500);
 			if (eventos) {
-			
+
 				res.json({
 					status: true,
 					data: eventos
 				});
-
-				
-
 
 			} else {
 				//si el id no corresponde responde error y procedo a hacer logout en la app
