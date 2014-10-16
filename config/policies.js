@@ -49,6 +49,7 @@ module.exports.policies = {
     '*': 'isAuthenticated',
     loginDriver: true,
     hayCondunctores: true,
+    chequeoDriver: true,
    
   },
     PassengerController: {  

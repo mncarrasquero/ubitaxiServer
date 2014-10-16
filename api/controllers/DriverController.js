@@ -9,6 +9,135 @@ var path = require('path');
 
 
 module.exports = {
+
+
+  chequeoDriver: function(req, res) {
+
+    /*
+     * en chequeo cuenta. se verifica el estatus del pasajero. y se cumple si hay conexion a internet
+     * la respuesta es true con la data del pasajero. menos la clave. se busca con la informacion del id
+     */
+
+    Driver.findOne({
+      id: req.param('id')
+    }).exec(function(err, user) {
+      if (err) res.json({
+        error: 'DB error'
+      }, 500);
+      if (user) {
+        // si existe el usuario procedo a validar el estatus en el sistema
+        //si es bien devuelvo la data 
+        if (user.isActive == true) {
+
+          //procedo a buscar si tiene algun evento creado... ene stado de activo...
+          Event.findOne({
+            'dataDriver.driverId': req.param('id')
+           
+            ,
+            isActive: true
+          }).exec(function(err, evento) {
+            if (err) res.json({
+              error: 'DB error'
+            }, 500);
+            if (evento) {
+
+              if (evento.status == 1) {
+                //buscando taxi
+
+                res.json({
+                  status: true,
+                  Appversion: "1.1",
+                  error: '',
+                  mensaje: "Bienvenido",
+                  data: user,
+                  code: "e01",
+                  evento: evento,
+            
+                });
+              };
+
+
+
+              if (evento.status == 8) {            
+
+                res.json({
+                  status: true,
+                  Appversion: "1.1",
+                  error: '',
+                  mensaje: "Bienvenido",
+                  data: user,
+                  code: "e08",
+                  evento: evento,
+                 
+                });
+              };
+
+
+
+              if (evento.status == 9) {
+                //buscando taxi
+
+                res.json({
+                  status: true,
+                  Appversion: "1.1",
+                  error: '',
+                  mensaje: "Bienvenido",
+                  data: user,
+                  code: "e09",
+                  evento: evento,
+                
+                });
+              };
+
+
+
+            } else {
+              //no tiene eventos creados
+
+              res.json({
+                status: true,
+                Appversion: "1.1",
+                error: '',
+                mensaje: "Bienvenido",
+                code: "e00",
+                data: user,
+               
+              });
+
+
+            }
+          });
+
+
+
+        } else {
+          //si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
+          res.json({
+            status: false,
+            Appversion: "1.1",
+            error: 'X01',
+            mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
+            data: ""
+          });
+
+        };
+      } else {
+        //si el id no corresponde responde error y procedo a hacer logout en la app
+        res.json({
+          status: false,
+          Appversion: "1.1",
+          error: 'X02',
+          mensaje: "Cuenta no existe",
+          data: ""
+        });
+      }
+    });
+
+
+  },
+
+
+
   /**
    * `DriverController.create()`   */
   create: function(req, res) {

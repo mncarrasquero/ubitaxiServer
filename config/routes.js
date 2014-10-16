@@ -46,9 +46,13 @@ module.exports.routes = {
 
 	'post /api/reclamoAbusoApp': 'PassengerController.reclamoAbusoApp',
 
-	
+
 	'post /api/detalleEvento': 'PassengerController.detalleEvento',
 
+	'post /api/chequeoDriver': 'DriverController.chequeoDriver',
+
+
+	
 
 	
 	
