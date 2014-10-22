@@ -56,7 +56,7 @@ module.exports = {
 			required: true,
 		},
 		birthday: {
-			type: 'date'
+			type: 'string'
 
 		},
 		address: {
