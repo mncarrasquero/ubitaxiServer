@@ -189,7 +189,7 @@ module.exports = {
     function crearDriver(nombreArchivo) {
       Driver.create({
         isActive: true,
-        imei: req.param('imei'),
+        uuid: req.param('uuid'),
         lastname: req.param('lastname'),
         email: req.param('email'),
         picture: nombreArchivo,
@@ -276,9 +276,9 @@ module.exports = {
   },
  
   loginDriver: function(req, res) {
-    console.log("tratando de hacer el maldito login");
+
     Driver.findOne({
-      emei: req.param('emei')
+      uuid: req.param('uuid')
     }, function(err, driver) {
 
       //   if (err) return verify_cb(err);

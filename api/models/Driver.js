@@ -17,7 +17,7 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
-		imei: {
+		uuid: {
 			type: 'string',
 			required: true
 		},
