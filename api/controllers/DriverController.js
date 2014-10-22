@@ -276,7 +276,7 @@ module.exports = {
   },
  
   loginDriver: function(req, res) {
-
+    console.log("tratando de hacer el maldito login");
     Driver.findOne({
       emei: req.param('emei')
     }, function(err, driver) {
