@@ -190,6 +190,7 @@ module.exports = {
       Driver.create({
         isActive: true,
         uuid: req.param('uuid'),
+         name: req.param('name'),
         lastname: req.param('lastname'),
         email: req.param('email'),
         picture: nombreArchivo,
