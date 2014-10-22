@@ -32,7 +32,7 @@ module.exports = {
           //procedo a buscar si tiene algun evento creado... ene stado de activo...
           Event.findOne({
             'dataDriver.driverId': req.param('id')
-           
+
             ,
             isActive: true
           }).exec(function(err, evento) {
@@ -52,13 +52,13 @@ module.exports = {
                   data: user,
                   code: "e01",
                   evento: evento,
-            
+
                 });
               };
 
 
 
-              if (evento.status == 8) {            
+              if (evento.status == 8) {
 
                 res.json({
                   status: true,
@@ -68,7 +68,7 @@ module.exports = {
                   data: user,
                   code: "e08",
                   evento: evento,
-                 
+
                 });
               };
 
@@ -85,7 +85,7 @@ module.exports = {
                   data: user,
                   code: "e09",
                   evento: evento,
-                
+
                 });
               };
 
@@ -101,7 +101,7 @@ module.exports = {
                 mensaje: "Bienvenido",
                 code: "e00",
                 data: user,
-               
+
               });
 
 
@@ -189,7 +189,7 @@ module.exports = {
     function crearDriver(nombreArchivo) {
       Driver.create({
         isActive: true,
-        name: req.param('name'),
+        imei: req.param('imei'),
         lastname: req.param('lastname'),
         email: req.param('email'),
         picture: nombreArchivo,
@@ -278,37 +278,48 @@ module.exports = {
   loginDriver: function(req, res) {
 
     Driver.findOne({
-      email: req.param('email'),
-      password: req.param('password')
+      emei: req.param('emei')
     }, function(err, driver) {
 
       //   if (err) return verify_cb(err);
       if (!driver) {
+
         return res.json({
           status: false,
-          message: 'Usuario o clave invalidos'
+
+          code: "F01",
+          message: 'Este equipo no esta registrado en nuestro sistema',
         });
       } else {
-        Driver.update({
-          email: req.param('email'),
-          password: req.param('password')
-        }, {
-          lastLogin: new Date(),
-        }).exec(function afterwards(err, updated) {
-          if (err) {
-            // handle error here- e.g. `res.serverError(err);`
-            return;
-          }
+        if (driver.ci == req.param('ci')) {
+          Driver.update({
+            emei: req.param('imei'),
+            ci: req.param('ci')
+          }, {
+            lastLogin: new Date(),
+          }).exec(function afterwards(err, updated) {
+            if (err) {
+              // handle error here- e.g. `res.serverError(err);`
+              return;
+            }
+          });
+          return res.json({
+            status: true,
+            data: driver
+          });
 
+        } else {
 
+          return res.json({
+          status: false,
+
+          code: "F02",
+          message: 'Cedula de identidad invalida',
         });
 
+          
+        };
 
-
-        return res.json({
-          status: true,
-          data: driver
-        });
       };
 
 

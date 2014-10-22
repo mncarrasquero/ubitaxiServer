@@ -17,6 +17,10 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
+		imei: {
+			type: 'string',
+			required: true
+		},
 		lastname: {
 			type: 'string',
 			required: true
