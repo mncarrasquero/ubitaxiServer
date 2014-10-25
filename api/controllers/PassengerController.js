@@ -5,7 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-var ciudadesServicio = ["Maracaibo", "Cabimas"]
+var ciudadesServicio = ["Maracaibo", "Cabimas","Acarigua"]
 
 module.exports = {
 	create: function(req, res, next) {
