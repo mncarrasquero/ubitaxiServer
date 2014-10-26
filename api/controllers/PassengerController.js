@@ -4,8 +4,13 @@
  * @description :: Server-side logic for managing passengers
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+//var ciudadesServicio;
 
-var ciudadesServicio = ["Maracaibo", "Cabimas","Acarigua"]
+
+
+//var ciudadesServicio = ["Maracaibo", "Cabimas", "Acarigua"]
+
+
 
 module.exports = {
 	create: function(req, res, next) {
@@ -53,6 +58,16 @@ module.exports = {
 	},
 
 	login: function(req, res, next) {
+		var ciudadesServicio = [];
+		Ciudades.find()
+			.exec(function foundUsers(err, city) {
+				if (err) return res.serverError(err);
+				for (var i = 0; i < city.length; i++) {
+					ciudadesServicio.push(city[i].name);
+				};
+			});
+
+
 		Passenger.findOne({
 			email: req.param('email')
 		}).exec(function(err, user) {
@@ -83,7 +98,8 @@ module.exports = {
 						req.session.user = user.id;
 						res.json({
 							status: true,
-							data: user
+							data: user,
+							ciudades: ciudadesServicio
 						});
 						//console.log('Updated user to have name ' + updated[0].lastLogin);
 					});
@@ -155,6 +171,14 @@ module.exports = {
 
 
 	chequeoPasajero: function(req, res) {
+		var ciudadesServicio = [];
+		Ciudades.find()
+			.exec(function foundUsers(err, city) {
+				if (err) return res.serverError(err);
+				for (var i = 0; i < city.length; i++) {
+					ciudadesServicio.push(city[i].name);
+				};
+			});
 
 		/*
 		 * en chequeo cuenta. se verifica el estatus del pasajero. y se cumple si hay conexion a internet

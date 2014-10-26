@@ -15,6 +15,13 @@ module.exports.routes = {
 	'get /detailNewDriver': 'AdminController.detailNewDriver',
 	'get /listDriver': 'AdminController.listDriver',
 
+	'post /addciudad': 'AdminController.addciudad',
+	'get /nuevaciudad': 'AdminController.nuevaciudad',
+	'get /listciudades': 'AdminController.listciudades',
+
+	
+
+
 	'post /createDriver': 'DriverController.create',
 	'get /signup': 'UserController.signup',
 

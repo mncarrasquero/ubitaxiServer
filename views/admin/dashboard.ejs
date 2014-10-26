@@ -1,7 +1,7 @@
   <section class="row m-b-md">
                     <div class="col-sm-6">
                       <h3 class="m-b-xs text-black">Dashboard</h3>
-                      <small>Welcome back, John Smith, <i class="fa fa-map-marker fa-lg text-primary"></i> New York City</small>
+                     
                     </div>
                  
                   </section>
@@ -13,12 +13,12 @@
                           <div class="col-md-6 b-b b-r">
                             <a href="#" class="block padder-v hover">
                               <span class="i-s i-s-2x pull-left m-r-sm">
-                                <i class="i i-hexagon2 i-s-base text-danger hover-rotate"></i>
-                                <i class="i i-plus2 i-1x text-white"></i>
+                                <i class="i i-hexagon2 i-s-base text-info hover-rotate"></i>
+                                <i class="fa  fa-group fa-1x text-white"></i>
                               </span>
                               <span class="clear">
-                                <span class="h3 block m-t-xs text-danger">2,000</span>
-                                <small class="text-muted text-u-c">New Visits</small>
+                                <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.pasajeros %>' data-speed='2000' data-refresh-interval='10'>0</span>                          
+                                <small class="text-muted text-u-c">Pasajeros</small>
                               </span>
                             </a>
                           </div>
@@ -26,23 +26,26 @@
                             <a href="#" class="block padder-v hover">
                               <span class="i-s i-s-2x pull-left m-r-sm">
                                 <i class="i i-hexagon2 i-s-base text-success-lt hover-rotate"></i>
-                                <i class="i i-users2 i-sm text-white"></i>
+                                <i class="fa fa-rocket  text-white"></i>
                               </span>
                               <span class="clear">
-                                <span class="h3 block m-t-xs text-success">75%</span>
-                                <small class="text-muted text-u-c">Bounce rate</small>
+                                 <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.taxistas %>' data-speed='2000' data-refresh-interval='10'>0</span>
+
+                             
+                                <small class="text-muted text-u-c">Taxistas</small>
                               </span>
                             </a>
                           </div>
                           <div class="col-md-6 b-b b-r">
                             <a href="#" class="block padder-v hover">
                               <span class="i-s i-s-2x pull-left m-r-sm">
-                                <i class="i i-hexagon2 i-s-base text-info hover-rotate"></i>
-                                <i class="i i-location i-sm text-white"></i>
+                                <i class="i i-hexagon2 i-s-base text-danger hover-rotate"></i>
+                                <i class="fa fa-thumbs-o-down text-white"></i>
                               </span>
                               <span class="clear">
-                                <span class="h3 block m-t-xs text-info">25 <span class="text-sm">m</span></span>
-                                <small class="text-muted text-u-c">location</small>
+                               <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.CanceladosTaxista %>' data-speed='2000' data-refresh-interval='10'>0</span>
+                             
+                                <small class="text-muted text-u-c">Servicios Cancelados</small>
                               </span>
                             </a>
                           </div>
@@ -50,11 +53,12 @@
                             <a href="#" class="block padder-v hover">
                               <span class="i-s i-s-2x pull-left m-r-sm">
                                 <i class="i i-hexagon2 i-s-base text-primary hover-rotate"></i>
-                                <i class="i i-alarm i-sm text-white"></i>
+                                <i class="fa fa-thumbs-o-up text-white"></i>
                               </span>
                               <span class="clear">
-                                <span class="h3 block m-t-xs text-primary">9:30</span>
-                                <small class="text-muted text-u-c">Meeting</small>
+                                
+                                <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.serviciosCompletados %>' data-speed='2000' data-refresh-interval='10'>0</span>
+                                <small class="text-muted text-u-c">Servicios Completados</small>
                               </span>
                             </a>
                           </div>
@@ -128,3 +132,5 @@
                       </section>                      
                     </div>
                   </div> 
+              <%- block('localScripts', '<script TYPE="text/javascript"> $(".timer").each(count); function count(options) {var $this = $(this); options = $.extend({}, options || {}, $this.data("countToOptions") || {}); $this.countTo(options); } </script>') %>
+

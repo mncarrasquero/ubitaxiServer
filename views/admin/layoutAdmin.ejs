@@ -122,6 +122,7 @@
                 <a href="#" class="media list-group-item">
                   <span class="pull-left thumb-sm">
                     <img src="linker/images/a0.png" alt="..." class="img-circle">
+
                   </span>
                   <span class="media-body block m-b-none">
                     Use awesome animate.css<br>
@@ -146,8 +147,12 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-left">
               <img src="linker/images/a0.png" alt="...">
+
             </span>
-            <%- user.name %>  <%- user.lastname %><b class="caret"></b>
+            <%- user.name %>  <%- user.lastname %>
+            <b class="caret"></b>
+          
+
           </a>
           <ul class="dropdown-menu animated fadeInRight"> 
             <li>
@@ -426,38 +431,26 @@
                         </span>
                         <i class="i i-grid2 icon">
                         </i>
-                        <span class="font-bold">Apps</span>
+                        <span class="font-bold">Configuración</span>
                       </a>
                       <ul class="nav dk">
                         <li >
-                          <a href="mail.html" class="auto">                            
+                          <a href="/listciudades"  class="auto">                            
                             <b class="badge bg-success lt pull-right">2</b>                                                        
                             <i class="i i-dot"></i>
 
-                            <span>Mailbox</span>
+                            <span>Ciudades</span>
                           </a>
                         </li>
                         <li >
                           <a href="fullcalendar.html" class="auto">                                                        
                             <i class="i i-dot"></i>
 
-                            <span>Calendar</span>
+                            <span>Taximetro</span>
                           </a>
                         </li>
-                        <li >
-                          <a href="project.html" class="auto">                                                        
-                            <i class="i i-dot"></i>
-
-                            <span>Project</span>
-                          </a>
-                        </li>
-                        <li >
-                          <a href="media.html" class="auto">                                                        
-                            <i class="i i-dot"></i>
-
-                            <span>Media</span>
-                          </a>
-                        </li>
+                     
+                
                       </ul>
                     </li>
                   </ul>
@@ -526,6 +519,7 @@
       </section>
     </section>
   </section>
+
   <script src="linker/js/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="linker/js/bootstrap.js"></script>
@@ -534,6 +528,9 @@
   <script src="linker/js/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="linker/js/app.plugin.js"></script>
      <script src="linker/js/moment-with-locales.min.js"></script>
+     <script src="linker/js/jquery.countTo.js"></script>
+     <%- blocks.localScripts %>
+     
 
   
     
