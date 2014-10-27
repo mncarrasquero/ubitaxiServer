@@ -145,9 +145,105 @@ module.exports = {
 
 	calcularPrecio: function(req, res, next) {
 
-		var kilometro = parseFloat("10.5");
-		var minuto = parseFloat("4.0");
-		var base = parseFloat("39");
+
+
+		Ciudades.find({
+			name: req.param('ciudad')
+		})
+			.exec(function foundUsers(err, data) {
+
+				if (err) {
+
+					return res.json({
+						status: false,
+						code: "TXOFF",
+						response: "El taxista establecera el precio",
+						data: {
+							precio1: "",
+							precio2: ""
+						}
+					});
+
+				}
+				if (data != "" && data[0].taximetroActivo == "on") {
+					//se podra calcular la tarifa
+					var kilometro = parseFloat(data[0].km);
+					var minuto = parseFloat(data[0].min);
+					var base = parseFloat(data[0].base);
+
+
+
+					var tiempo1 = req.param('min') * minuto;
+					var km = kilometro + parseFloat(req.param('km'));
+					var p1 = Math.round(base + parseFloat(tiempo1) + parseFloat(km));
+					var p2 = Math.round(base + parseFloat(tiempo1 * 1.5) + parseFloat(km));
+
+					p1 = Math.round(p1 / 10) * 10;
+					p2 = Math.round(p2 / 10) * 10;
+
+					var beginningTime = moment('8:00pm', 'h:mma');
+					var endTime = moment(beginningTime).add(9,'hours');
+					var now = moment();
+					console.log(beginningTime.isBefore(endTime)); //false???
+
+					console.log(beginningTime.toDate());
+					console.log(endTime.toDate());
+					console.log(moment().toDate());
+
+					if (now.isBefore(endTime) &&  now.isAfter(beginningTime) ) {
+						//	console.log("esta en horario nocturno");
+							res.json({
+						status: true,
+						code: "TXON",
+						type: "nocturno",
+						response: "Horario nocturno",
+						data: {
+							precio1:     parseInt(p1)+parseInt(data[0].nocturno) ,
+							precio2: parseInt(p2)+parseInt(data[0].nocturno),
+							extra: data[0].nocturno
+
+						}
+					});
+
+					}else{
+						//console.log("no esta en horario nocturno");
+
+					res.json({
+						status: true,
+						code: "TXON",
+						type: "normal",
+						response: "",
+						data: {
+							precio1: p1,
+							precio2: p2,
+							extra: ""
+						}
+					});
+					}
+
+
+
+
+				} else {
+					return res.json({
+						status: false,
+						code: "TXOFF",
+						type: "normal",
+						response: "El taxista establecera el precio",
+						data: {
+							precio1: "",
+							precio2: "",
+							extra: ""
+						}
+					});
+				};
+
+
+
+			});
+
+		/*
+
 		var tiempo1 = req.param('min') * minuto;
 		var km = kilometro + parseFloat(req.param('km'));
 		var p1 = Math.round(base + parseFloat(tiempo1) + parseFloat(km));
@@ -165,6 +261,7 @@ module.exports = {
 				precio2: p2
 			}
 		});
+*/
 		//console.log("Calculando tarifa:");
 
 	},
