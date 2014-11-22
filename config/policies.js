@@ -43,7 +43,7 @@ module.exports.policies = {
     changepass: true
   },
    AdminController: {
-    '*': 'isAuthenticated',
+    //'*': 'isAuthenticated',
 
   },
   DriverController: {

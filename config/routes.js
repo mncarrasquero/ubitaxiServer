@@ -19,6 +19,9 @@ module.exports.routes = {
 	'get /nuevaciudad': 'AdminController.nuevaciudad',
 	'get /listciudades': 'AdminController.listciudades',
 
+
+	'get /api/test1': 'AdminController.test1',
+
 	
 
 

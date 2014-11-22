@@ -8,29 +8,41 @@ var Q = require('q');
 module.exports = {
 	listciudades: function(req, res, next) {
 
-     Ciudades.find()
-    .exec(function foundUsers(err, city) {
+		Ciudades.find()
+			.exec(function foundUsers(err, city) {
 
-        if (err) return res.serverError(err);
+				if (err) return res.serverError(err);
 
-        // Get an array of all the UserId2 values, using sails.util.pluck,
-        // which is essentially Lodash's _.pluck
-       // var friend_ids = sails.util.pluck(friend_records, 'id');
+				// Get an array of all the UserId2 values, using sails.util.pluck,
+				// which is essentially Lodash's _.pluck
+				// var friend_ids = sails.util.pluck(friend_records, 'id');
 
-        // Get the User records for those users.  Using an array
-        // in the criteria makes Waterline do an "in" query
-      
-            // pass the array down to the /views/index.ejs page
-           res.view({
-			layout: 'admin/layoutAdmin.ejs',
-			user: req.session.passport.me,
-			ciudades: city
-		});
+				// Get the User records for those users.  Using an array
+				// in the criteria makes Waterline do an "in" query
+
+				// pass the array down to the /views/index.ejs page
+				res.view({
+					layout: 'admin/layoutAdmin.ejs',
+					user: req.session.passport.me,
+					ciudades: city
+				});
 
 
-    });
+			});
 
-},
+	},
+
+	test1: function (req, res, next) {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+
+		for (var i = 0; i < 4; i++)
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		console.log(text);
+		
+		return text;
+		
+	},
 
 
 
@@ -82,8 +94,8 @@ module.exports = {
 			}).then(),
 
 			Event.count({
-				
-				or: [{				
+
+				or: [{
 
 						status: 7
 					},
