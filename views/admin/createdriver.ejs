@@ -52,16 +52,36 @@
                   <input  name="birthday" class="input-sm input-s datepicker-input form-control" size="16" type="text"  data-date-format="dd-mm-yyyy" >        
                   <p class="m-t">Dirección de vivienda:</p>
                   <input  name="address" type="text" class="form-control" data-trigger="change" data-required="true"  >
-                  <p class="m-t">Ciudad:</p>
-                  <input  name="city" type="text" class="form-control" data-trigger="change" data-required="true"  >
-                  <p class="m-t">Estado:</p>
-                  <input  name="state" type="text" class="form-control" data-trigger="change" data-required="true"  >
-                  <p class="m-t">Pais:</p>
-                  <input  name="country" type="text" class="form-control" data-trigger="change" data-required="true"  >
+
+                   <p class="m-t">Pais:</p>
+                  <select  name="country" id='stateCombo'class="form-control m-b" required="true"  onchange='stateComboChange();'>
+                    <option value='-1'  >Selecciona un pais</option> 
+                  <option value='Venezuela'  >Venezuela</option> 
+                   <option value='Panama'  >Panama</option>         
+                   </select>
+
+                    <p class="m-t">Estado:</p>
+                  <select  name="state" class="form-control m-b" id='cityCombo' required="true"  onchange='cityComboChange();'>
+                 <option value='' title='-select state first-'>-Selecciona primero un Pais-</option>     
+                   </select>
+
+
+                     <p class="m-t">Ciudad:</p>
+                  <select  name="city" class="form-control m-b" id='ciudadCombo' required="true"  onchange='ciudadComboChange();'>
+                 <option value='' title='-select state first-'>-Selecciona primero un Estado-</option>     
+                   </select>
+
+
+
+
+
+
+
                 </div>
                 <div class="tab-pane" id="step2">
 
                   <p>Marca:</p>
+
                   <input  name="car-brand" type="text" class="form-control" data-trigger="change" data-required="true">
                   <p>Modelo:</p>
                   <input  name="car-model" type="text" class="form-control" data-trigger="change" data-required="true">

@@ -19,6 +19,12 @@
     <script src="js/ie/respond.min.js"></script>
     <script src="js/ie/excanvas.js"></script>
   <![endif]-->
+
+  <script src="linker/js/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="linker/js/bootstrap.js"></script>
+
+
 </head>
 <body class="">
   <section class="vbox">
@@ -180,9 +186,19 @@
                       <a href="/dashboard" class="auto">
                         <i class="i i-statistics icon">
                         </i>
-                        <span class="font-bold">Dasahboard</span>
+                        <span class="font-bold">Dashboard</span>
                       </a>
                     </li>
+
+                     <li >
+                      <a href="/mapa" class="auto">
+                        <i class="i i-map icon">
+                        </i>
+                        <span class="font-bold">Mapa</span>
+                      </a>
+                    </li>
+
+
                     <li >
                       <a href="#" class="auto">
                         <span class="pull-right text-muted">
@@ -510,9 +526,9 @@
         <!-- /.aside -->
         <section id="content">
           <section class="vbox">          
-            <section class="scrollable padder">
+            
                <%- body %>
-            </section>
+          
           </section>
           <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
         </section>
@@ -520,9 +536,7 @@
     </section>
   </section>
 
-  <script src="linker/js/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="linker/js/bootstrap.js"></script>
+  
   <!-- App -->
   <script src="linker/js/app.js"></script>  
   <script src="linker/js/slimscroll/jquery.slimscroll.min.js"></script>

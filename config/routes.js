@@ -22,7 +22,9 @@ module.exports.routes = {
 
 	'get /api/test1': 'AdminController.test1',
 
-	
+	'get /mapa': 'AdminController.mapa',
+
+		
 
 
 	'post /createDriver': 'DriverController.create',

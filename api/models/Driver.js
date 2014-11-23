@@ -12,6 +12,10 @@ module.exports = {
 			type: 'boolean',
 
 		},
+		pin: {
+			type: 'string',
+			
+		},
 
 		name: {
 			type: 'string',

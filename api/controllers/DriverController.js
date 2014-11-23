@@ -187,9 +187,17 @@ module.exports = {
     });
 
     function crearDriver(nombreArchivo) {
+       var pin = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz123456789";
+        for (var i = 0; i < 5; i++){
+           pin += possible.charAt(Math.floor(Math.random() * possible.length));
+          };
+            
+
       Driver.create({
         isActive: true,
         uuid: req.param('uuid'),
+        pin: pin,
          name: req.param('name'),
         lastname: req.param('lastname'),
         email: req.param('email'),

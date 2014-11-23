@@ -6,179 +6,187 @@
  */
 var Q = require('q');
 module.exports = {
-	listciudades: function(req, res, next) {
+    listciudades: function(req, res, next) {
 
-		Ciudades.find()
-			.exec(function foundUsers(err, city) {
+        Ciudades.find()
+            .exec(function foundUsers(err, city) {
 
-				if (err) return res.serverError(err);
+                if (err) return res.serverError(err);
 
-				// Get an array of all the UserId2 values, using sails.util.pluck,
-				// which is essentially Lodash's _.pluck
-				// var friend_ids = sails.util.pluck(friend_records, 'id');
+                // Get an array of all the UserId2 values, using sails.util.pluck,
+                // which is essentially Lodash's _.pluck
+                // var friend_ids = sails.util.pluck(friend_records, 'id');
 
-				// Get the User records for those users.  Using an array
-				// in the criteria makes Waterline do an "in" query
+                // Get the User records for those users.  Using an array
+                // in the criteria makes Waterline do an "in" query
 
-				// pass the array down to the /views/index.ejs page
-				res.view({
-					layout: 'admin/layoutAdmin.ejs',
-					user: req.session.passport.me,
-					ciudades: city
-				});
-
-
-			});
-
-	},
-
-	test1: function (req, res, next) {
-		var text = "";
-		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
-
-		for (var i = 0; i < 4; i++)
-			text += possible.charAt(Math.floor(Math.random() * possible.length));
-		console.log(text);
-		
-		return text;
-		
-	},
+                // pass the array down to the /views/index.ejs page
+                res.view({
+                    layout: 'admin/layoutAdmin.ejs',
+                    user: req.session.passport.me,
+                    ciudades: city
+                });
 
 
+            });
 
-	nuevaciudad: function(req, res, next) {
-		res.view({
-			layout: 'admin/layoutAdmin.ejs',
-			user: req.session.passport.me
-		});
-	},
-	addciudad: function(req, res, next) {
+    },
 
+    test1: function(req, res, next) {
+        var text = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz123456789";
+        for (var i = 0; i < 4; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        console.log(text);
 
-		Ciudades.create(req.params.all(), function passengerCreated(error, ciudad) {
-			if (error) {
-				res.json({
-					status: false,
-					response: "Error al crear la ciudad",
+        return text;
 
-				});
-
-			} else {
-
-				return res.redirect('/listciudades');
-
-			}
-		});
-
-
-	},
+    },
 
 
 
-	dashboard: function(req, res, next) {
+    nuevaciudad: function(req, res, next) {
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+    },
 
-		// Let's combine results of 3 queries
-		Q.all([
-			// let's find one user with name "Pavel"
-			Passenger.count({
-				isActive: true
-			}).then(),
+      mapa: function(req, res, next) {
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+    },
 
-			Driver.count({
-				isActive: true
-			}).then(),
 
-			Event.count({
-				isActive: false,
-				status: 7
-			}).then(),
+    addciudad: function(req, res, next) {
 
-			Event.count({
 
-				or: [{
+        Ciudades.create(req.params.all(), function passengerCreated(error, ciudad) {
+            if (error) {
+                res.json({
+                    status: false,
+                    response: "Error al crear la ciudad",
 
-						status: 7
-					},
+                });
 
-					{
-						status: 4
-					}
-				]
-			}).then(),
+            } else {
 
-			// let's find one Lexus car
+                return res.redirect('/listciudades');
 
-		])
-			.spread(function(Passenger, Driver, Event, CanceladosTaxista) {
-				// Output results as json, but you can do whatever you want here
-				//res.json([user, car, phone]);
-				res.view({
-					layout: 'admin/layoutAdmin.ejs',
-					user: req.session.passport.me,
-					data: {
-						pasajeros: Passenger,
-						taxistas: Driver,
-						CanceladosTaxista: CanceladosTaxista,
-						serviciosCompletados: Event,
-					}
-				});
+            }
+        });
 
-			}).fail(function(reason) {
-				// output reason of failure
-				res.json(reason);
-			});
+
+    },
 
 
 
-	},
-	createDriver: function(req, res) {
+    dashboard: function(req, res, next) {
 
-		res.view({
-			layout: 'admin/layoutAdmin.ejs',
-			user: req.session.passport.me
-		});
+        // Let's combine results of 3 queries
+        Q.all([
+                // let's find one user with name "Pavel"
+                Passenger.count({
+                    isActive: true
+                }).then(),
 
-	},
+                Driver.count({
+                    isActive: true
+                }).then(),
 
-	listDriver: function(req, res) {
+                Event.count({
+                    isActive: false,
+                    status: 7
+                }).then(),
 
-		res.view({
-			layout: 'admin/layoutAdmin.ejs',
-			user: req.session.passport.me
-		});
+                Event.count({
 
-	},
+                    or: [{
 
-	detailNewDriver: function(req, res) {
-		Driver.findOne({
-			id: req.param('id')
-		}, function(err, driver) {
-			// Send internal db errors back up (passes through back to our main app)
-			if (err) {
+                            status: 7
+                        },
 
-			}
-			if (!driver) {
+                        {
+                            status: 4
+                        }
+                    ]
+                }).then(),
 
-				res.notFound();
+                // let's find one Lexus car
+
+            ])
+            .spread(function(Passenger, Driver, Event, CanceladosTaxista) {
+                // Output results as json, but you can do whatever you want here
+                //res.json([user, car, phone]);
+                res.view({
+                    layout: 'admin/layoutAdmin.ejs',
+                    user: req.session.passport.me,
+                    data: {
+                        pasajeros: Passenger,
+                        taxistas: Driver,
+                        CanceladosTaxista: CanceladosTaxista,
+                        serviciosCompletados: Event,
+                    }
+                });
+
+            }).fail(function(reason) {
+                // output reason of failure
+                res.json(reason);
+            });
 
 
-			} else {
-				//consulta generada con exito
-				res.view({
-					layout: 'admin/layoutAdmin.ejs',
-					user: req.session.passport.me,
-					driver: driver
 
-				});
-			};
+    },
+    createDriver: function(req, res) {
+
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+
+    },
+
+    listDriver: function(req, res) {
+
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+
+    },
+
+    detailNewDriver: function(req, res) {
+        Driver.findOne({
+            id: req.param('id')
+        }, function(err, driver) {
+            // Send internal db errors back up (passes through back to our main app)
+            if (err) {
+
+            }
+            if (!driver) {
+
+                res.notFound();
+
+
+            } else {
+                //consulta generada con exito
+                res.view({
+                    layout: 'admin/layoutAdmin.ejs',
+                    user: req.session.passport.me,
+                    driver: driver
+
+                });
+            };
 
 
 
-		});
+        });
 
 
 
-	},
+    },
 
 
 
