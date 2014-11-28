@@ -21,6 +21,7 @@
 // Ensure a "sails" can be located:
 (function() {
   var sails;
+    var = NewRelic requieren ( 'NewRelic' );
   try {
     sails = require('sails');
   } catch (e) {
@@ -34,6 +35,8 @@
   }
 
   // Try to get `rc` dependency
+
+
   var rc;
   try {
     rc = require('rc');
