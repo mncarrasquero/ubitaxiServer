@@ -10,7 +10,7 @@
  */
 
 module.exports.bootstrap = function(cb) {
-	//sails.newrelic = require ( 'NewRelic' );
+	 sails.newrelic = require('newrelic');
 
 mandrill = require('mandrill-api/mandrill');
 mandrill_client = new mandrill.Mandrill('SkxqA6fV9H56kGZjEvVBkQ');
