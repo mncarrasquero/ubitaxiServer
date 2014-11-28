@@ -17,7 +17,7 @@
  * The same command-line arguments are supported, e.g.:
  * `node app.js --silent --port=80 --prod`
  */
- var = NewRelic requiere ( 'NewRelic' );
+ var = NewRelic require ( 'NewRelic' );
  console.log("cargando newrelic");
 // Ensure a "sails" can be located:
 (function() {
