@@ -165,6 +165,7 @@ module.exports = {
 					});
 
 				}
+	
 				if (data != "" && data[0].taximetroActivo == "on") {
 					//se podra calcular la tarifa
 					var kilometro = parseFloat(data[0].km);
@@ -182,7 +183,7 @@ module.exports = {
 					p2 = Math.round(p2 / 10) * 10;
 
 					var beginningTime = moment('8:00pm', 'h:mma');
-					var endTime = moment(beginningTime).add(9,'hours');
+					var endTime = moment(beginningTime).add(8,'hours');
 					var now = moment();
 					console.log(beginningTime.isBefore(endTime)); //false???
 
