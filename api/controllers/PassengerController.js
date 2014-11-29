@@ -184,7 +184,7 @@ module.exports = {
 
 					var beginningTime = moment('8:00pm', 'h:mma');
 					var endTime = moment(beginningTime).add(8,'hours');
-					var now = moment();
+					var now = moment().zone(data[0].timeZone);
 					console.log(beginningTime.isBefore(endTime)); //false???
 
 					console.log(beginningTime.toDate());
