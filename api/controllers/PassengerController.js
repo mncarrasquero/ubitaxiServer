@@ -189,8 +189,8 @@ module.exports = {
 
 					console.log(beginningTime.toDate());
 					console.log(endTime.toDate());
-					console.log(moment().zone(data[0].timeZone).toDate());
-					console.log(now.toDate('-0430'));
+					console.log(moment().zone('-0430').toDate());
+					console.log(now.toDate());
 					console.log(data[0].timeZone);
 
 					if (now.isBefore(endTime) &&  now.isAfter(beginningTime) ) {
