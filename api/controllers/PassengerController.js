@@ -193,7 +193,7 @@ module.exports = {
 					console.log(now.toDate());
 					console.log(data[0].timeZone);
 
-					if (now.toDate().isBefore(endTime) &&  now.toDate().isAfter(beginningTime) ) {
+					if (now.isBefore(endTime) &&  now.isAfter(beginningTime) ) {
 						//	console.log("esta en horario nocturno");
 							res.json({
 						status: true,
