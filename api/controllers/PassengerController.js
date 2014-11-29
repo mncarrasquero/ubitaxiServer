@@ -189,7 +189,7 @@ module.exports = {
 
 					console.log(beginningTime.toDate());
 					console.log(endTime.toDate());
-					console.log(moment().zone('-0430').toDate());
+					console.log(moment().add(8,'hours').toDate());
 					console.log(now.toDate());
 					console.log(data[0].timeZone);
 
