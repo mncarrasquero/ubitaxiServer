@@ -184,16 +184,16 @@ module.exports = {
 
 					var beginningTime = moment('8:00pm', 'h:mma');
 					var endTime = moment(beginningTime).add(9,'hours');
-					var now = moment().zone(data[0].timeZone).toDate();
+					var now = moment().zone(data[0].timeZone);
 					console.log(beginningTime.isBefore(endTime)); //false???
 
 					console.log(beginningTime.toDate());
 					console.log(endTime.toDate());
 					console.log(moment().zone("-04:30").toDate());
-					console.log(now);
+					console.log(now.toDate());
 					console.log(data[0].timeZone);
 
-					if (now.isBefore(endTime) &&  now.isAfter(beginningTime) ) {
+					if (now.toDate().isBefore(endTime) &&  now.toDate().isAfter(beginningTime) ) {
 						//	console.log("esta en horario nocturno");
 							res.json({
 						status: true,
