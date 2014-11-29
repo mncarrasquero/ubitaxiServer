@@ -190,6 +190,7 @@ module.exports = {
 					console.log(beginningTime.toDate());
 					console.log(endTime.toDate());
 					console.log(moment().zone(data[0].timeZone).toDate());
+					console.log(now);
 
 					if (now.isBefore(endTime) &&  now.isAfter(beginningTime) ) {
 						//	console.log("esta en horario nocturno");
