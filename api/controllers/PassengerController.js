@@ -182,7 +182,7 @@ module.exports = {
 					p1 = Math.round(p1 / 10) * 10;
 					p2 = Math.round(p2 / 10) * 10;
 
-					var beginningTime = moment('8:00pm', 'h:mma');
+					var beginningTime = moment('8:00pm', 'h:mma' ).subtract(1,'days');
 					var endTime = moment(beginningTime).add(9,'hours');
 					var now = moment().add(data[0].timeZone,'minute');
 					
