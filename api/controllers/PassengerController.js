@@ -851,7 +851,8 @@ module.exports = {
         var limit = parseInt(req.param('limit')) || 0;
 
         Event.find({
-            passengerId: req.param('passengerId')
+            passengerId: req.param('passengerId'),
+            status: 7
         }).limit(limit).sort({
             createdAt: 'desc'
         }).exec(function(err, eventos) {
