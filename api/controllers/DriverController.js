@@ -395,7 +395,7 @@ module.exports = {
                             var hace = now.diff(date, 'minutes')
                             console.log(now.diff(date, 'minutes'));  // 1
 
-                            if (hace <= 20 {
+                            if (hace <= 20 ){
                                nuevoArray.push(docs.results[i].obj.lastPosition.coordinates);
                             };
 
