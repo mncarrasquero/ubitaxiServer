@@ -393,7 +393,7 @@ module.exports = {
                             var now = moment().add(15, 'minute');
                             var date = docs.results[i].obj.lastPosition.date
                             var hace = now.diff(date, 'minutes')
-                            console.log(now.diff(date, 'minutes')); // 1
+                            //console.log(now.diff(date, 'minutes')); // 1
 
                             if (hace <= 20) {
                                 nuevoArray.push(docs.results[i].obj.lastPosition.coordinates);
