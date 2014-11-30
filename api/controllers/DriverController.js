@@ -393,21 +393,30 @@ module.exports = {
                             var now = moment().add(15, 'minute');
                             var date = docs.results[i].obj.lastPosition.date
                             var hace = now.diff(date, 'minutes')
-                            console.log(now.diff(date, 'minutes'));  // 1
+                            console.log(now.diff(date, 'minutes')); // 1
 
-                            if (hace <= 20 ){
-                               nuevoArray.push(docs.results[i].obj.lastPosition.coordinates);
+                            if (hace <= 20) {
+                                nuevoArray.push(docs.results[i].obj.lastPosition.coordinates);
                             };
 
-                           
+
 
                         }
+                        if (nuevoArray.length > 0) {
+                            res.json({
+                                status: true,
+                                response: nuevoArray
+                            });
+
+                        } else {
+                            res.json({
+                                status: false,
+                                response: nuevoArray
+                            });
+
+                        };
 
 
-                        res.json({
-                            status: true,
-                            response: nuevoArray
-                        });
                     };
                 }
             });
