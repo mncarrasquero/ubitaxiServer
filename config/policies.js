@@ -57,7 +57,11 @@ module.exports.policies = {
     create: true,
     calcularPrecio: true,
    
-  }
+  },
+  
+   UserController: {  
+    recoverypass: true,
+    changepass: true,
 
 	// RabbitController: {
 
