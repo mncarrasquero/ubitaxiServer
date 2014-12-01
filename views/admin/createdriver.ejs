@@ -1,4 +1,4 @@
- <link rel="stylesheet" href="linker/js/datepicker/datepicker.css" type="text/css" />
+<link rel="stylesheet" href="linker/js/datepicker/datepicker.css" type="text/css" />
  <link rel="stylesheet" href="linker/js/slider/slider.css" type="text/css" />
  <link rel="stylesheet" href="linker/css/bootstrap-fileupload.css" type="text/css" />
 
@@ -54,22 +54,32 @@
                   <input  name="address" type="text" class="form-control" data-trigger="change" data-required="true"  >
 
                    <p class="m-t">Pais:</p>
-                  <select  name="country" id='stateCombo'class="form-control m-b" required="true"  onchange='stateComboChange();'>
+                  <select  name="country" id='stateCombo'class="form-control m-b" required="true" >
                     <option value='-1'  >Selecciona un pais</option> 
                   <option value='Venezuela'  >Venezuela</option> 
                    <option value='Panama'  >Panama</option>         
                    </select>
 
                     <p class="m-t">Estado:</p>
-                  <select  name="state" class="form-control m-b" id='cityCombo' required="true"  onchange='cityComboChange();'>
-                 <option value='' title='-select state first-'>-Selecciona primero un Pais-</option>     
+                     <select  name="state" id='stateCombo'class="form-control m-b" required="true"  >
+                    <option value=''  >Selecciona un Estado</option> 
+                  <option value='Zulia'  >Zulia</option> 
+                        
                    </select>
+
+
 
 
                      <p class="m-t">Ciudad:</p>
-                  <select  name="city" class="form-control m-b" id='ciudadCombo' required="true"  onchange='ciudadComboChange();'>
-                 <option value='' title='-select state first-'>-Selecciona primero un Estado-</option>     
+                        <select  name="city" id='stateCombo'class="form-control m-b" required="true"  >
+                    <option value=''  >Selecciona un Municipio</option> 
+                  <option value='Maracaibo'  >Maracaibo</option> 
+                   <option value='San Francisco'  >San Francisco</option> 
+                    <option value='Cabimas'  >Cabimas</option> 
+                        
                    </select>
+
+
 
 
 

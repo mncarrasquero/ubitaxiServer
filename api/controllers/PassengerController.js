@@ -177,7 +177,8 @@ module.exports = {
                     var tiempo1 = req.param('min') * minuto;
                     var km = kilometro + parseFloat(req.param('km'));
                     var p1 = Math.round(base + parseFloat(tiempo1) + parseFloat(km));
-                    var p2 = Math.round(base + parseFloat(tiempo1 * 1.5) + parseFloat(km));
+                   // var p2 = Math.round(base + parseFloat(tiempo1 * 1.5) + parseFloat(km));
+                   var p2 = parseFloat(p1/ 2 ) + p1;
 
                     p1 = Math.round(p1 / 10) * 10;
                     p2 = Math.round(p2 / 10) * 10;
