@@ -140,10 +140,41 @@ module.exports = {
 
 
     },
+  //  alert(getDistanceFromLatLonInKm(59.3293371,13.4877472,59.3225525,13.4619422).toFixed(1));
 
 
 
-    calcularPrecio: function(req, res, next) {
+
+// [LAT, LNG , MIN , MAX] 0 1 2 3
+
+
+
+calcularPrecio: function(req, res, next) {
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+};
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+};
+
+
+//Coordenadas Aeropuerto
+
+
+
+
 
 
 
@@ -194,7 +225,52 @@ module.exports = {
 					console.log(moment().subtract(270,'minute').toDate());
 					console.log(now);
 					console.log(data[0].timeZone);
-					*/
+					*/ 
+
+//console.log(getDistanceFromLatLonInKm(59.3293371,13.4877472,59.3225525,13.4619422).toFixed(1));
+                    
+                    //CONDICON SI SUPERA LOS 800 BS 
+                    if (p1 > 750) {
+                         res.json({
+                            status: false,
+                            code: "TXOFF",
+                            type: "MAYOR AL LIMITE DE 700",
+                            response: "",
+                            data: {
+                                precio1: parseInt(p1) + parseInt(data[0].nocturno),
+                                precio2: parseInt(p2) + parseInt(data[0].nocturno),
+                                extra: data[0].nocturno
+
+                            }
+                        });
+
+                         return;
+                    };
+                    // Aeropuerto la chinita Maracaibo... 
+                  //  var AeropuertoLachinita = [10.555113,-71.723943,400,600];
+                  
+                      if (getDistanceFromLatLonInKm(10.555113,-71.723943 , req.param('latD') ,req.param('lngD') ).toFixed(1) <= 1) {
+                         res.json({
+                            status: true,
+                            code: "TXON",
+                            type: "Especial Aeropuerto La Chinita",
+                            response: "",
+                            data: {
+                                precio1: parseInt(400) ,
+                                precio2: parseInt(600) ,
+                                extra: data[0].nocturno
+
+                            }
+                        });
+
+                         return;
+                    };
+
+                            
+
+
+
+
 
                     if (now.isBefore(endTime) && now.isAfter(beginningTime)) {
                         //	console.log("esta en horario nocturno");
