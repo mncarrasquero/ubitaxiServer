@@ -347,7 +347,8 @@ module.exports = {
 		var lat = parseFloat(req.param('lat'));
 		var lng = parseFloat(req.param('lng'));
 		var idDriver = req.param('id');
-		var maxDistance = parseInt(req.param('maxDistance')) || 2;
+		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
+		var maxDistance = parseInt(req.param('maxDistance')) || 7;
 		var limit = parseInt(req.param('limit')) || 50;
 		//  console.log('   lat         ', lat, typeof lat);
 		//  console.log('   lng         ', lng);

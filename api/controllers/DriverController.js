@@ -361,7 +361,7 @@ module.exports = {
         Driver.native(function(err, collection) {
 
             collection.geoNear(lng, lat, {
-                maxDistance: 5 / 6378,
+                maxDistance: 15 / 6378,
                 limit: limit,
                 // in meters
                 query: {
