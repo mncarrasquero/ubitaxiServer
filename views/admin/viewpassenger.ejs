@@ -1,32 +1,56 @@
 
         <section class="scrollable bg-white">
             <div class="wrapper-lg bg-light">
+
+                 
+
+
                 <div class="hbox">
-                    <aside class="aside-md">
-                        <div class="text-center"> <img src="linker/images/a5.png" alt="..." class="img-circle m-b">
-                            <div>Nivel de karma</div>
-                            <div class="">
-                                <div class="progress progress-xs progress-striped active inline m-b-none bg-white" style="width:128px">
-                                    <div class="progress-bar bg-success" data-toggle="tooltip" data-original-title="50%" style="width: 100%"></div>
-                                </div>
+                    <div class="col-sm-5">
+                      <section class="panel panel-default">
+                        <header class="panel-heading bg-light no-border">
+                          <div class="clearfix">
+                            <a href="#" class="pull-left thumb-md avatar b-3x m-r">
+                              <img src="linker/images/a5.png">
+                            </a>
+                            <div class="clear">
+                              <div class="h3 m-t-xs m-b-xs">
+                                <%- data.pasajero.name%> <%- data.pasajero.lastName %>
+                                <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                              </div>
+                              <small class="text-muted">Pasajero</small>
                             </div>
-                            <p>100%</p>
+                          </div>
+                        </header>
+                        <div class="list-group no-radius alt">
+                          <a class="list-group-item" href="#">
+                            <span class="badge bg-success"><%- data.Completados%></span>
+                            <i class="i i-checkmark2 icon-muted"></i> 
+                            Eventos Completados
+                          </a>
+                          <a class="list-group-item" href="#">
+                            <span class="badge bg-warning"><%- data.CaceladosPasajero%></span>
+                            <i class="fa fa-exclamation icon-muted"></i> 
+                            Cancelados Pasajero
+                          </a>
+                          <a class="list-group-item" href="#">
+                            <span class="badge bg-danger"><%- data.CanceladoTaxista%></span>
+                            <i class="fa fa-exclamation-triangle icon-muted"></i> 
+                            Cancelados Taxista
+                          </a>
+
+                           <a class="list-group-item" href="#">
+                            <span class="badge bg-light"><%- data.sinRespuesta%>  </span>
+                            <i class="fa fa-meh-o icon-muted"></i> 
+                            Eventos sin respuesta
+                          </a>
+
+
                         </div>
-                    </aside>
-                    <aside>
-                        <p class="pull-right m-l inline"> <a href="#" class="btn btn-sm btn-icon btn-info rounded m-b"><i class="fa fa-twitter"></i></a> <a href="#" class="btn btn-sm btn-icon btn-primary rounded m-b"><i class="fa fa-facebook"></i></a> <a href="#" class="btn btn-sm btn-icon btn-danger rounded m-b"><i class="fa fa-google-plus"></i></a> </p>
-                        <h3 class="font-bold m-b-none m-t-none" style="text-transform: capitalize;" ><%- data.pasajero.name%> <%- data.pasajero.lastName %></h3>
-                        <p><%- data.pasajero.email%></p>
-                        <p><i class="fa fa-lg fa-circle-o text-primary m-r-sm"></i><strong>Pasajero</strong>
-                        </p>
-                        <ul class="nav nav-pills nav-stacked aside-lg">
-                            
-                            <li class="bg-light dk"><a href="#"><i class="i i-mail m-r-sm"></i> Enviar Email</a>
-                            </li>
-                            <li class="bg-light dk"><a href="#"><i class="i i-chat m-r-sm"></i> Enviar SMS</a>
-                            </li>
-                        </ul>
-                    </aside>
+                      </section>
+                     
+                    </div>
+
                 </div>
             </div>
             <ul class="nav nav-tabs m-b-n-xxs bg-light">
@@ -39,7 +63,7 @@
                     <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
                           <% for(var i=0; i < data.eventos.length; i++) { %>
                         <li class="list-group-item">
-                            <a href="#" class="thumb-sm pull-left m-r-sm"> <img src="<%- data.eventos[i].dataDriver.driverPicture%>" class="img-circle"> </a>
+                            <a href="#" class="thumb-md pull-left m-r-sm"> <img src="<%- data.eventos[i].dataDriver.driverPicture%>" class="img-circle"> </a>
                            
                             <a href="#" class="clear"> <small class="pull-right"><span data-livestamp="<%-  moment(data.eventos[i].createdAt)  %>"></span></small> <strong class="block h4" ><%- data.eventos[i].dataDriver.driverName%> <%- data.eventos[i].dataDriver.driverLastname%></strong> 
                             	<p class="m-t m-b">
@@ -122,11 +146,9 @@
    
     <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
 
-   <!--SCRIPTS-->
-   <script src="linker/js/moment.min.js"></script>
-   <script src="linker/js/livestamp.min.js"></script>
-   <!--SCRIPTS END-->
-    
+ 
+     <script src="/linker/js/moment.min.js"></script>
+    <script src="/linker/js/livestamp.min.js"></script>
  
 
 

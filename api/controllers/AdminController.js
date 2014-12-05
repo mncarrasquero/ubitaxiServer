@@ -114,12 +114,19 @@ module.exports = {
                     ]
                 }).then(),
 
+                Event.find({
+                    isActive: false,
+                    status: 7
+                }).sort({ createdAt: 'desc' }).then(),
+
+
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Driver, Event, CanceladosTaxista) {
+            .spread(function(Passenger, Driver, Event, CanceladosTaxista , EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
+                console.log(EventosCompletados);
                 res.view({
                     layout: 'admin/layoutAdmin.ejs',
                     user: req.session.passport.me,
@@ -128,6 +135,7 @@ module.exports = {
                         taxistas: Driver,
                         CanceladosTaxista: CanceladosTaxista,
                         serviciosCompletados: Event,
+                        eventosCompletados: EventosCompletados,
                     }
                 });
 
@@ -207,10 +215,47 @@ module.exports = {
                     ]
                 }).then(),
 
+                 Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                            status: 7
+                            //completados
+                        }                       
+                    ]
+                }).then(),
+
+                 Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                            status: 2
+                            //cancelado taxista
+                        }                       
+                    ]
+                }).then(),
+
+                 Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                            status: 4
+                        //cancelado pasajero
+                        }                       
+                    ]
+                }).then(),
+
+
+                 Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                            status: 5
+                            //por parka
+                        }                       
+                    ]
+                }).then(),
+
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Eventos, Driver, EventCount ) {
+            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta ) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
                 //console.log(Eventos);
@@ -222,6 +267,10 @@ module.exports = {
                         taxistas: Driver,
                         eventos: Eventos,
                         totalEvent: EventCount,
+                        Completados: Completados,
+                        CaceladosPasajero: CaceladosPasajero,
+                        CanceladoTaxista: CanceladoTaxista,
+                        sinRespuesta: sinRespuesta,
                         
                     }
                 });
