@@ -56,6 +56,7 @@ module.exports.policies = {
     PassengerController: {  
     create: true,
     calcularPrecio: true,
+    listpassenger: true,
    
   },
   

@@ -57,6 +57,24 @@ module.exports = {
         });
     },
 
+    listpassengers: function(req, res) {
+        Passenger.find().exec(function(err, passenger) {
+            if (err) {
+                return res.json({
+                    status: false,
+
+
+                });
+            } else {
+                return res.json({
+                    status: true,
+                    aaData: passenger
+                });
+            }
+        });
+
+    },
+
     login: function(req, res, next) {
         var ciudadesServicio = [];
         Ciudades.find()

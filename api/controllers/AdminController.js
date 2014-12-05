@@ -52,7 +52,7 @@ module.exports = {
         });
     },
 
-      mapa: function(req, res, next) {
+    mapa: function(req, res, next) {
         res.view({
             layout: 'admin/layoutAdmin.ejs',
             user: req.session.passport.me
@@ -156,6 +156,87 @@ module.exports = {
         });
 
     },
+
+    listPassenger: function(req, res) {
+
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+
+    },
+
+    viewpassenger: function(req, res) {
+        Q.all([
+                // let's find one user with name "Pavel"
+                Passenger.findOne({
+                    id: req.param('id'),
+
+                }).then(), 
+
+                 Event.find({
+                    passengerId: req.param('id'),
+                     or: [{
+                            status: 7
+                        },
+                        {
+                            status: 4
+                        },
+                        {
+                            status: 2
+                        }
+                    ]
+                }).sort({ createdAt: 'desc' }).then(),                
+
+                Driver.count({
+                    isActive: true
+                }).then(),
+            
+
+                Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                            status: 7
+                        },
+                        {
+                            status: 4
+                        },
+                        {
+                            status: 2
+                        }
+                    ]
+                }).then(),
+
+                // let's find one Lexus car
+
+            ])
+            .spread(function(Passenger, Eventos, Driver, EventCount ) {
+                // Output results as json, but you can do whatever you want here
+                //res.json([user, car, phone]);
+                //console.log(Eventos);
+                res.view({
+                    layout: 'admin/layoutAdmin.ejs',
+                    user: req.session.passport.me,
+                    data: {
+                        pasajero: Passenger,
+                        taxistas: Driver,
+                        eventos: Eventos,
+                        totalEvent: EventCount,
+                        
+                    }
+                });
+
+            }).fail(function(reason) {
+                // output reason of failure
+                res.json(reason);
+            });
+
+
+
+    },
+
+
+
 
     detailNewDriver: function(req, res) {
         Driver.findOne({

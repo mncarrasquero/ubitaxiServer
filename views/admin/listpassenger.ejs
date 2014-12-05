@@ -1,0 +1,82 @@
+    <link rel="stylesheet" href="linker/js/datatables/datatables.css" type="text/css"/>
+  <section class="vbox">
+            <section class="scrollable padder">
+              <div class="m-b-md">
+                <h3 class="m-b-none">Lista de Pasajeros</h3>
+              </div>
+              <section class="panel panel-default">
+              
+                <div class="table-responsive">
+                  <table class="table table-striped m-b-none" data-ride="datatables">
+                    <thead>
+                      <tr>
+                         <th width="5%">Ver</th>
+                        <th width="10%">Nombre</th>
+                        <th width="10%">Apellido</th>
+                    
+                      
+                        <th width="12%">Modelo</th>
+                   
+                  
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </section>
+          </section>
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<!--SCRIPTS END-->
+
+<% script('linker/js/datatables/jquery.dataTables.min.js') %>
+<% script('linker/js/datatables/jquery.csv-0.71.min.js') %>
+
+<script type="text/javascript">
++function ($) { "use strict";
+
+  $(function(){
+
+  // datatable
+  $('[data-ride="datatables"]').each(function() {
+    var oTable = $(this).dataTable( {
+      "bProcessing": true,
+      "sAjaxSource": "/api/listpassengers",
+      "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+      "sPaginationType": "full_numbers",
+
+      "aoColumns": [
+
+      { "mData": null , //its null here because history column will contain the mRender
+    "mRender" : function ( data, type, full ) {
+    return '<a href="/viewPassenger?id='+full.id+'" class="btn btn-default btn-xs">ver</a>';}
+  },
+
+
+
+  
+       { "mData": "name" },
+        { "mData": "lastName" },
+        { "mData": "phoneNumber" },       
+     
+
+
+
+ 
+
+      ]
+    } );
+  });
+
+
+
+
+
+
+  });
+}(window.jQuery);
+</script>
+
+
