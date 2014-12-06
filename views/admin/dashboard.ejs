@@ -3,112 +3,84 @@
             <section class="scrollable padder">
 
 
-  <section class="row m-b-md">
-                    <div class="col-sm-6">
-                      <h3 class="m-b-xs text-black">Dashboard</h3>
-                     
-                    </div>
-                 
-                  </section>
+  <br>
 
 
-          <div class="row">
-                    <div class="col-sm-6">
-                      <div class="panel b-a">
-                        <div class="row m-n">
-                          <div class="col-md-6 b-b b-r">
-                            <a href="#" class="block padder-v hover">
-                              <span class="i-s i-s-2x pull-left m-r-sm">
-                                <i class="i i-hexagon2 i-s-base text-info hover-rotate"></i>
-                                <i class="fa  fa-group fa-1x text-white"></i>
-                              </span>
-                              <span class="clear">
-                                <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.pasajeros %>' data-speed='2000' data-refresh-interval='10'>0</span>                          
-                                <small class="text-muted text-u-c">Pasajeros</small>
-                              </span>
-                            </a>
-                          </div>
-                          <div class="col-md-6 b-b">
-                            <a href="#" class="block padder-v hover">
-                              <span class="i-s i-s-2x pull-left m-r-sm">
-                                <i class="i i-hexagon2 i-s-base text-success-lt hover-rotate"></i>
-                                <i class="fa fa-rocket  text-white"></i>
-                              </span>
-                              <span class="clear">
-                                 <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.taxistas %>' data-speed='2000' data-refresh-interval='10'>0</span>
-
-                             
-                                <small class="text-muted text-u-c">Taxistas</small>
-                              </span>
-                            </a>
-                          </div>
-                          <div class="col-md-6 b-b b-r">
-                            <a href="#" class="block padder-v hover">
-                              <span class="i-s i-s-2x pull-left m-r-sm">
-                                <i class="i i-hexagon2 i-s-base text-danger hover-rotate"></i>
-                                <i class="fa fa-thumbs-o-down text-white"></i>
-                              </span>
-                              <span class="clear">
-                               <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.CanceladosTaxista %>' data-speed='2000' data-refresh-interval='10'>0</span>
-                             
-                                <small class="text-muted text-u-c">Servicios Cancelados</small>
-                              </span>
-                            </a>
-                          </div>
-                          <div class="col-md-6 b-b">
-                            <a href="#" class="block padder-v hover">
-                              <span class="i-s i-s-2x pull-left m-r-sm">
-                                <i class="i i-hexagon2 i-s-base text-primary hover-rotate"></i>
-                                <i class="fa fa-thumbs-o-up text-white"></i>
-                              </span>
-                              <span class="clear">
-                                
-                                <span class="h3  timer block m-t-xs text-primary" data-start='0' data-from='0' data-to='<%- data.serviciosCompletados %>' data-speed='2000' data-refresh-interval='10'>0</span>
-                                <small class="text-muted text-u-c">Servicios Completados</small>
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
+          <div class="row ">
+                  
+                    <div class="col-md-4 col-sm-6">
                       <div class="panel b-a">
                         <div class="panel-heading no-border bg-primary lt text-center">
                           <a href="#">
-                            <i class="fa fa-facebook fa fa-3x m-t m-b text-white"></i>
+                           <h3><strong>Usuarios</strong></h3>
                           </a>
                         </div>
                         <div class="padder-v text-center clearfix">                            
                           <div class="col-xs-6 b-r">
-                            <div class="h3 font-bold">42k</div>
-                            <small class="text-muted">Friends</small>
+                              <div class="h3 font-bold  timer " data-start='0' data-from='0' data-to='<%- data.pasajeros %>' data-speed='1000' data-refresh-interval='10'>0</div>  
+                            
+                            <small class="text-muted">Pasajeros</small>
                           </div>
                           <div class="col-xs-6">
-                            <div class="h3 font-bold">90</div>
-                            <small class="text-muted">Feeds</small>
+                           <div class="h3 font-bold  timer" data-start='0' data-from='0' data-to='<%- data.taxistas %>' data-speed='1000' data-refresh-interval='10'>0</div>
+                            <small class="text-muted">Taxista</small>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4 col-sm-6">
                       <div class="panel b-a">
                         <div class="panel-heading no-border bg-info lter text-center">
                           <a href="#">
-                            <i class="fa fa-twitter fa fa-3x m-t m-b text-white"></i>
+                           <h3><strong>Servicios Hoy</strong></h3>
                           </a>
                         </div>
-                        <div class="padder-v text-center clearfix">                            
-                          <div class="col-xs-6 b-r">
-                            <div class="h3 font-bold">27k</div>
-                            <small class="text-muted">Tweets</small>
+                        <div class="padder-v text-center clearfix">    
+
+                          <div class="col-xs-4 b-r">
+                             <div class="h3 font-bold  timer" data-start='0' data-from='0' data-to='<%- data.totalHoy %>' data-speed='1000' data-refresh-interval='10'>0</div>
+                            
+                            <small class="text-muted">Solicitudes</small>
                           </div>
-                          <div class="col-xs-6">
+                          <div class="col-xs-4">
                             <div class="h3 font-bold">15k</div>
-                            <small class="text-muted">Followers</small>
+                            <small class="text-muted">Completadas</small>
                           </div>
+
+                            <div class="col-xs-4">
+                            <div class="h3 font-bold">15k</div>
+                            <small class="text-muted">Sin Respuesta</small>
+                          </div>
+
                         </div>
                       </div>
                     </div>
+
+                        <div class="col-md-4 col-sm-6">
+                      <div class="panel b-a">
+                        <div class="panel-heading no-border bg-danger lter text-center">
+                          <a href="#">
+                           <h3><strong>Cancelados Hoy</strong></h3>
+                          </a>
+                        </div>
+                        <div class="padder-v text-center clearfix">    
+
+                          <div class="col-xs-6 b-r">
+                            <div class="h3 font-bold">27k</div>
+                            <small class="text-muted">Cancelado Pasajeros</small>
+                          </div>
+                     
+
+                            <div class="col-xs-6">
+                            <div class="h3 font-bold">15k</div>
+                            <small class="text-muted">Cancelado Taxistas</small>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+
                     <div class="col-sm-3 hide">
                       <section class="panel b-a">
                         <header class="panel-heading b-b b-light">
@@ -152,9 +124,9 @@
                         <img src="<%- data.eventosCompletados[i].dataDriver.driverPicture %>" class="img-circle">
                       </a>
                       <span class="arrow left"></span>
-                      <section class="comment-body panel panel-default">
+                      <section class="comment-body">
                         <header class="panel-heading bg-white">
-                          <a href="#"><%- data.eventosCompletados[i].dataDriver.driverName %> <%- data.eventosCompletados[i].dataDriver.driverLastname %></a>
+                          <a href="#"> <strong><%- data.eventosCompletados[i].dataDriver.driverName %> <%- data.eventosCompletados[i].dataDriver.driverLastname %></strong></a>
                           <label class="label bg-info m-l-xs">Editor</label> 
                           <span class="text-muted m-l-sm pull-right">
                             <i class="fa fa-clock-o"></i>
@@ -162,29 +134,16 @@
                           </span>
                         </header>
                         <div class="panel-body">
-                         <p class="m-t m-b">
+                        
                                Origen: <%- data.eventosCompletados[i].eventSector%> - <%- data.eventosCompletados[i].eventCalle%> - <em class="h5 text-mute"> <strong> <%- data.eventosCompletados[i].eventExtra%> </strong> </em>       
 
                 <br>
 
-                               Destino:    <% if (data.eventosCompletados[i].eventDestinoName != "") {%>
-                           <em class="h5 text-mute"> <strong> <%- data.eventosCompletados[i].eventDestinoName%> </strong> </em>  <br>  Tarifa: <%- data.eventosCompletados[i].eventPrice[0]%>  - <%- data.eventosCompletados[i].eventPrice[1]%>
-                           <%  } else{ %>
-                           S/I                           
-                        <% };  %> 
-                               <br> Status: <% if (data.eventosCompletados[i].status == 7) {%>
-                          <span class="label bg-success">Completado</span> 
-                           <%  } %> 
-                           <% if (data.eventosCompletados[i].status == 2) {%>
-                          <span class="label bg-danger">Cancelado - Pasajero</span> 
-                           <%  } %> 
-                           <% if (data.eventosCompletados[i].status == 4) {%>
-                          <span class="label bg-dark">Cancelado - TAXISTA</span> 
-                           <%  } %> 
+                           
 
 
 
-                              </p>
+                             
                           <div class="comment-action m-t-sm">
                             <a href="#" data-toggle="class" class="btn btn-default btn-xs active">
                               <i class="fa fa-star-o text-muted text"></i>
@@ -198,8 +157,11 @@
                         </div>
                       </section>
                     </article>
-                    <!-- .comment-reply -->
-                    <article id="comment-id-2" class="comment-item comment-reply">
+                   
+                    <% if (data.eventosCompletados[i].coment != "") {%>
+                           <!-- .comment-reply -->
+
+                                 <article id="comment-id-2" class="comment-item comment-reply">
                       <a class="pull-left thumb-sm avatar">
                         <img src="images/a8.png">
                       </a>
@@ -217,6 +179,11 @@
                       </section>
                     </article>
                     <!-- / .comment-reply -->
+                           
+
+                           <%  } %> 
+
+             
 
                     <% } %>    
                   

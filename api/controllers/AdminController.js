@@ -86,55 +86,58 @@ module.exports = {
     dashboard: function(req, res, next) {
 
         // Let's combine results of 3 queries
+
+        var today = moment().format('YYYY-MM-DD');
+        var _date = new Date(today);
+
+        console.log(_date);
+
         Q.all([
                 // let's find one user with name "Pavel"
+                //cuantos pasajero hay 
                 Passenger.count({
                     isActive: true
                 }).then(),
+                // Fin de pasajeto
 
+                //cuantos conductores hay
                 Driver.count({
                     isActive: true
                 }).then(),
+                //fIN DE CONDUCTORES
 
+                //cuantos conductores hay
                 Event.count({
-                    isActive: false,
-                    status: 7
+                    createdAt: { '>=': _date }
                 }).then(),
+                //fIN DE CONDUCTORES
 
-                Event.count({
 
-                    or: [{
 
-                            status: 7
-                        },
 
-                        {
-                            status: 4
-                        }
-                    ]
-                }).then(),
-
+                //ultimos servicios
                 Event.find({
                     isActive: false,
                     status: 7
                 }).sort({ createdAt: 'desc' }).then(),
+                //Ultimos Servicios
 
 
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Driver, Event, CanceladosTaxista , EventosCompletados) {
+            .spread(function(Passenger, Driver, totalHoy,   EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
-                console.log(EventosCompletados);
+                console.log(totalHoy);
                 res.view({
                     layout: 'admin/layoutAdmin.ejs',
                     user: req.session.passport.me,
                     data: {
                         pasajeros: Passenger,
-                        taxistas: Driver,
-                        CanceladosTaxista: CanceladosTaxista,
-                        serviciosCompletados: Event,
+                        taxistas: Driver, 
+                        totalHoy: totalHoy,             
+                        
                         eventosCompletados: EventosCompletados,
                     }
                 });
