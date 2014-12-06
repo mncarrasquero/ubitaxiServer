@@ -162,7 +162,29 @@
                           </span>
                         </header>
                         <div class="panel-body">
-                          <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
+                         <p class="m-t m-b">
+                               Origen: <%- data.eventosCompletados[i].eventSector%> - <%- data.eventosCompletados[i].eventCalle%> - <em class="h5 text-mute"> <strong> <%- data.eventosCompletados[i].eventExtra%> </strong> </em>       
+
+                <br>
+
+                               Destino:    <% if (data.eventosCompletados[i].eventDestinoName != "") {%>
+                           <em class="h5 text-mute"> <strong> <%- data.eventosCompletados[i].eventDestinoName%> </strong> </em>  <br>  Tarifa: <%- data.eventosCompletados[i].eventPrice[0]%>  - <%- data.eventosCompletados[i].eventPrice[1]%>
+                           <%  } else{ %>
+                           S/I                           
+                        <% };  %> 
+                               <br> Status: <% if (data.eventosCompletados[i].status == 7) {%>
+                          <span class="label bg-success">Completado</span> 
+                           <%  } %> 
+                           <% if (data.eventosCompletados[i].status == 2) {%>
+                          <span class="label bg-danger">Cancelado - Pasajero</span> 
+                           <%  } %> 
+                           <% if (data.eventosCompletados[i].status == 4) {%>
+                          <span class="label bg-dark">Cancelado - TAXISTA</span> 
+                           <%  } %> 
+
+
+
+                              </p>
                           <div class="comment-action m-t-sm">
                             <a href="#" data-toggle="class" class="btn btn-default btn-xs active">
                               <i class="fa fa-star-o text-muted text"></i>

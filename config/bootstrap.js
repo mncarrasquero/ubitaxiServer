@@ -27,7 +27,7 @@ uuid = require('node-uuid');
 var objFecha = new Date();
 var milisegundos = objFecha.getTime();
 // Restar 5 minutos . 
-objFecha.setTime( milisegundos - (2* 60000) );
+objFecha.setTime( milisegundos - (3* 60000) );
 
 		//date.toISOString(); //"2011-12-19T15:28:46.493Z"
 		
