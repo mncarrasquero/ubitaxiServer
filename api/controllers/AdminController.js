@@ -106,12 +106,29 @@ module.exports = {
                 }).then(),
                 //fIN DE CONDUCTORES
 
-                //cuantos conductores hay
+                //cuantos eventos hoy
                 Event.count({
-                    createdAt: { '>=': _date }
-                }).then(),
-                //fIN DE CONDUCTORES
+                    createdAt: { '>=': _date },
 
+                }).then(),
+                //fIN eventos hoy
+
+                 //cuantos eventos completados hoy
+                Event.count({
+                    createdAt: { '>=': _date },
+                     status: 7
+                }).then(),
+                //fIN 
+
+               
+
+                 //cuantos eventos cancelados por parka
+                Event.count({
+                    createdAt: { '>=': _date },
+                    status: 5
+
+                }).then(),
+                //fIN 
 
 
 
@@ -126,7 +143,7 @@ module.exports = {
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Driver, totalHoy,   EventosCompletados) {
+            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka,   EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
                 console.log(totalHoy);
@@ -136,8 +153,9 @@ module.exports = {
                     data: {
                         pasajeros: Passenger,
                         taxistas: Driver, 
-                        totalHoy: totalHoy,             
-                        
+                        totalHoy: totalHoy,  
+                        completadosHoy: completadosHoy,          
+                        sinRespuesta: canceladosParka,
                         eventosCompletados: EventosCompletados,
                     }
                 });
