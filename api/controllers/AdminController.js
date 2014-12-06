@@ -87,10 +87,10 @@ module.exports = {
 
         // Let's combine results of 3 queries
 
-        var today = moment().format('YYYY-MM-DD');
+        var today = moment().zone('-0430').format('YYYY-MM-DD');
         var _date = new Date(today);
 
-        console.log(_date);
+
 
         Q.all([
                 // let's find one user with name "Pavel"
@@ -131,6 +131,23 @@ module.exports = {
                 //fIN 
 
 
+                 //cuantos eventos cancelados pasajero
+                Event.count({
+                    createdAt: { '>=': _date },
+                    status: 2
+
+                }).then(),
+                //fIN 
+
+                 //cuantos eventos cancelados taxista
+                Event.count({
+                    createdAt: { '>=': _date },
+                    status: 4
+
+                }).then(),
+                //fIN 
+
+
 
                 //ultimos servicios
                 Event.find({
@@ -143,10 +160,10 @@ module.exports = {
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka,   EventosCompletados) {
+            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista,   EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
-                console.log(totalHoy);
+              
                 res.view({
                     layout: 'admin/layoutAdmin.ejs',
                     user: req.session.passport.me,
@@ -156,6 +173,8 @@ module.exports = {
                         totalHoy: totalHoy,  
                         completadosHoy: completadosHoy,          
                         sinRespuesta: canceladosParka,
+                        canceladoPasajero: canceladoPasajero,
+                        canceladoTaxista: canceladoTaxista,
                         eventosCompletados: EventosCompletados,
                     }
                 });
