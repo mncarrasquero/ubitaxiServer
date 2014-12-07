@@ -80,14 +80,14 @@
                       </div>
                     </div>
 
-                  </div> 
+                  </div> <%- data.canceladoTaxista.length %>
 
  <div class="row ">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         
                       <section class="panel b-a ">
                         <div class="panel-heading b-b">
-                          <span class="badge bg-warning pull-right">10</span>
+                          <span class="badge bg-warning pull-right"><%- data.eventosCompletados.length %></span>
                           <a href="#" class="font-bold">Ultimos Servicios</a>
                         </div>
                          <section class="panel-body slim-scroll" data-height="400" data-size="10px">
@@ -98,7 +98,17 @@
                           <a href="#" class="list-group-item clearfix">
                             <span class="pull-left thumb-sm avatar m-r">
                               <img src="<%- data.eventosCompletados[i].dataDriver.driverPicture %>" alt="...">
+                                <% if (data.eventosCompletados[i].exp == "positivo") {%>
+                              <i class="on b-white bottom"></i>
+                              <%  } %>
+                               <% if (data.eventosCompletados[i].exp == "negativo") {%>
+                              <i class="busy b-white bottom"></i>
+                              <%  } %>
+                              <% if (data.eventosCompletados[i].exp == null ) {%>
                               <i class="away b-white bottom"></i>
+                              <%  } %>
+
+                             
                             </span>
                             <span class="text-muted m-l-sm pull-right">
                             <i class="fa fa-clock-o"></i>
@@ -107,6 +117,8 @@
                             <span class="clear">
                               <span><%- data.eventosCompletados[i].dataDriver.driverName %> <%- data.eventosCompletados[i].dataDriver.driverLastname %></span>
                               <small class="text-muted clear text-ellipsis"><%- data.eventosCompletados[i].eventSector%> - <%- data.eventosCompletados[i].eventCalle%> </small>
+                              <small class="text-muted clear text-ellipsis"><%- data.eventosCompletados[i].passengerName%> <%- data.eventosCompletados[i].passengerLastname%> - "<%- data.eventosCompletados[i].coment%>" </small>
+                           
                             </span>
                           </a>
 
@@ -120,7 +132,7 @@
                       </section>
                     </div>
 
-                   <div class="col-md-4">
+                   <div class="col-md-3">
                       <section class="panel b-a">
                         <div class="panel-heading b-b">
                           <span class="badge bg-warning pull-right">10</span>
@@ -180,7 +192,7 @@
                     </div>
 
 
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                       <section class="panel b-a">
                         <div class="panel-heading b-b">
                           <span class="badge bg-warning pull-right">10</span>

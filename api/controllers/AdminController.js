@@ -108,40 +108,50 @@ module.exports = {
 
                 //cuantos eventos hoy
                 Event.count({
-                    createdAt: { '>=': _date },
+                    createdAt: {
+                        '>=': _date
+                    },
 
                 }).then(),
                 //fIN eventos hoy
 
-                 //cuantos eventos completados hoy
+                //cuantos eventos completados hoy
                 Event.count({
-                    createdAt: { '>=': _date },
-                     status: 7
+                    createdAt: {
+                        '>=': _date
+                    },
+                    status: 7
                 }).then(),
                 //fIN 
 
-               
 
-                 //cuantos eventos cancelados por parka
+
+                //cuantos eventos cancelados por parka
                 Event.count({
-                    createdAt: { '>=': _date },
+                    createdAt: {
+                        '>=': _date
+                    },
                     status: 5
 
                 }).then(),
                 //fIN 
 
 
-                 //cuantos eventos cancelados pasajero
+                //cuantos eventos cancelados pasajero
                 Event.count({
-                    createdAt: { '>=': _date },
+                    createdAt: {
+                        '>=': _date
+                    },
                     status: 2
 
                 }).then(),
                 //fIN 
 
-                 //cuantos eventos cancelados taxista
+                //cuantos eventos cancelados taxista
                 Event.count({
-                    createdAt: { '>=': _date },
+                    createdAt: {
+                        '>=': _date
+                    },
                     status: 4
 
                 }).then(),
@@ -153,25 +163,67 @@ module.exports = {
                 Event.find({
                     isActive: false,
                     status: 7
-                }).sort({ createdAt: 'desc' }).then(),
+                }).sort({
+                    createdAt: 'desc'
+                }).then(),
                 //Ultimos Servicios
+
+
 
 
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista,   EventosCompletados) {
+            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista, EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
-              
+             
+                /*
+                var data  = new Array();
+    var tempData = new Object();
+    var eventId = "";
+    var cont = "";
+
+                Event.find({
+                    groupBy: ['passengerId'],
+                    sum: ['status'],
+                    //limit: 20,
+                    //sort: 'count DESC'
+                }).exec(function(error, eventos) {
+                    if (error) res.json(error);
+                    for (var i = 0; i < eventos.length; i++) {
+                        
+                        //console.log(eventos[i].passengerId);
+                        eventId = eventos[i].passengerId;
+
+                        Event.count({
+                            passengerId:  eventos[i].passengerId,
+                             status: 7                         
+
+                        }).exec(function(err, contador) {
+                            cont = contador
+                          
+                            
+                        });
+                         data.push({"passengerId": eventId, "cantidad": contador }); 
+
+                    };
+                    console.log(data);
+                });
+
+*/
+
+
+
+
                 res.view({
                     layout: 'admin/layoutAdmin.ejs',
                     user: req.session.passport.me,
                     data: {
                         pasajeros: Passenger,
-                        taxistas: Driver, 
-                        totalHoy: totalHoy,  
-                        completadosHoy: completadosHoy,          
+                        taxistas: Driver,
+                        totalHoy: totalHoy,
+                        completadosHoy: completadosHoy,
                         sinRespuesta: canceladosParka,
                         canceladoPasajero: canceladoPasajero,
                         canceladoTaxista: canceladoTaxista,
@@ -220,82 +272,74 @@ module.exports = {
                 Passenger.findOne({
                     id: req.param('id'),
 
-                }).then(), 
+                }).then(),
 
-                 Event.find({
+                Event.find({
                     passengerId: req.param('id'),
-                     or: [{
-                            status: 7
-                        },
-                        {
-                            status: 4
-                        },
-                        {
-                            status: 2
-                        }
-                    ]
-                }).sort({ createdAt: 'desc' }).then(),                
+                    or: [{
+                        status: 7
+                    }, {
+                        status: 4
+                    }, {
+                        status: 2
+                    }]
+                }).sort({
+                    createdAt: 'desc'
+                }).then(),
 
                 Driver.count({
                     isActive: true
                 }).then(),
-            
+
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
-                            status: 7
-                        },
-                        {
-                            status: 4
-                        },
-                        {
-                            status: 2
-                        }
-                    ]
+                        status: 7
+                    }, {
+                        status: 4
+                    }, {
+                        status: 2
+                    }]
                 }).then(),
 
-                 Event.count({
+                Event.count({
                     passengerId: req.param('id'),
                     or: [{
-                            status: 7
+                        status: 7
                             //completados
-                        }                       
-                    ]
+                    }]
                 }).then(),
 
-                 Event.count({
+                Event.count({
                     passengerId: req.param('id'),
                     or: [{
-                            status: 2
+                        status: 2
                             //cancelado taxista
-                        }                       
-                    ]
+                    }]
                 }).then(),
 
-                 Event.count({
+                Event.count({
                     passengerId: req.param('id'),
                     or: [{
-                            status: 4
-                        //cancelado pasajero
-                        }                       
-                    ]
+                        status: 4
+                            //cancelado pasajero
+                    }]
                 }).then(),
 
 
-                 Event.count({
+                Event.count({
                     passengerId: req.param('id'),
                     or: [{
-                            status: 5
+                        status: 5
                             //por parka
-                        }                       
-                    ]
+                    }]
                 }).then(),
 
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta ) {
+            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
                 //console.log(Eventos);
@@ -311,7 +355,7 @@ module.exports = {
                         CaceladosPasajero: CaceladosPasajero,
                         CanceladoTaxista: CanceladoTaxista,
                         sinRespuesta: sinRespuesta,
-                        
+
                     }
                 });
 
