@@ -225,6 +225,14 @@
                             <span>Nuevo conductor</span>
                           </a>
                         </li>
+
+                         <li >
+                          <a href="/prospecto" class="auto">                                                        
+                            <i class="i i-dot"></i>
+
+                            <span>Prospectos</span>
+                          </a>
+                        </li>
                   
                  
                       </ul>
@@ -562,10 +570,12 @@
       </section>
     </section>
   </section>
-
+   <!--SCRIPTS-->
+   <script src="/js/dependencies/sails.io.js"></script>
+   <!--SCRIPTS END-->
   
   <!-- App -->
-  <script src="/js/dependencies/sails.io.js"></script>
+
   <script src="linker/js/app.js"></script>  
   <script src="linker/js/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="linker/js/app.plugin.js"></script>
@@ -577,6 +587,16 @@
   
     
         <%-scripts%>
+<script>
+ sails.sockets.join("req.socket", 'admin');
+io.socket.on('admin', function onServerSentEvent (msg) {
+ console.log(msg);
+});
+
+
+
+
+</script>
      
     
 </body>

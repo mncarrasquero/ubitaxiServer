@@ -86,6 +86,12 @@ module.exports = {
     dashboard: function(req, res, next) {
 
         // Let's combine results of 3 queries
+    console.log(sails.sockets.subscribers('admin'));
+
+      
+    sails.sockets.emit('admin', { msg: 'Hi there!' });
+ 
+   
 
         var today = moment().zone('-0430').format('YYYY-MM-DD');
         var _date = new Date(today);

@@ -89,6 +89,7 @@ module.exports.routes = {
 
 	//chequeo de estatus de pasaro inicial 
 	'post /api/ciudadNoDisponible': 'PassengerController.ciudadNoDisponible',
+	'post /api/newProspecto': 'DriverController.newProspecto',
 
 
 		//calificacion pasajero
