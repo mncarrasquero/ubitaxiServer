@@ -85,8 +85,8 @@ module.exports = {
 
     dashboard: function(req, res, next) {
 
-  
-   
+
+
 
         var today = moment().zone('-0430').format('YYYY-MM-DD');
         var _date = new Date(today);
@@ -178,7 +178,7 @@ module.exports = {
             .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista, EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
-             
+
                 /*
                 var data  = new Array();
     var tempData = new Object();
@@ -241,6 +241,15 @@ module.exports = {
 
     },
     createDriver: function(req, res) {
+
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+
+    },
+
+    prospectos: function(req, res) {
 
         res.view({
             layout: 'admin/layoutAdmin.ejs',
@@ -369,6 +378,57 @@ module.exports = {
 
     },
 
+    eventosAsk: function(req, res, next) {
+
+        var inicio = new Date(moment(req.param('inicio')).toISOString());
+        var fin = new Date(moment(req.param('fin')).toISOString());
+
+       
+        Event.find({
+                createdAt: {
+                    '>=': inicio,
+                    '<=': fin
+                },
+
+            })
+            .exec(function foundEvent(err, eventos) {
+
+                if (err) return res.serverError(err);
+                if (eventos) {
+                    for (var i = eventos.length - 1; i >= 0; i--) {
+                        delete eventos[i]["gpsPassengerLocation"];
+                         delete eventos[i]["gpsDriverLocation"];
+                          delete eventos[i]["dataTaximetro"];
+                          delete eventos[i]["eventPrice"];
+                          delete eventos[i]["dataPriceEvent"];
+                          
+                          
+
+                        
+                      
+                    };
+
+                    eventos = eventos.filter(function() {
+                        return true;
+                    });
+
+
+                    res.json({
+                        cant: eventos.length,
+                        status: true,
+                        data: eventos
+                    });
+
+
+                } else {
+                    //si el id no corresponde responde error y procedo a hacer logout en la app
+                    res.json({
+                        status: false,
+                        data: ""
+                    });
+                }
+            });
+    },
 
 
 

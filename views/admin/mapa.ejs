@@ -2,94 +2,264 @@
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 <script src="linker/js/maps/gmaps.js"></script>
 <script src="linker/js/maps/demo.js"></script>
+<script src="linker/js/moment-with-locales.min.js"></script>
+<script src="linker/js/daterangepicker.js"></script>
+
+
+
+
 <!--SCRIPTS END-->
 
+<link rel="stylesheet" type="text/css" media="all" href="linker/css/daterangepicker-bs3.css" />
 
 
-        
-  
-              <section class="hbox stretch">
-                <section id="mapa" style="min-height:240px;">          
-                </section>
-              <aside class="aside-md bg-primary dker" id="sidebar">
-    <section class="vbox animated fadeInRight">
-        <section class="scrollable">
 
-          
-            <h4 class="font-thin text-white padder m-b-none m-t">Taxistas</h4>
-            <div class="wrapper text-u-c"><strong>Online</strong>
-            </div>
-            <ul class="list-group no-bg no-borders auto m-b-none">
-                <li class="list-group-item">
-                    <div class="media">
-                        <a href="#" class="pull-right m-t-sm"> <span class="badge badge-empty">4</span> </a> <span class="pull-left thumb-sm avatar"> <img src="images/a3.png" alt="..." class="img-circle"> <i class="on b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Julien Reowo</a>
-                            </div> <small class="text-muted">14 sec ago</small> </div>
-                    </div>
-                </li>
-                <li class="list-group-item active">
-                    <div class="media">
-                        <a href="#" class="pull-right m-t-sm"> <span class="badge badge-empty">8</span> </a> <span class="pull-left thumb-sm avatar"> <img src="images/a2.png" alt="..."> <i class="on b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">James Conlan</a>
-                            </div> <small class="text-muted">15 min ago</small> </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="media">
-                        <a href="#" class="pull-right m-t-sm"> <span class="badge badge-empty">3</span> </a> <span class="pull-left thumb-sm avatar"> <img src="images/a1.png" alt="..."> <i class="busy b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Dan Doorack</a>
-                            </div> <small class="text-muted">30 min ago</small> </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="media">
-                        <a href="#" class="pull-right m-t-sm"> <span class="badge badge-empty">6</span> </a> <span class="pull-left thumb-sm avatar"> <img src="images/a0.png" alt="..."> <i class="away b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Lauren Taylor</a>
-                            </div> <small class="text-muted">40 min ago</small> </div>
-                    </div>
-                </li>
-            </ul>
-            <div class="wrapper text-u-c"><strong>Offline</strong>
-            </div>
-            <ul class="list-group no-bg no-borders auto">
-                <li class="list-group-item">
-                    <div class="media"> <a href="#" class="pull-right m-t-sm"><i class="i i-phone"></i></a> <span class="pull-left thumb-sm avatar"> <img src="images/a4.png" alt="..." class="img-circle"> <i class="off b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Julien Reowo</a>
-                            </div> <small class="text-muted">14 sec ago</small> </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="media"> <a href="#" class="pull-right m-t-sm"><i class="i i-phone"></i></a> <span class="pull-left thumb-sm avatar"> <img src="images/a5.png" alt="..."> <i class="off b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Amanda Conlan</a>
-                            </div> <small class="text-muted">15 min ago</small> </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="media"> <a href="#" class="pull-right m-t-sm"><i class="i i-phone"></i></a> <span class="pull-left thumb-sm avatar"> <img src="images/a6.png" alt="..."> <i class="off b-white bottom"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Dan Doorack</a>
-                            </div> <small class="text-muted">30 min ago</small> </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="media"> <a href="#" class="pull-right m-t-sm"><i class="i i-phone"></i></a> <span class="pull-left thumb-sm avatar"> <img src="images/a7.png" alt="..."> <i class="off b-white right"></i> </span>
-                        <div class="media-body">
-                            <div><a href="#">Lauren Taylor</a>
-                            </div> <small class="text-muted">40 min ago</small> </div>
-                    </div>
-                </li>
-            </ul>
-        </section>
+<section class="hbox stretch">
+    <section id="mapa" style="min-height:240px;">          
     </section>
+    <aside class="wrapper aside-lg">
+      <p class="text-lg font-thin">Selecione una fecha</p>
+
+      <div id="reportrange" class="input-sm form-control" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+          <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+          <span></span> <b class="caret"></b>
+      </div>
+      <br>
+
+      <h5 class="font-semibold">Servicios</h5>
+      <div class="line line-dashed"></div>
+      <div class="list-group auto dk">
+        <a href="#" class="list-group-item">
+          <span  id="completados" class="badge pull-right"></span>
+          Completados
+      </a>
+      <a href="#" class="list-group-item">
+          <span id="canceladoTaxista" class="badge pull-right"></span>
+          Cancelado Taxista
+      </a>
+      <a href="#" class="list-group-item">
+          <span id="canceladoPasajero" class="badge pull-right"></span>
+          Cancelado Pasajero
+      </a>
+      <a href="#" class="list-group-item">
+          <span id="busquedaCancelada" class="badge pull-right"></span>
+          Busqueda Cancelada
+      </a>
+      <a href="#" class="list-group-item">
+          <span id="sinRepuesta" class="badge pull-right"></span>
+          Sin respuesta
+      </a>
+      <a href="#" class="list-group-item">
+          <span id="eventosTotales" class="badge pull-right"></span>
+          Eventos Totales
+      </a>
+  </div> 
+
+
+
 </aside>
-              </section>
-                 
-   
-          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
-       
+</section>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+  var cb = function(start, end, label) {
+
+    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
+                    preguntar(start.toISOString(), end.toISOString() );
+                }
+
+                var optionSet1 = {
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment(),
+                    minDate: '01/01/2012',
+                    maxDate: '12/31/2014',
+                    dateLimit: { days: 60 },
+                    showDropdowns: true,
+                    showWeekNumbers: true,
+                    timePicker: false,
+                    timePickerIncrement: 1,
+                    timePicker12Hour: true,
+                    ranges: {
+                       'Hoy': [moment(), moment()],
+                       'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                       'Ultimos 7 Dias': [moment().subtract(6, 'days'), moment()],
+                       'Ultimos 30 Dias': [moment().subtract(29, 'days'), moment()],
+                       'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+                       'El mes pasado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                   },
+                   opens: 'left',
+                   buttonClasses: ['btn btn-default'],
+                   applyClass: 'btn-small btn-primary',
+                   cancelClass: 'btn-small',
+                   format: 'MM/DD/YYYY',
+                   separator: ' to ',
+                   locale: {
+                    applyLabel: 'Submit',
+                    cancelLabel: 'Clear',
+                    fromLabel: 'From',
+                    toLabel: 'To',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
+                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    firstDay: 1
+                }
+            };
+
+
+
+            $('#reportrange span').html(moment().subtract(29, 'days').format('MMM, D, YYYY') + ' - ' + moment().format('MMM D, YYYY'));
+
+            $('#reportrange').daterangepicker(optionSet1, cb);
+
+            $('#reportrange').on('show.daterangepicker', function() { console.log("show event fired"); });
+            $('#reportrange').on('hide.daterangepicker', function() { console.log("hide event fired"); });
+            $('#reportrange').on('apply.daterangepicker', function(ev, picker) { 
+                console.log("apply event fired, start/end dates are " 
+                  + picker.startDate.format('MMMM D, YYYY') 
+                  + " to " 
+                  + picker.endDate.format('MMMM D, YYYY')
+                  ); 
+            });
+            $('#reportrange').on('cancel.daterangepicker', function(ev, picker) { console.log("cancel event fired"); });
+
+
+
+
+        });
+
+
+
+
+
+function preguntar(inicio, fin ){
+    var completados =  0;
+    var canceladoTaxista =  0;
+    var canceladoPasajero =  0;
+    var busquedaCancelada  = 0;
+    var sinRepuesta = 0;
+
+    map.removeMarkers();
+    $.post("/api/eventosAsk",
+    {
+        inicio: inicio,
+        fin: fin
+    },
+    function(data,status){
+
+        for (var i = data.data.length - 1; i >= 0; i--) {
+            var evento = data.data[i]
+            //eventos copletados
+            if (evento.status == 7) {
+                completados = completados + 1;
+
+                map.addMarker({
+                    lat: evento.eventLocation.coordinates[1],
+                    lng: evento.eventLocation.coordinates[0],
+                    title: 'Lima',
+                    icon: '/linker/images/taxiGreen.png',
+                    click: function(e) {
+                        alert('You clicked in this marker');
+                    }
+                });
+            };
+                //eventos Cancelado taxista
+                if (evento.status == 4) {
+                    canceladoTaxista = canceladoTaxista + 1;
+
+                    map.addMarker({
+                        lat: evento.eventLocation.coordinates[1],
+                        lng: evento.eventLocation.coordinates[0],
+                        title: 'Lima',
+                        icon: '/linker/images/taxiRed.png',
+                        click: function(e) {
+                            alert('You clicked in this marker');
+                        }
+                    });
+
+
+                };
+
+                 //eventos Cancelado pasajero
+                 if (evento.status == 2) {
+                    canceladoPasajero = canceladoPasajero + 1;
+                    
+
+                    map.addMarker({
+                        lat: evento.eventLocation.coordinates[1],
+                        lng: evento.eventLocation.coordinates[0],
+                        title: 'Lima',
+                        icon: '/linker/images/pasajeroCancel.png',
+                        click: function(e) {
+                            alert('You clicked in this marker');
+                        }
+                    });
+
+                };
+
+                //eventos busqueda cancelada
+                if (evento.status == 3) {
+                    busquedaCancelada = busquedaCancelada + 1;
+
+                    map.addMarker({
+                        lat: evento.eventLocation.coordinates[1],
+                        lng: evento.eventLocation.coordinates[0],
+                        title: 'Lima',
+                        icon: '/linker/images/busquedaCancelada.png',
+                        click: function(e) {
+                            alert('You clicked in this marker');
+                        }
+                    });
+
+                };
+
+                //eventos sin respueta
+                if (evento.status == 5) {
+                    sinRepuesta = sinRepuesta + 1;
+                    
+                    map.addMarker({
+                        lat: evento.eventLocation.coordinates[1],
+                        lng: evento.eventLocation.coordinates[0],
+                        title: 'Lima',
+                        icon: '/linker/images/sinRepuesta.png',
+                        click: function(e) {
+                            alert('You clicked in this marker');
+                        }
+                    });
+
+
+
+                };              
+
+
+
+
+            };
+            console.log("Cantidad: " + data.cant + "\nStatus: " + data.status);
+
+            $("#eventosTotales").text(data.cant);
+            $("#completados").text(completados);
+            $("#canceladoTaxista").text(canceladoTaxista);
+            $("#canceladoPasajero").text(canceladoPasajero);
+            $("#busquedaCancelada").text(busquedaCancelada);
+            $("#sinRepuesta").text(sinRepuesta);
+
+            
+
+
+
+        });
+
+
+
+
+}
+</script>
+
+
+<a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+
+

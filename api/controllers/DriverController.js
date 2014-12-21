@@ -463,6 +463,24 @@ module.exports = {
         })
     },
 
+       listprospectos: function(req, res) {
+        Prospecto.find().exec(function(err, driver) {
+            if (err) {
+                return res.json({
+                    status: false,
+
+
+                });
+            } else {
+                return res.json({
+                    status: true,
+                    aaData: driver
+                });
+            }
+        });
+
+    },
+
 
 
     /**

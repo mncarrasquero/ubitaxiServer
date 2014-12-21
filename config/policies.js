@@ -44,6 +44,7 @@ module.exports.policies = {
   },
    AdminController: {
     '*': 'isAuthenticated',
+     eventosAsk: true
 
   },
   DriverController: {

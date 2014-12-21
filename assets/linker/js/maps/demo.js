@@ -22,7 +22,7 @@
                 //alert("Done!");
             }
         });
-
+        /*
         map.addMarker({
             lat: 37.77493,
             lng: -122.419416,
@@ -30,7 +30,7 @@
             infoWindow: {
                 content: 'Info content here...'
             }
-        });
+        });*/
 
 
     });
