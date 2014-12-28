@@ -78,9 +78,10 @@ module.exports = {
 		},
 		rating: {
 			type: 'string',
+			required: false
 		},
 		point: {
-			type: 'string',
+			type: 'integer',
 		},
 		platform: {
 			type: 'string',

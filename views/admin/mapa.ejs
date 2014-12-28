@@ -1,4 +1,4 @@
-<!-- SCRIPTS -->
+
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 <script src="linker/js/maps/gmaps.js"></script>
 <script src="linker/js/maps/demo.js"></script>
@@ -8,7 +8,6 @@
 
 
 
-<!--SCRIPTS END-->
 
 <link rel="stylesheet" type="text/css" media="all" href="linker/css/daterangepicker-bs3.css" />
 
@@ -70,6 +69,8 @@ $(document).ready(function() {
     $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                     //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
                     preguntar(start.toISOString(), end.toISOString() );
+
+                   
                 }
 
                 var optionSet1 = {
@@ -134,7 +135,6 @@ $(document).ready(function() {
 
 
 
-
 function preguntar(inicio, fin ){
     var completados =  0;
     var canceladoTaxista =  0;
@@ -159,11 +159,9 @@ function preguntar(inicio, fin ){
                 map.addMarker({
                     lat: evento.eventLocation.coordinates[1],
                     lng: evento.eventLocation.coordinates[0],
-                    title: 'Lima',
+                    title: evento.passengerName +' ' + evento.passengerLastname,
                     icon: '/linker/images/taxiGreen.png',
-                    click: function(e) {
-                        alert('You clicked in this marker');
-                    }
+                  
                 });
             };
                 //eventos Cancelado taxista
@@ -173,11 +171,9 @@ function preguntar(inicio, fin ){
                     map.addMarker({
                         lat: evento.eventLocation.coordinates[1],
                         lng: evento.eventLocation.coordinates[0],
-                        title: 'Lima',
+                        title:   evento.dataDriver.driverName +' ' + evento.dataDriver.driverLastname,
                         icon: '/linker/images/taxiRed.png',
-                        click: function(e) {
-                            alert('You clicked in this marker');
-                        }
+                     
                     });
 
 
@@ -191,11 +187,9 @@ function preguntar(inicio, fin ){
                     map.addMarker({
                         lat: evento.eventLocation.coordinates[1],
                         lng: evento.eventLocation.coordinates[0],
-                        title: 'Lima',
+                        title: evento.passengerName +' ' + evento.passengerLastname,
                         icon: '/linker/images/pasajeroCancel.png',
-                        click: function(e) {
-                            alert('You clicked in this marker');
-                        }
+                      
                     });
 
                 };
@@ -207,11 +201,9 @@ function preguntar(inicio, fin ){
                     map.addMarker({
                         lat: evento.eventLocation.coordinates[1],
                         lng: evento.eventLocation.coordinates[0],
-                        title: 'Lima',
+                        title: evento.passengerName +' ' + evento.passengerLastname,
                         icon: '/linker/images/busquedaCancelada.png',
-                        click: function(e) {
-                            alert('You clicked in this marker');
-                        }
+                      
                     });
 
                 };
@@ -223,11 +215,9 @@ function preguntar(inicio, fin ){
                     map.addMarker({
                         lat: evento.eventLocation.coordinates[1],
                         lng: evento.eventLocation.coordinates[0],
-                        title: 'Lima',
+                        title: evento.passengerName +' ' + evento.passengerLastname,
                         icon: '/linker/images/sinRepuesta.png',
-                        click: function(e) {
-                            alert('You clicked in this marker');
-                        }
+                      
                     });
 
 
@@ -238,7 +228,7 @@ function preguntar(inicio, fin ){
 
 
             };
-            console.log("Cantidad: " + data.cant + "\nStatus: " + data.status);
+            
 
             $("#eventosTotales").text(data.cant);
             $("#completados").text(completados);

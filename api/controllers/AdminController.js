@@ -4,14 +4,14 @@
  * @description :: Server-side logic for managing admins
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-var Q = require('q');
-module.exports = {
+ var Q = require('q');
+ module.exports = {
     listciudades: function(req, res, next) {
 
         Ciudades.find()
-            .exec(function foundUsers(err, city) {
+        .exec(function foundUsers(err, city) {
 
-                if (err) return res.serverError(err);
+            if (err) return res.serverError(err);
 
                 // Get an array of all the UserId2 values, using sails.util.pluck,
                 // which is essentially Lodash's _.pluck
@@ -163,7 +163,8 @@ module.exports = {
                 //ultimos servicios
                 Event.find({
                     isActive: false,
-                    status: 7
+                    status: 7,
+                    limit: 10,
                 }).sort({
                     createdAt: 'desc'
                 }).then(),
@@ -172,10 +173,10 @@ module.exports = {
 
 
 
-                // let's find one Lexus car
+                
 
-            ])
-            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista, EventosCompletados) {
+                ])
+.spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista, EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
 
@@ -217,67 +218,67 @@ module.exports = {
 
 
 
-                res.view({
-                    layout: 'admin/layoutAdmin.ejs',
-                    user: req.session.passport.me,
-                    data: {
-                        pasajeros: Passenger,
-                        taxistas: Driver,
-                        totalHoy: totalHoy,
-                        completadosHoy: completadosHoy,
-                        sinRespuesta: canceladosParka,
-                        canceladoPasajero: canceladoPasajero,
-                        canceladoTaxista: canceladoTaxista,
-                        eventosCompletados: EventosCompletados,
-                    }
-                });
+res.view({
+    layout: 'admin/layoutAdmin.ejs',
+    user: req.session.passport.me,
+    data: {
+        pasajeros: Passenger,
+        taxistas: Driver,
+        totalHoy: totalHoy,
+        completadosHoy: completadosHoy,
+        sinRespuesta: canceladosParka,
+        canceladoPasajero: canceladoPasajero,
+        canceladoTaxista: canceladoTaxista,
+        eventosCompletados: EventosCompletados,
+    }
+});
 
-            }).fail(function(reason) {
+}).fail(function(reason) {
                 // output reason of failure
                 res.json(reason);
             });
 
 
 
-    },
-    createDriver: function(req, res) {
+},
+createDriver: function(req, res) {
 
-        res.view({
-            layout: 'admin/layoutAdmin.ejs',
-            user: req.session.passport.me
-        });
+    res.view({
+        layout: 'admin/layoutAdmin.ejs',
+        user: req.session.passport.me
+    });
 
-    },
+},
 
-    prospectos: function(req, res) {
+prospectos: function(req, res) {
 
-        res.view({
-            layout: 'admin/layoutAdmin.ejs',
-            user: req.session.passport.me
-        });
+    res.view({
+        layout: 'admin/layoutAdmin.ejs',
+        user: req.session.passport.me
+    });
 
-    },
+},
 
-    listDriver: function(req, res) {
+listDriver: function(req, res) {
 
-        res.view({
-            layout: 'admin/layoutAdmin.ejs',
-            user: req.session.passport.me
-        });
+    res.view({
+        layout: 'admin/layoutAdmin.ejs',
+        user: req.session.passport.me
+    });
 
-    },
+},
 
-    listPassenger: function(req, res) {
+listPassenger: function(req, res) {
 
-        res.view({
-            layout: 'admin/layoutAdmin.ejs',
-            user: req.session.passport.me
-        });
+    res.view({
+        layout: 'admin/layoutAdmin.ejs',
+        user: req.session.passport.me
+    });
 
-    },
+},
 
-    viewpassenger: function(req, res) {
-        Q.all([
+viewpassenger: function(req, res) {
+    Q.all([
                 // let's find one user with name "Pavel"
                 Passenger.findOne({
                     id: req.param('id'),
@@ -318,24 +319,24 @@ module.exports = {
                     or: [{
                         status: 7
                             //completados
-                    }]
-                }).then(),
+                        }]
+                    }).then(),
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
                         status: 2
                             //cancelado taxista
-                    }]
-                }).then(),
+                        }]
+                    }).then(),
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
                         status: 4
                             //cancelado pasajero
-                    }]
-                }).then(),
+                        }]
+                    }).then(),
 
 
                 Event.count({
@@ -343,13 +344,13 @@ module.exports = {
                     or: [{
                         status: 5
                             //por parka
-                    }]
-                }).then(),
+                        }]
+                    }).then(),
 
                 // let's find one Lexus car
 
-            ])
-            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
+                ])
+.spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
                 //console.log(Eventos);
@@ -376,15 +377,118 @@ module.exports = {
 
 
 
-    },
+        },
 
-    eventosAsk: function(req, res, next) {
 
-        var inicio = new Date(moment(req.param('inicio')).toISOString());
-        var fin = new Date(moment(req.param('fin')).toISOString());
+        viewdriver: function(req, res) {
+    Q.all([
+                // let's find one user with name "Pavel"
+                Passenger.findOne({
+                    id: req.param('id'),
 
-       
-        Event.find({
+                }).then(),
+
+                Event.find({
+                    passengerId: req.param('id'),
+                    or: [{
+                        status: 7
+                    }, {
+                        status: 4
+                    }, {
+                        status: 2
+                    }]
+                }).sort({
+                    createdAt: 'desc'
+                }).then(),
+
+                Driver.count({
+                    isActive: true
+                }).then(),
+
+
+                Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                        status: 7
+                    }, {
+                        status: 4
+                    }, {
+                        status: 2
+                    }]
+                }).then(),
+
+                Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                        status: 7
+                            //completados
+                        }]
+                    }).then(),
+
+                Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                        status: 2
+                            //cancelado taxista
+                        }]
+                    }).then(),
+
+                Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                        status: 4
+                            //cancelado pasajero
+                        }]
+                    }).then(),
+
+
+                Event.count({
+                    passengerId: req.param('id'),
+                    or: [{
+                        status: 5
+                            //por parka
+                        }]
+                    }).then(),
+
+                // let's find one Lexus car
+
+                ])
+.spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
+                // Output results as json, but you can do whatever you want here
+                //res.json([user, car, phone]);
+                //console.log(Eventos);
+                res.view({
+                    layout: 'admin/layoutAdmin.ejs',
+                    user: req.session.passport.me,
+                    data: {
+                        pasajero: Passenger,
+                        taxistas: Driver,
+                        eventos: Eventos,
+                        totalEvent: EventCount,
+                        Completados: Completados,
+                        CaceladosPasajero: CaceladosPasajero,
+                        CanceladoTaxista: CanceladoTaxista,
+                        sinRespuesta: sinRespuesta,
+
+                    }
+                });
+
+            }).fail(function(reason) {
+                // output reason of failure
+                res.json(reason);
+            });
+
+
+
+        },
+
+        eventosAsk: function(req, res, next) {
+
+            var inicio = new Date(moment(req.param('inicio')).toISOString());
+            var fin = new Date(moment(req.param('fin')).toISOString());
+
+
+            Event.find({
                 createdAt: {
                     '>=': inicio,
                     '<=': fin
@@ -397,15 +501,15 @@ module.exports = {
                 if (eventos) {
                     for (var i = eventos.length - 1; i >= 0; i--) {
                         delete eventos[i]["gpsPassengerLocation"];
-                         delete eventos[i]["gpsDriverLocation"];
-                          delete eventos[i]["dataTaximetro"];
-                          delete eventos[i]["eventPrice"];
-                          delete eventos[i]["dataPriceEvent"];
-                          
-                          
+                        delete eventos[i]["gpsDriverLocation"];
+                        delete eventos[i]["dataTaximetro"];
+                        delete eventos[i]["eventPrice"];
+                        delete eventos[i]["dataPriceEvent"];
+
+
 
                         
-                      
+
                     };
 
                     eventos = eventos.filter(function() {
@@ -428,14 +532,16 @@ module.exports = {
                     });
                 }
             });
-    },
+},
 
 
 
-    detailNewDriver: function(req, res) {
-        Driver.findOne({
-            id: req.param('id')
-        }, function(err, driver) {
+
+
+detailNewDriver: function(req, res) {
+    Driver.findOne({
+        id: req.param('id')
+    }, function(err, driver) {
             // Send internal db errors back up (passes through back to our main app)
             if (err) {
 
@@ -455,13 +561,94 @@ module.exports = {
                 });
             };
 
-
-
         });
+},
+
+
+pasajeroEventos: function(req, res, next){
+    var sort_by = function(field, reverse, primer){
+
+   var key = primer ? 
+       function(x) {return primer(x[field])} : 
+       function(x) {return x[field]};
+
+   reverse = [-1, 1][+!!reverse];
+
+   return function (a, b) {
+       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+     } 
+}
+
+
+    var inicio = new Date(moment().subtract(14, 'days').toISOString());
+    var fin = new Date(moment().toISOString());
+    var status =  7 ;
+
+    Event.find({
+        status : status,
+        createdAt: {
+            '>=': inicio,
+            '<=': fin
+        },
+
+    })
+    .exec(function foundEvent(err, eventos) {
+
+        if (err) return res.serverError(err);
+        if (eventos) {
+            for (var i = eventos.length - 1; i >= 0; i--) {
+                delete eventos[i]["gpsPassengerLocation"];
+                delete eventos[i]["gpsDriverLocation"];
+                delete eventos[i]["dataTaximetro"];
+                delete eventos[i]["eventPrice"];
+                delete eventos[i]["dataPriceEvent"];                   
+
+            };
+
+            eventos = eventos.filter(function() {
+                return true;
+            });
 
 
 
-    },
+            var newFoods = _.chain( eventos ).reduce(function( memo, evento ) {
+              memo[ evento.passengerId ] = memo[ evento.passengerId ] || [];
+              memo[ evento.passengerId ].push( evento );
+             //  memo[ evento.passengerId ].push( evento.passengerName );
+              return memo;
+          }, {}).map(function( eventos, id  ) {
+            return {
+                id: id,
+                passengerName: eventos[0].passengerName + " " + eventos[0].passengerLastname ,
+                total: eventos.length
+            };
+        }).value();
+
+
+          newFoods.sort(sort_by('total', false, parseInt));
+
+            return newFoods;
+            /*
+          res.json({
+         
+            data: newFoods
+        });
+*/
+
+
+      } else {
+                    //si el id no corresponde responde error y procedo a hacer logout en la app
+                    res.json({
+                        status: false,
+                        data: ""
+                    });
+                }
+            });
+
+
+
+
+}
 
 
 

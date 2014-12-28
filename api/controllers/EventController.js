@@ -695,11 +695,27 @@ module.exports = {
 				};
 				if (evento.status != 8) {
 					//x209 servicio cancelado sin penalizacion
-					res.json({
+						Event.update({
+						id: eventId
+					}, {
+						status: 4,
+						isActive: false,
+						razonCancel: razonCancel
+					}).exec(function afterwards(err, updated) {
+						if (err) {
+							// handle error here- e.g. `res.serverError(err);`
+							return;
+						}
+
+						res.json({
 						status: true,
 						error: "x209",
 						mensaje: "Servicio cancelado"
 					});
+					});
+
+					
+					
 
 
 

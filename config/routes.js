@@ -22,6 +22,7 @@ module.exports.routes = {
     'get /listciudades': 'AdminController.listciudades',
 
     'get /viewpassenger': 'AdminController.viewpassenger',
+    'get /viewdriver': 'AdminController.viewdriver',
 
 
     'get /api/test1': 'AdminController.test1',
@@ -73,6 +74,10 @@ module.exports.routes = {
     'post /api/chequeoDriver': 'DriverController.chequeoDriver',
 
     'post /api/eventosAsk': 'AdminController.eventosAsk',
+
+    'post /api/pasajeroEventos': 'AdminController.pasajeroEventos',
+
+    
     
 
 
