@@ -927,6 +927,7 @@ module.exports = {
 		var taximetroTotal = req.param('taximetroTotal');
 		var taximetroMin = req.param('taximetroMin');
 		var taximetroKm = req.param('taximetroKm');
+		var cobrado = req.param('cobrado');
 		Event.findOne({
 			id: eventId,
 
@@ -947,6 +948,7 @@ module.exports = {
 						id: eventId
 					}, {
 						status: 7,
+						cobrado: cobrado,
 						isActive: false,
 						dataTaximetro: {
 							taximetroTotal: taximetroTotal,
