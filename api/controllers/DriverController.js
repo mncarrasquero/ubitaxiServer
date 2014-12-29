@@ -12,12 +12,10 @@ module.exports = {
 
 
     chequeoDriver: function(req, res) {
-
         /*
          * en chequeo cuenta. se verifica el estatus del pasajero. y se cumple si hay conexion a internet
          * la respuesta es true con la data del pasajero. menos la clave. se busca con la informacion del id
          */
-
         Driver.findOne({
             id: req.param('id')
         }).exec(function(err, user) {
@@ -463,7 +461,7 @@ module.exports = {
         })
     },
 
-       listprospectos: function(req, res) {
+    listprospectos: function(req, res) {
         Prospecto.find().exec(function(err, driver) {
             if (err) {
                 return res.json({

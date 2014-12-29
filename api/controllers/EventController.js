@@ -346,6 +346,9 @@ module.exports = {
 
 		var lat = parseFloat(req.param('lat'));
 		var lng = parseFloat(req.param('lng'));
+		var trueHeading = parseFloat(req.param('trueHeading')) || 0;
+
+		
 		var idDriver = req.param('id');
 		//var maxDistance = parseInt(req.param('maxDistance')) || 2;
 		var maxDistance = parseInt(req.param('maxDistance')) || 7;
@@ -376,6 +379,7 @@ module.exports = {
 						lastPosition: {
 							type: "Point",
 							status: "disponible",
+							trueHeading: trueHeading,
 							date: new Date(),
 							coordinates: [parseFloat(req.param('lng')), parseFloat(req.param('lat'))]
 						},
@@ -714,7 +718,7 @@ module.exports = {
 					});
 					});
 
-					
+
 					
 
 
@@ -997,6 +1001,7 @@ module.exports = {
 		var idDriver = req.param('idDriver');
 		var lat = req.param('lat');
 		var lng = req.param('lng');
+		var trueHeading = parseFloat(req.param('trueHeading')) || 0;
 
 
 		Event.findOne()
@@ -1028,12 +1033,13 @@ module.exports = {
 						if (evento.gpsDriverLocation) {
 
 							var data = evento.gpsDriverLocation;
-							var newData = [{
+							var newData = {
 								date: new Date(),
 								lat: parseFloat(lat),
 								lng: parseFloat(lng),
+								trueHeading: trueHeading,
 								flag: flag
-							}];
+							};
 							data.push(newData);
 
 						} else {
@@ -1041,6 +1047,7 @@ module.exports = {
 								date: new Date(),
 								lat: parseFloat(lat),
 								lng: parseFloat(lng),
+								trueHeading: trueHeading,
 								flag: flag
 							}];
 
