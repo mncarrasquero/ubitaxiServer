@@ -107,6 +107,13 @@ module.exports.routes = {
 
     'post /api/testEmail': 'EventController.testEmail',
 
+
+    'post /api/addPoint': 'EventController.addPoint',
+
+
+
+
+    
     //evento crear cancelar preguntar
     '/createEvent': {
         controller: 'event',
