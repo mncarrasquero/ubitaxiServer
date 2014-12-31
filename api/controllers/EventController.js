@@ -747,6 +747,27 @@ module.exports = {
 
 
 
+        if (experiencia == "positivo") {
+
+            Event.findOne({
+                id: eventId,
+            }).exec(function(err, evento) {
+                if (err) res.json({
+                    error: 'DB error'
+                }, 500);
+                if (evento) {
+                	// _id: evento.dataDriver.driverId
+                	
+                 
+
+
+                }
+            });
+
+
+
+
+        };
 
         Event.findOne({
             id: eventId,
