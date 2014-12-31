@@ -801,7 +801,7 @@ module.exports = {
                     }).exec(function(err, driver) {
                         data = parseInt(driver.point) + 50;
                         Driver.update({
-                            id: driverId
+                            id: evento.dataDriver['driverId']
                         }, {
                             point: data,
 
@@ -818,12 +818,12 @@ module.exports = {
 
                 if (experiencia == "negativo") {
                     Driver.findOne({
-                          id: evento.dataDriver[0].driverId,
+                          id: evento.dataDriver['driverId'],
 
                     }).exec(function(err, driver) {
                         data = parseInt(driver.point) - 75;
                         Driver.update({
-                            id: driverId
+                            id: evento.dataDriver['driverId']
                         }, {
                             point: data,
 
