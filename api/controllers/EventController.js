@@ -790,6 +790,7 @@ module.exports = {
             }, 500);
             if (evento) {
 
+            	console.log(evento);
 
                 //evaluar la calificancion para asignar puntos
 
@@ -806,7 +807,7 @@ module.exports = {
 
                         }).exec(function afterwards(err, updated) {
                           
-
+                        	console.log("actualizado positivo " + data);
                            
                         });
 
@@ -828,7 +829,7 @@ module.exports = {
 
                         }).exec(function afterwards(err, updated) {
                           
-
+                        	console.log("actualizado positivo " + data);
                            
                         });
 
