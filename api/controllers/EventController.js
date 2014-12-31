@@ -791,12 +791,12 @@ module.exports = {
             if (evento) {
 
             	console.log(evento);
-
+            	console.log("Id de driver es " + evento.dataDriver['driverId'] );
                 //evaluar la calificancion para asignar puntos
 
                 if (experiencia == "positivo") {
                     Driver.findOne({
-                        id: evento.dataDriver.driverId,
+                        id: evento.dataDriver['driverId'],
 
                     }).exec(function(err, driver) {
                         data = parseInt(driver.point) + 50;
@@ -818,7 +818,7 @@ module.exports = {
 
                 if (experiencia == "negativo") {
                     Driver.findOne({
-                        id: evento.dataDriver.driverId,
+                          id: evento.dataDriver[0].driverId,
 
                     }).exec(function(err, driver) {
                         data = parseInt(driver.point) - 75;
