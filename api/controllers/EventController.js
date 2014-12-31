@@ -749,18 +749,34 @@ module.exports = {
 
         if (experiencia == "positivo") {
 
+            Event.findOne({
+                id: eventId,
+            }).exec(function(err, evento) {
+                    if (err) res.json({
+                        error: 'DB error'
+                    }, 500);
+                    if (evento) {
 
-            Event.native(function(err, collection) {
-                collection.update({
-                    _id: eventId
-                }, {
-                    $inc: {
-                        point: 50,
+                        Driver.native(function(err, collection) {
+                            collection.update({
+                                _id: evento.dataDriver.driverId
+                            }, {
+                                $inc: {
+                                    point: 50,
+
+                                }
+                            })
+
+                        });
+
 
                     }
-                })
 
-            });
+                )
+            }
+
+
+
 
         };
 
