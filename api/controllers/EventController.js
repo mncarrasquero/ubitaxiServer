@@ -59,7 +59,7 @@ module.exports = {
                     response: "Evento creado.",
                     data: evento
                 });
-                console.log("User created:", evento);
+               // console.log("User created:", evento);
             }
         });
 
