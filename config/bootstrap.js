@@ -73,12 +73,7 @@ module.exports.bootstrap = function(cb) {
                             if (err) {
                                 console.log(err);
                             } else {
-                                res.json({
-                                    status: true,
-                                    date: new Date(),
-                                    state: state,
-                                    rank: nuevo
-                                });
+                            
                             }
                         }
                     );
