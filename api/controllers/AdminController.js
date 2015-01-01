@@ -567,40 +567,7 @@ module.exports = {
         });
     },
 
-    rankGenerator: function(req, res) {
-        //este generator corre  cada 1 hora por servicio, va a generar un json  directo con datos basicos de los conductores 
-        // para un facil acceso de la tabla de posiciones.
-        Driver.find({
-                isActive: true,
 
-            })
-            .exec(function foundDriver(err, drivers) {
-
-                if (err) return res.serverError(err);
-                if (drivers) {
-                    for (var i = drivers.length - 1; i >= 0; i--) {
-                        arr.push({
-                            key: oFullResponse.results[i].label,
-                            sortable: true,
-                            resizeable: true
-                        });
-
-                    };
-
-
-
-
-                } else {
-                    //si el id no corresponde responde error y procedo a hacer logout en la app
-                    res.json({
-                        status: false,
-                        data: ""
-                    });
-                }
-            });
-
-
-    },
 
 
     findMyRank: function(req, res, next) {
@@ -656,13 +623,6 @@ module.exports = {
 
 
         });
-
-
-
-
-
-
-
     },
 
     generateRank: function(req, res) {
@@ -684,14 +644,11 @@ module.exports = {
         }
 
 
-        var state = req.param('state');
+        var state = "Zulia";
 
         Driver.find({
 
             isActive: true,
-            /* point: {
-                 '>': 0
-             },*/
             state: state
         }).exec(function(err, drivers) {
 
