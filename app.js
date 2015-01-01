@@ -22,8 +22,9 @@
 (function() {
 
   var sails;
-    
+    var  newrelic;  
   try {
+    newrelic = require('newrelic');
     sails = require('sails');
   } catch (e) {
     console.error('To run an app using `node app.js`, you usually need to have a version of `sails` installed in the same directory as your app.');
