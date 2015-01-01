@@ -298,6 +298,8 @@ module.exports = {
                     message: 'Este equipo no esta registrado en nuestro sistema',
                 });
             } else {
+                var point = "";
+                var pos = "";
                 if (driver.ci == req.param('ci')) {
                     Driver.update({
                         emei: req.param('imei'),
@@ -310,10 +312,51 @@ module.exports = {
                             return;
                         }
                     });
-                    return res.json({
-                        status: true,
-                        data: driver
+
+                    //buscar el rank
+
+                    Rank.find({
+                        state: driver.state
+                    }).exec(function(err, data) {
+
+
+                        if (data != "") {
+
+                            var found = false;
+
+                            for (var i = 0; i < data[0].rank.length; i++) {
+                                if (data[0].rank[i].id == driver.id) {
+                                    found = true;
+                                    point = data[0].rank[i].point;
+                                    pos = i + 1;
+                                    break;
+                                }
+                            }
+
+                            return res.json({
+                                status: true,
+                                pos: pos,
+                                point: point,
+
+                                data: driver
+                            });
+
+
+
+                        } else {
+                            point = "";
+                            pos = "";
+
+                        };
+
+
+
                     });
+                    //fin de buscar el rank
+
+
+
+
 
                 } else {
 

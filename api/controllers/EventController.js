@@ -790,8 +790,6 @@ module.exports = {
             }, 500);
             if (evento) {
 
-            	console.log(evento);
-            	console.log("Id de driver es " + evento.dataDriver['driverId'] );
                 //evaluar la calificancion para asignar puntos
 
                 if (experiencia == "positivo") {
@@ -807,7 +805,7 @@ module.exports = {
 
                         }).exec(function afterwards(err, updated) {
                           
-                        	console.log("actualizado positivo " + data);
+                        
                            
                         });
 
@@ -829,7 +827,7 @@ module.exports = {
 
                         }).exec(function afterwards(err, updated) {
                           
-                        	console.log("actualizado positivo " + data);
+                        
                            
                         });
 

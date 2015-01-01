@@ -45,7 +45,9 @@ module.exports.policies = {
    AdminController: {
     '*': 'isAuthenticated',
      eventosAsk: true,
-     pasajeroEventos: true
+     pasajeroEventos: true,
+     generateRank: true,
+     findMyRank: true
 
   },
   DriverController: {

@@ -30,6 +30,14 @@ module.exports.routes = {
     'get /mapa': 'AdminController.mapa',
 
 
+    'post /api/generateRank': 'AdminController.generateRank',
+
+    'post /api/findMyRank': 'AdminController.findMyRank',
+
+
+    
+
+
 
 
     'post /createDriver': 'DriverController.create',

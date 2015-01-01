@@ -4,14 +4,14 @@
  * @description :: Server-side logic for managing admins
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
- var Q = require('q');
- module.exports = {
+var Q = require('q');
+module.exports = {
     listciudades: function(req, res, next) {
 
         Ciudades.find()
-        .exec(function foundUsers(err, city) {
+            .exec(function foundUsers(err, city) {
 
-            if (err) return res.serverError(err);
+                if (err) return res.serverError(err);
 
                 // Get an array of all the UserId2 values, using sails.util.pluck,
                 // which is essentially Lodash's _.pluck
@@ -173,10 +173,10 @@
 
 
 
-                
 
-                ])
-.spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista, EventosCompletados) {
+
+            ])
+            .spread(function(Passenger, Driver, totalHoy, completadosHoy, canceladosParka, canceladoPasajero, canceladoTaxista, EventosCompletados) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
 
@@ -218,67 +218,70 @@
 
 
 
-res.view({
-    layout: 'admin/layoutAdmin.ejs',
-    user: req.session.passport.me,
-    data: {
-        pasajeros: Passenger,
-        taxistas: Driver,
-        totalHoy: totalHoy,
-        completadosHoy: completadosHoy,
-        sinRespuesta: canceladosParka,
-        canceladoPasajero: canceladoPasajero,
-        canceladoTaxista: canceladoTaxista,
-        eventosCompletados: EventosCompletados,
-    }
-});
+                res.view({
+                    layout: 'admin/layoutAdmin.ejs',
+                    user: req.session.passport.me,
+                    data: {
+                        pasajeros: Passenger,
+                        taxistas: Driver,
+                        totalHoy: totalHoy,
+                        completadosHoy: completadosHoy,
+                        sinRespuesta: canceladosParka,
+                        canceladoPasajero: canceladoPasajero,
+                        canceladoTaxista: canceladoTaxista,
+                        eventosCompletados: EventosCompletados,
+                    }
+                });
 
-}).fail(function(reason) {
+            }).fail(function(reason) {
                 // output reason of failure
                 res.json(reason);
             });
 
 
 
-},
-createDriver: function(req, res) {
+    },
 
-    res.view({
-        layout: 'admin/layoutAdmin.ejs',
-        user: req.session.passport.me
-    });
 
-},
 
-prospectos: function(req, res) {
+    createDriver: function(req, res) {
 
-    res.view({
-        layout: 'admin/layoutAdmin.ejs',
-        user: req.session.passport.me
-    });
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
 
-},
+    },
 
-listDriver: function(req, res) {
+    prospectos: function(req, res) {
 
-    res.view({
-        layout: 'admin/layoutAdmin.ejs',
-        user: req.session.passport.me
-    });
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
 
-},
+    },
 
-listPassenger: function(req, res) {
+    listDriver: function(req, res) {
 
-    res.view({
-        layout: 'admin/layoutAdmin.ejs',
-        user: req.session.passport.me
-    });
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
 
-},
+    },
 
-viewpassenger: function(req, res) {
-    Q.all([
+    listPassenger: function(req, res) {
+
+        res.view({
+            layout: 'admin/layoutAdmin.ejs',
+            user: req.session.passport.me
+        });
+
+    },
+
+    viewpassenger: function(req, res) {
+        Q.all([
                 // let's find one user with name "Pavel"
                 Passenger.findOne({
                     id: req.param('id'),
@@ -319,24 +322,24 @@ viewpassenger: function(req, res) {
                     or: [{
                         status: 7
                             //completados
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
                         status: 2
                             //cancelado taxista
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
                         status: 4
                             //cancelado pasajero
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
 
                 Event.count({
@@ -344,13 +347,13 @@ viewpassenger: function(req, res) {
                     or: [{
                         status: 5
                             //por parka
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
                 // let's find one Lexus car
 
-                ])
-.spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
+            ])
+            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
                 //console.log(Eventos);
@@ -377,11 +380,11 @@ viewpassenger: function(req, res) {
 
 
 
-        },
+    },
 
 
-        viewdriver: function(req, res) {
-    Q.all([
+    viewdriver: function(req, res) {
+        Q.all([
                 // let's find one user with name "Pavel"
                 Passenger.findOne({
                     id: req.param('id'),
@@ -422,24 +425,24 @@ viewpassenger: function(req, res) {
                     or: [{
                         status: 7
                             //completados
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
                         status: 2
                             //cancelado taxista
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
                 Event.count({
                     passengerId: req.param('id'),
                     or: [{
                         status: 4
                             //cancelado pasajero
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
 
                 Event.count({
@@ -447,13 +450,13 @@ viewpassenger: function(req, res) {
                     or: [{
                         status: 5
                             //por parka
-                        }]
-                    }).then(),
+                    }]
+                }).then(),
 
                 // let's find one Lexus car
 
-                ])
-.spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
+            ])
+            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
                 //console.log(Eventos);
@@ -480,15 +483,15 @@ viewpassenger: function(req, res) {
 
 
 
-        },
+    },
 
-        eventosAsk: function(req, res, next) {
+    eventosAsk: function(req, res, next) {
 
-            var inicio = new Date(moment(req.param('inicio')).toISOString());
-            var fin = new Date(moment(req.param('fin')).toISOString());
+        var inicio = new Date(moment(req.param('inicio')).toISOString());
+        var fin = new Date(moment(req.param('fin')).toISOString());
 
 
-            Event.find({
+        Event.find({
                 createdAt: {
                     '>=': inicio,
                     '<=': fin
@@ -508,7 +511,7 @@ viewpassenger: function(req, res) {
 
 
 
-                        
+
 
                     };
 
@@ -532,16 +535,16 @@ viewpassenger: function(req, res) {
                     });
                 }
             });
-},
+    },
 
 
 
 
 
-detailNewDriver: function(req, res) {
-    Driver.findOne({
-        id: req.param('id')
-    }, function(err, driver) {
+    detailNewDriver: function(req, res) {
+        Driver.findOne({
+            id: req.param('id')
+        }, function(err, driver) {
             // Send internal db errors back up (passes through back to our main app)
             if (err) {
 
@@ -562,73 +565,264 @@ detailNewDriver: function(req, res) {
             };
 
         });
-},
+    },
+
+    rankGenerator: function(req, res) {
+        //este generator corre  cada 1 hora por servicio, va a generar un json  directo con datos basicos de los conductores 
+        // para un facil acceso de la tabla de posiciones.
+        Driver.find({
+                isActive: true,
+
+            })
+            .exec(function foundDriver(err, drivers) {
+
+                if (err) return res.serverError(err);
+                if (drivers) {
+                    for (var i = drivers.length - 1; i >= 0; i--) {
+                        arr.push({
+                            key: oFullResponse.results[i].label,
+                            sortable: true,
+                            resizeable: true
+                        });
+
+                    };
 
 
-pasajeroEventos: function(req, res, next){
-    var sort_by = function(field, reverse, primer){
-
-   var key = primer ? 
-       function(x) {return primer(x[field])} : 
-       function(x) {return x[field]};
-
-   reverse = [-1, 1][+!!reverse];
-
-   return function (a, b) {
-       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-     } 
-}
 
 
-    var inicio = new Date(moment().subtract(14, 'days').toISOString());
-    var fin = new Date(moment().toISOString());
-    var status =  7 ;
-
-    Event.find({
-        status : status,
-        createdAt: {
-            '>=': inicio,
-            '<=': fin
-        },
-
-    })
-    .exec(function foundEvent(err, eventos) {
-
-        if (err) return res.serverError(err);
-        if (eventos) {
-            for (var i = eventos.length - 1; i >= 0; i--) {
-                delete eventos[i]["gpsPassengerLocation"];
-                delete eventos[i]["gpsDriverLocation"];
-                delete eventos[i]["dataTaximetro"];
-                delete eventos[i]["eventPrice"];
-                delete eventos[i]["dataPriceEvent"];                   
-
-            };
-
-            eventos = eventos.filter(function() {
-                return true;
+                } else {
+                    //si el id no corresponde responde error y procedo a hacer logout en la app
+                    res.json({
+                        status: false,
+                        data: ""
+                    });
+                }
             });
 
 
+    },
 
-            var newFoods = _.chain( eventos ).reduce(function( memo, evento ) {
-              memo[ evento.passengerId ] = memo[ evento.passengerId ] || [];
-              memo[ evento.passengerId ].push( evento );
-             //  memo[ evento.passengerId ].push( evento.passengerName );
-              return memo;
-          }, {}).map(function( eventos, id  ) {
-            return {
-                id: id,
-                passengerName: eventos[0].passengerName + " " + eventos[0].passengerLastname ,
-                total: eventos.length
+
+    findMyRank: function(req, res, next) {
+        var driverId = req.param('driverId');
+        Driver.findOne({
+            id: driverId
+        }).exec(function(err, driver) {
+
+
+            if (err) {
+                res.json({
+                    status: false
+
+                });
+            } else {
+                Rank.find({
+                    state: driver.state
+                }).exec(function(err, data) {
+
+                    if (data != "") {
+
+                        var found = false;
+                        var point = "";
+                        var pos = "";
+                        for (var i = 0; i < data[0].rank.length; i++) {
+                            if (data[0].rank[i].id == driverId) {
+                                found = true;
+                                point = data[0].rank[i].point;
+                                pos = i + 1;
+                                break;
+                            }
+                        }
+                        res.json({
+                            status: true,
+                            pos: pos,
+                            point: point,
+                            driverId: driverId
+
+                        });
+
+                    } else {
+                        res.json({
+                            status: false
+
+                        });
+
+                    };
+
+
+
+                });
             };
-        }).value();
 
 
-          newFoods.sort(sort_by('total', false, parseInt));
+        });
 
-            return newFoods;
-            /*
+
+
+
+
+
+
+    },
+
+    generateRank: function(req, res) {
+        var sort_by = function(field, reverse, primer) {
+
+            var key = primer ?
+                function(x) {
+                    return primer(x[field])
+                } :
+                function(x) {
+                    return x[field]
+                };
+
+            reverse = [-1, 1][+!!reverse];
+
+            return function(a, b) {
+                return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+            }
+        }
+
+
+        var state = req.param('state');
+
+        Driver.find({
+
+            isActive: true,
+            /* point: {
+                 '>': 0
+             },*/
+            state: state
+        }).exec(function(err, drivers) {
+
+            if (drivers) {
+                var nuevo = [];
+                var data = {};
+                for (var i = drivers.length - 1; i >= 0; i--) {
+                    data = {
+                        picture: drivers[i].dir_picture + drivers[i].picture,
+                        name: drivers[i].name + " " + drivers[i].lastname,
+                        point: drivers[i].point,
+                        state: drivers[i].state,
+                        id: drivers[i].id
+                    }
+                    nuevo.push(data);
+
+                };
+                nuevo.sort(sort_by('point', false, parseInt));
+
+                var aGuardar = {
+                    generateAt: new Date(),
+                    state: state,
+                    rank: nuevo
+                };
+
+                Rank.native(function(err, collection) {
+                    collection.update({
+                            state: state
+                        }, {
+                            date: new Date(),
+                            state: state,
+                            rank: nuevo
+                        }, {
+                            upsert: true,
+                            safe: true
+                        },
+                        function(err) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.json({
+                                    status: true,
+                                    date: new Date(),
+                                    state: state,
+                                    rank: nuevo
+                                });
+                            }
+                        }
+                    );
+                });
+
+            };
+
+
+
+        })
+
+
+
+    },
+
+
+
+    pasajeroEventos: function(req, res, next) {
+        var sort_by = function(field, reverse, primer) {
+
+            var key = primer ?
+                function(x) {
+                    return primer(x[field])
+                } :
+                function(x) {
+                    return x[field]
+                };
+
+            reverse = [-1, 1][+!!reverse];
+
+            return function(a, b) {
+                return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+            }
+        }
+
+
+        var inicio = new Date(moment().subtract(14, 'days').toISOString());
+        var fin = new Date(moment().toISOString());
+        var status = 7;
+
+        Event.find({
+                status: status,
+                createdAt: {
+                    '>=': inicio,
+                    '<=': fin
+                },
+
+            })
+            .exec(function foundEvent(err, eventos) {
+
+                if (err) return res.serverError(err);
+                if (eventos) {
+                    for (var i = eventos.length - 1; i >= 0; i--) {
+                        delete eventos[i]["gpsPassengerLocation"];
+                        delete eventos[i]["gpsDriverLocation"];
+                        delete eventos[i]["dataTaximetro"];
+                        delete eventos[i]["eventPrice"];
+                        delete eventos[i]["dataPriceEvent"];
+
+                    };
+
+                    eventos = eventos.filter(function() {
+                        return true;
+                    });
+
+
+
+                    var newFoods = _.chain(eventos).reduce(function(memo, evento) {
+                        memo[evento.passengerId] = memo[evento.passengerId] || [];
+                        memo[evento.passengerId].push(evento);
+                        //  memo[ evento.passengerId ].push( evento.passengerName );
+                        return memo;
+                    }, {}).map(function(eventos, id) {
+                        return {
+                            id: id,
+                            passengerName: eventos[0].passengerName + " " + eventos[0].passengerLastname,
+                            total: eventos.length
+                        };
+                    }).value();
+
+
+                    newFoods.sort(sort_by('total', false, parseInt));
+
+                    return newFoods;
+                    /*
           res.json({
          
             data: newFoods
@@ -636,7 +830,7 @@ pasajeroEventos: function(req, res, next){
 */
 
 
-      } else {
+                } else {
                     //si el id no corresponde responde error y procedo a hacer logout en la app
                     res.json({
                         status: false,
@@ -648,7 +842,7 @@ pasajeroEventos: function(req, res, next){
 
 
 
-}
+    }
 
 
 
