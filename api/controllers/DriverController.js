@@ -346,6 +346,13 @@ module.exports = {
                         } else {
                             point = "";
                             pos = "";
+                             return res.json({
+                                status: true,
+                                pos: pos,
+                                point: point,
+
+                                data: driver
+                            });
 
                         };
 
