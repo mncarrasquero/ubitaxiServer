@@ -33,6 +33,7 @@ module.exports.routes = {
     'post /api/generateRank': 'AdminController.generateRank',
 
     'post /api/findMyRank': 'AdminController.findMyRank',
+    'post /api/stateRank': 'AdminController.stateRank',
 
 
     

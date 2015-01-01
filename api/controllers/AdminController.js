@@ -567,7 +567,32 @@ module.exports = {
         });
     },
 
+  stateRank: function(req, res, next) {
+        var state = req.param('state');
+          Rank.find({
+                    state: state
+                }).exec(function(err, data) {
 
+                    if (data != "") {              
+                  
+                        res.json({
+                            status: true,
+                            data: data
+
+                        });
+
+                    } else {
+                        res.json({
+                            status: false
+
+                        });
+
+                    };
+
+
+
+                });
+    },
 
 
     findMyRank: function(req, res, next) {
@@ -624,6 +649,12 @@ module.exports = {
 
         });
     },
+
+
+
+
+
+
 
     generateRank: function(req, res) {
         var sort_by = function(field, reverse, primer) {
