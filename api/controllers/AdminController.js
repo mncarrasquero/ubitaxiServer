@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing admins
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-var Q = require('q');
+
 module.exports = {
     listciudades: function(req, res, next) {
 
@@ -40,6 +40,43 @@ module.exports = {
         console.log(text);
 
         return text;
+
+    },
+
+
+    updatePassengerData: function(req, res, next) {
+        var valores = req.params.all();
+        var activo = true;
+        if (req.param('isActive') === "true") {
+            activo = true;
+        } else {
+            activo = false;
+
+        };
+        console.log(valores);
+
+        Passenger.update({
+            id: req.param('id')
+        }, {
+            name: req.param('name'),
+            lastName: req.param('lastName'),
+            email: req.param('email'),
+            password: req.param('password'),
+            phoneNumber: req.param('phoneNumber'),
+            isActive: activo,
+
+        }).exec(function afterwards(err, updated) {
+            if (err) {
+                // handle error here- e.g. `res.serverError(err);`
+                return;
+            }
+           return res.redirect('/listpassenger');
+
+          
+        });
+
+
+
 
     },
 
@@ -569,18 +606,18 @@ module.exports = {
 
     stateRank: function(req, res, next) {
         var state = req.param('state');
-        var top = req.param('top') || 20;
+        var top = req.param('top') || 10;
         Rank.find({
             state: state
         }).exec(function(err, data) {
 
             if (data != "") {
-              
+
                 var output = [];
                 for (var i = 0, l = data[0].rank.length; i < top; ++i) {
-                  
-                        output.push(data[0].rank[i]);
-                    
+
+                    output.push(data[0].rank[i]);
+
                 }
                 res.json({
                     status: true,
@@ -751,6 +788,7 @@ module.exports = {
 
 
     pasajeroEventos: function(req, res, next) {
+
         var sort_by = function(field, reverse, primer) {
 
             var key = primer ?
@@ -769,7 +807,7 @@ module.exports = {
         }
 
 
-        var inicio = new Date(moment().subtract(14, 'days').toISOString());
+        var inicio = new Date(moment().subtract(35, 'days').toISOString());
         var fin = new Date(moment().toISOString());
         var status = 7;
 
@@ -816,13 +854,13 @@ module.exports = {
 
                     newFoods.sort(sort_by('total', false, parseInt));
 
-                    return newFoods;
-                    /*
-          res.json({
-         
-            data: newFoods
-        });
-*/
+                    // return newFoods;
+
+                    res.json({
+
+                        data: newFoods
+                    });
+
 
 
                 } else {

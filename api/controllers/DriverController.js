@@ -4,8 +4,6 @@
  * @description :: Server-side logic for managing drivers
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-var uuid = require('node-uuid');
-var path = require('path');
 
 
 module.exports = {
@@ -346,7 +344,7 @@ module.exports = {
                         } else {
                             point = "";
                             pos = "";
-                             return res.json({
+                            return res.json({
                                 status: true,
                                 pos: pos,
                                 point: point,
@@ -528,7 +526,150 @@ module.exports = {
         });
 
     },
+    /**
+     * consulta historial de servicios realizados para conductores por fecha
+     * param   day month year
+     *
+     */
 
+    historialDriver: function(req, res) {
+
+        //  fecha = new Date(req.param('y'), req.param('m'), req.param('d'));
+        var fecha = Date.parse(req.param('d') + "/" + req.param('d') + "/" + req.param('y'));
+
+
+        var driverId = req.param('driverId');
+        var inicio = new Date(moment(fecha).startOf('day').toISOString());
+        var fin = new Date(moment().endOf('day').toISOString());
+        console.log(fecha);
+        console.log(inicio);
+        console.log(fin);
+        console.log(driverId);
+
+        Q.all([
+                //eventos completados por el conductor ese dia
+                Event.count({
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
+                    isActive: false,
+                    status: 7,
+                    'dataDriver.driverId': {
+                        contains: driverId
+                    }
+
+
+                }).then(),
+                //fin cancelador conductor
+                //eventos completados por el conductor ese dia
+                Event.count({
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
+                    isActive: false,
+                    status: 4,
+                    'dataDriver.driverId': {
+                        contains: driverId
+                    }
+
+
+                }).then(),
+                //fin cancelador conductor
+
+                //eventos completados por el pasajerp ese dia
+                Event.count({
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
+                    isActive: false,
+                    status: 2,
+                    'dataDriver.driverId': {
+                        contains: driverId
+                    }
+
+
+                }).then(),
+                //fin cancelador pasajero
+
+                //ultimos servicios
+                Event.find({
+                    isActive: false,
+                    status: 7,
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
+
+                }).sort({
+                    createdAt: 'desc'
+                }).then(),
+                //Ultimos Servicios
+
+
+
+
+
+
+
+
+
+            ])
+            .spread(function(eventosCompletados, eventosCanceladosConductor, eventosCanceladosPasajero, eventos) {
+                var outputEvent = [];
+                var data = {};
+
+                 for (var i = 0; i < eventos.length; i++) {
+                       data = {
+                        eventCalle :  eventos[i].eventCalle,
+                        eventSector :  eventos[i].eventSector,
+                        eventCity :  eventos[i].eventCity,
+                        eventExtra :  eventos[i].eventExtra,
+                        eventDestinoName :  eventos[i].eventDestinoName,
+                        eventDestinoCoordinate :  eventos[i].eventDestinoCoordinate,
+                        eventPrice :  eventos[i].eventPrice,
+                        passengerId :  eventos[i].passengerId,
+                        passengerName :  eventos[i].passengerName,
+                        passengerLastname :  eventos[i].passengerLastname,
+                        createdAt :  eventos[i].createdAt,
+                        coment :  eventos[i].coment,
+                        exp :  eventos[i].exp,
+                        id :  eventos[i].id,
+                        cobrado :  eventos[i].cobrado,
+
+
+
+
+
+
+
+                    }
+                      outputEvent.push(data);
+
+                 };
+
+
+
+                return res.json({
+                    status: true,
+                    eventosCompletados: eventosCompletados,
+                    eventosCancelados: eventosCanceladosConductor,
+                    eventosCanceladosPasajero: eventosCanceladosPasajero,
+                    eventos: outputEvent
+                });
+
+
+
+
+            }).fail(function(reason) {
+                // output reason of failure
+                res.json(reason);
+            });
+
+
+    },
 
 
     /**

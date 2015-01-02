@@ -18,6 +18,15 @@ module.exports.routes = {
     'get /listPassenger': 'AdminController.listPassenger',
 
     'post /addciudad': 'AdminController.addciudad',
+
+
+'post /updatePassengerData': 'AdminController.updatePassengerData',
+
+'post /api/historialDriver': 'DriverController.historialDriver',
+
+
+
+    
     'get /nuevaciudad': 'AdminController.nuevaciudad',
     'get /listciudades': 'AdminController.listciudades',
 

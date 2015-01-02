@@ -18,6 +18,10 @@ module.exports.bootstrap = function(cb) {
 
     moment = require('moment');
     uuid = require('node-uuid');
+    Q = require('q');
+    path = require('path');
+
+
 
     setInterval(function() {
         console.log("generando rank");
@@ -73,7 +77,7 @@ module.exports.bootstrap = function(cb) {
                             if (err) {
                                 console.log(err);
                             } else {
-                            
+
                             }
                         }
                     );

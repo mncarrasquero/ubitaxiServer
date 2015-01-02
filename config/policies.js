@@ -57,6 +57,7 @@ module.exports.policies = {
     hayCondunctores: true,
     chequeoDriver: true,
     newProspecto: true,
+    historialDriver: true,
    
   },
     PassengerController: {  
