@@ -567,31 +567,38 @@ module.exports = {
         });
     },
 
-  stateRank: function(req, res, next) {
+    stateRank: function(req, res, next) {
         var state = req.param('state');
-          Rank.find({
-                    state: state
-                }).exec(function(err, data) {
+        var top = req.param('top') || 20;
+        Rank.find({
+            state: state
+        }).exec(function(err, data) {
 
-                    if (data != "") {              
+            if (data != "") {
+              
+                var output = [];
+                for (var i = 0, l = data[0].rank.length; i < top; ++i) {
                   
-                        res.json({
-                            status: true,
-                            data: data
-
-                        });
-
-                    } else {
-                        res.json({
-                            status: false
-
-                        });
-
-                    };
-
-
+                        output.push(data[0].rank[i]);
+                    
+                }
+                res.json({
+                    status: true,
+                    data: output
 
                 });
+
+            } else {
+                res.json({
+                    status: false
+
+                });
+
+            };
+
+
+
+        });
     },
 
 
