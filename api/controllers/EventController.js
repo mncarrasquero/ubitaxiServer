@@ -797,7 +797,7 @@ module.exports = {
                         id: evento.dataDriver['driverId'],
 
                     }).exec(function(err, driver) {
-                        data = parseInt(driver.point) + 50;
+                        data = parseInt(driver.point) + 15;
                         Driver.update({
                             id: evento.dataDriver['driverId']
                         }, {
@@ -819,7 +819,7 @@ module.exports = {
                           id: evento.dataDriver['driverId'],
 
                     }).exec(function(err, driver) {
-                        data = parseInt(driver.point) - 75;
+                        data = parseInt(driver.point) - 30;
                         Driver.update({
                             id: evento.dataDriver['driverId']
                         }, {
