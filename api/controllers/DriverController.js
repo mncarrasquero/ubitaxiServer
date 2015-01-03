@@ -540,7 +540,7 @@ module.exports = {
 
         var driverId = req.param('driverId');
         var inicio = new Date(moment(fecha).startOf('day').toISOString());
-        var fin = new Date(moment().endOf('day').toISOString());
+        var fin = new Date(moment(fecha).endOf('day').toISOString());
         console.log(fecha);
         console.log(inicio);
         console.log(fin);
