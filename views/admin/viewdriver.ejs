@@ -1,153 +1,125 @@
-
-        <section class="scrollable bg-white">
-            <div class="wrapper-lg bg-light">
-
-                 
+  
 
 
-                <div class="hbox">
-                    <div class="col-sm-5">
-                      <section class="panel panel-default">
-                        <header class="panel-heading bg-light no-border">
-                          <div class="clearfix">
-                            <a href="#" class="pull-left thumb-md avatar b-3x m-r">
-                              <img src="linker/images/a5.png">
-                            </a>
-                            <div class="clear">
-                              <div class="h3 m-t-xs m-b-xs">
-                                <%- data.driver.name%> <%- data.driver.lastName %>
-                                <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
-                              </div>
-                              <small class="text-muted"><%- data.pasajero.phoneNumber %> </small><br>
-                               <small class="text-muted">Pasajero </small>
+  <section class="vbox">
+                        <section class="scrollable bg-white">
+                            <div class="wrapper-lg bg-light">
+                                <div class="hbox">
+                                    <aside class="aside-md">
+                                        <div class="text-center"> <img src=" http://app.ubitaxi.net:1337/<%- data.Driver.dir_picture %><%- data.Driver.picture %>    " alt="..." class="img-circle m-b">
+                                            <div>Nivel de karma</div>
+                                            <div class="">
+                                                <div class="progress progress-xs progress-striped active inline m-b-none bg-white" style="width:128px">
+                                                    <div class="progress-bar bg-success" data-toggle="tooltip" data-original-title="<%- data.karma%>%" style="width: <%- data.karma%>%"></div>
+                                                </div>
+                                            </div>
+                                            <p><%- data.karma%>%</p>
+                                        </div>
+                                    </aside>
+                                    <aside>
+                                        <p class="pull-right m-l inline"> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-info rounded m-b"><i class="fa fa-twitter"></i></a> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-primary rounded m-b"><i class="fa fa-facebook"></i></a> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-danger rounded m-b"><i class="fa fa-google-plus"></i></a> </p>
+                                        <h3 class="font-bold m-b-none m-t-none"> <%- data.Driver.name%> <%- data.Driver.lastname %></h3>
+                                        <p><%- data.Driver.phone %></p>
+                                        <p><i class="fa fa-lg fa-circle-o text-primary m-r-sm"></i><strong>Taxista</strong>
+                                        </p>
+                                        <ul class="nav nav-pills nav-stacked aside-lg">
+                                          
+                                            <li class="bg-light dk"><a href="http://flatfull.com/themes/scale/profile-2.html#"><i class="i i-mail m-r-sm"></i> Enviar Email</a>
+                                            </li>
+                                            <li class="bg-light dk"><a href="http://flatfull.com/themes/scale/profile-2.html#"><i class="i i-chat m-r-sm"></i> Enviar Mensaje</a>
+                                            </li>
+                                        </ul>
+                                    </aside>
+                                </div>
                             </div>
-                          </div>
-                        </header>
-                        <div class="list-group no-radius alt">
-                          <a class="list-group-item" href="#">
-                            <span class="badge bg-success"><%- data.Completados%></span>
-                            <i class="i i-checkmark2 icon-muted"></i> 
-                            Eventos Completados
-                          </a>
-                          <a class="list-group-item" href="#">
-                            <span class="badge bg-warning"><%- data.CaceladosPasajero%></span>
-                            <i class="fa fa-exclamation icon-muted"></i> 
-                            Cancelados Pasajero
-                          </a>
-                          <a class="list-group-item" href="#">
-                            <span class="badge bg-danger"><%- data.CanceladoTaxista%></span>
-                            <i class="fa fa-exclamation-triangle icon-muted"></i> 
-                            Cancelados Taxista
-                          </a>
+                            <ul class="nav nav-tabs m-b-n-xxs bg-light">
+                                <li class="active"> <a href="#eventos" data-toggle="tab" class="m-l">Ultimos Eventos<span class="badge bg-primary badge-sm m-l-xs">
+                                    <%- data.eventos.length%></span></a> </li>
+                               
+                                <li class=""> <a href="#edit" data-toggle="tab">Editar Perfil</a> </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="panel tab-pane active" id="eventos">
+                                    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
 
-                           <a class="list-group-item" href="#">
-                            <span class="badge bg-light"><%- data.sinRespuesta%>  </span>
-                            <i class="fa fa-meh-o icon-muted"></i> 
-                            Eventos sin respuesta
-                          </a>
+                                         <% for(var i=0; i < data.eventos.length; i++) { %>
+                                        <li class="list-group-item" >
+                                           
+                                            <a href="#" class="clear"> <small class="pull-right" data-livestamp="<%-  moment(data.eventos[i].createdAt)  %>"></small> <strong class="block"><%- data.eventos[i].passengerName%> <%- data.eventos[i].passengerLastname%> <% if (data.eventos[i].status == 7) {%>
+                                              <span class="label bg-success">Completado</span> 
+                                               <%  } %> 
+                                               <% if (data.eventos[i].status == 2) {%>
+                                              <span class="label bg-danger">Cancelado - Pasajero</span> 
+                                               <%  } %> 
+                                               <% if (data.eventos[i].status == 4) {%>
+                                              <span class="label bg-dark">Cancelado - TAXISTA</span> 
+                                               <%  } %> </strong>
+                                             <small> Origen: <%- data.eventos[i].eventSector%> - <%- data.eventos[i].eventCalle%> - <em class="h5 text-mute">  <%- data.eventos[i].eventExtra%>  </em>         </small> 
+                                             <br>
+                                              <% if (data.eventos[i].eventDestinoName != null && data.eventos[i].eventDestinoName != "" ) {%>
+                                               <small> Destino:<em class="h5 text-mute"> <strong> <%- data.eventos[i].eventDestinoName%> </strong> </em>  <br>  Tarifa: <%- data.eventos[i].eventPrice[0]%>  - <%- data.eventos[i].eventPrice[1]%>        </small> 
+                                               <%  } %> 
+
+                                         </a>
 
 
-                        </div>
-                      </section>
+                                        </li>
+                                            <% } %>
+                                       
+                                 
+                                    </ul>
+                                </div>
                      
-                    </div>
-
-                </div>
-            </div>
-            <ul class="nav nav-tabs m-b-n-xxs bg-light">
-                <li class="active"> <a href="#activities" data-toggle="tab" class="m-l">Servicios<span class="badge bg-primary badge-sm m-l-xs"><%- data.totalEvent %></span></a> </li>
-
-                <li class=""> <a href="#edit" data-toggle="tab">Editar Perfil</a> </li>
-            </ul>
-            <div class="tab-content">
-                <div class="panel tab-pane active" id="activities">
-                    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-                          <% for(var i=0; i < data.eventos.length; i++) { %>
-                        <li class="list-group-item">
-                            <a href="#" class="thumb-md pull-left m-r-sm"> <img src="<%- data.eventos[i].dataDriver.driverPicture%>" class="img-circle"> </a>
-                           
-                            <a href="#" class="clear"> <small class="pull-right"><span data-livestamp="<%-  moment(data.eventos[i].createdAt)  %>"></span></small> <strong class="block h4" ><%- data.eventos[i].dataDriver.driverName%> <%- data.eventos[i].dataDriver.driverLastname%></strong> 
-                            	<p class="m-t m-b">
-                            	 Origen: <%- data.eventos[i].eventSector%> - <%- data.eventos[i].eventCalle%> - <em class="h5 text-mute"> <strong> <%- data.eventos[i].eventExtra%> </strong> </em>				
-
-								<br>
-
-                            	 Destino: 	 <% if (data.eventos[i].eventDestinoName != "") {%>
-										       <em class="h5 text-mute"> <strong> <%- data.eventos[i].eventDestinoName%> </strong> </em>  <br>  Tarifa: <%- data.eventos[i].eventPrice[0]%>  - <%- data.eventos[i].eventPrice[1]%>
-										       <%  } else{ %>
-										       S/I										       
-							     			<% };  %> 
-                            	 <br> Status: <% if (data.eventos[i].status == 7) {%>
-										      <span class="label bg-success">Completado</span> 
-										       <%  } %> 
-										       <% if (data.eventos[i].status == 2) {%>
-										      <span class="label bg-danger">Cancelado - Pasajero</span> 
-										       <%  } %> 
-										       <% if (data.eventos[i].status == 4) {%>
-										      <span class="label bg-dark">Cancelado - TAXISTA</span> 
-										       <%  } %> 
-
-
-
-                            	</p>
-                            </a>
-                        </li>
-                        <% } %>
-                      
-                    </ul>
-                </div>
-        
-                <div class="tab-pane wrapper-lg" id="edit">
-                    <form class="form-horizontal" method="get">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Name:</label>
-                            <div class="col-sm-5">
-                                <input type="text" name="name" value="<%- data.pasajero.name %>" class="form-control"> </div>
-                        </div>
-                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Apellido:</label>
-                            <div class="col-sm-5">
-                                <input type="text" name="lastName" value="<%- data.pasajero.lastName %>" class="form-control"> </div>
-                        </div>
-
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="input-id-1">Correo Electronico:</label>
-                            <div class="col-sm-5"> 
-                                <input type="text" name="email" class="form-control" id="input-id-1" disabled="disabled" value="<%- data.pasajero.email %>"> </div>
-                        </div>
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Contraseña:</label>
-                            <div class="col-sm-5">
-                                <input type="password" value="<%- data.pasajero.password %>"   class="form-control"> </div>
-                        </div>
-
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Telefono:</label>
-                            <div class="col-sm-5">
-                                <input type="phoneNumber" value="<%- data.pasajero.phoneNumber %>"   class="form-control"> </div>
-                        </div>
-
-
-                       
-                    
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-5">
-                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                <div class="tab-pane wrapper-lg" id="edit">
+                                    <form class="form-horizontal" method="get">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Name:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control"> </div>
+                                        </div>
+                                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="input-id-1">Email:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="input-id-1" disabled="disabled" value="drew.willon@scale.com"> </div>
+                                        </div>
+                                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Password:</label>
+                                            <div class="col-sm-5">
+                                                <input type="password" class="form-control"> </div>
+                                        </div>
+                                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Password Again:</label>
+                                            <div class="col-sm-5">
+                                                <input type="password" class="form-control"> </div>
+                                        </div>
+                                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Phone:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control"> </div>
+                                        </div>
+                                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Bio:</label>
+                                            <div class="col-sm-5">
+                                                <textarea class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-5">
+                                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-   
-    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+                        </section>
+                    </section>
 
- 
-     <script src="/linker/js/moment.min.js"></script>
+
+                    <script src="/linker/js/moment.min.js"></script>
     <script src="/linker/js/livestamp.min.js"></script>
  
-
-

@@ -94,9 +94,10 @@ module.exports.routes = {
     'post /api/eventosAsk': 'AdminController.eventosAsk',
 
     'post /api/pasajeroEventos': 'AdminController.pasajeroEventos',
+    'post /api/driverEventos': 'AdminController.driverEventos',
 
     
-    
+
 
 
 

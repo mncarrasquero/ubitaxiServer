@@ -14,7 +14,7 @@
 
       { "mData": null , //its null here because history column will contain the mRender
     "mRender" : function ( data, type, full ) {
-    return '<a href="/viewDriver?='+full.id+'" class="btn btn-default btn-xs">ver</a>';}
+    return '<a href="/viewDriver?id='+full.id+'" class="btn btn-default btn-xs">ver</a>';}
   },
 
 

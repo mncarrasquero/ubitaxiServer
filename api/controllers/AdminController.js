@@ -70,9 +70,9 @@ module.exports = {
                 // handle error here- e.g. `res.serverError(err);`
                 return;
             }
-           return res.redirect('/listpassenger');
+            return res.redirect('/listpassenger');
 
-          
+
         });
 
 
@@ -423,13 +423,36 @@ module.exports = {
     viewdriver: function(req, res) {
         Q.all([
                 // let's find one user with name "Pavel"
-                Passenger.findOne({
+                Driver.findOne({
                     id: req.param('id'),
 
                 }).then(),
 
-                Event.find({
-                    passengerId: req.param('id'),
+                Event.count({
+                    'dataDriver.driverId': {
+                        contains: req.param('id')
+                    },
+
+                    or: [{
+                        status: 7
+                            //completados
+                    }]
+                }).then(),
+
+                Event.count({
+                    'dataDriver.driverId': {
+                        contains: req.param('id')
+                    },
+                    or: [{
+                        status: 2
+                            //cancelado taxista
+                    }]
+                }).then(),
+                    //eventos q partcipo
+                 Event.find({
+                   'dataDriver.driverId': {
+                        contains: req.param('id')
+                    },
                     or: [{
                         status: 7
                     }, {
@@ -441,74 +464,33 @@ module.exports = {
                     createdAt: 'desc'
                 }).then(),
 
-                Driver.count({
-                    isActive: true
-                }).then(),
 
 
-                Event.count({
-                    passengerId: req.param('id'),
-                    or: [{
-                        status: 7
-                    }, {
-                        status: 4
-                    }, {
-                        status: 2
-                    }]
-                }).then(),
-
-                Event.count({
-                    passengerId: req.param('id'),
-                    or: [{
-                        status: 7
-                            //completados
-                    }]
-                }).then(),
-
-                Event.count({
-                    passengerId: req.param('id'),
-                    or: [{
-                        status: 2
-                            //cancelado taxista
-                    }]
-                }).then(),
-
-                Event.count({
-                    passengerId: req.param('id'),
-                    or: [{
-                        status: 4
-                            //cancelado pasajero
-                    }]
-                }).then(),
-
-
-                Event.count({
-                    passengerId: req.param('id'),
-                    or: [{
-                        status: 5
-                            //por parka
-                    }]
-                }).then(),
 
                 // let's find one Lexus car
 
             ])
-            .spread(function(Passenger, Eventos, Driver, EventCount, Completados, CaceladosPasajero, CanceladoTaxista, sinRespuesta) {
+            .spread(function(Driver, completadosDriver, canceladosDriver,eventos) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
-                //console.log(Eventos);
+               
+                var karma = completadosDriver / (completadosDriver + canceladosDriver);
+                karma = karma * 100;
+                karma =  karma.toFixed(0);
+      
+
                 res.view({
                     layout: 'admin/layoutAdmin.ejs',
                     user: req.session.passport.me,
                     data: {
-                        pasajero: Passenger,
-                        taxistas: Driver,
-                        eventos: Eventos,
-                        totalEvent: EventCount,
-                        Completados: Completados,
-                        CaceladosPasajero: CaceladosPasajero,
-                        CanceladoTaxista: CanceladoTaxista,
-                        sinRespuesta: sinRespuesta,
+                        Driver: Driver,
+                        completadosDriver: completadosDriver,
+                        canceladosDriver: canceladosDriver,
+                        karma : karma,
+                        eventos: eventos
+
+
+
 
                     }
                 });
@@ -784,6 +766,99 @@ module.exports = {
 
 
     },
+
+
+    driverEventos: function(req, res, next) {
+
+        var sort_by = function(field, reverse, primer) {
+
+            var key = primer ?
+                function(x) {
+                    return primer(x[field])
+                } :
+                function(x) {
+                    return x[field]
+                };
+
+            reverse = [-1, 1][+!!reverse];
+
+            return function(a, b) {
+                return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+            }
+        }
+
+
+        var inicio = new Date(moment().subtract(35, 'days').toISOString());
+        var fin = new Date(moment().endOf('day').toISOString());
+        //var fin = new Date(moment().toISOString());
+        var status = req.param("status") || 7;
+
+        Event.find({
+                status: status,
+                createdAt: {
+                    '>=': inicio,
+                    '<=': fin
+                },
+
+            })
+            .exec(function foundEvent(err, eventos) {
+
+                if (err) return res.serverError(err);
+                if (eventos) {
+                    for (var i = eventos.length - 1; i >= 0; i--) {
+                        delete eventos[i]["gpsPassengerLocation"];
+                        delete eventos[i]["gpsDriverLocation"];
+                        delete eventos[i]["dataTaximetro"];
+                        delete eventos[i]["eventPrice"];
+                        delete eventos[i]["dataPriceEvent"];
+
+                    };
+
+                    eventos = eventos.filter(function() {
+                        return true;
+                    });
+
+
+
+                    var newFoods = _.chain(eventos).reduce(function(memo, evento) {
+                        memo[evento.dataDriver['driverId']] = memo[evento.dataDriver['driverId']] || [];
+                        memo[evento.dataDriver['driverId']].push(evento);
+                        //  memo[ evento.passengerId ].push( evento.passengerName );
+                        return memo;
+                    }, {}).map(function(eventos, id) {
+                        return {
+                            id: id,
+                            driverName: eventos[0].dataDriver['driverName'] + " " + eventos[0].dataDriver['driverLastname'],
+                            total: eventos.length
+                        };
+                    }).value();
+
+
+                    newFoods.sort(sort_by('total', false, parseInt));
+
+                    // return newFoods;
+
+                    res.json({
+
+                        data: newFoods
+                    });
+
+
+
+                } else {
+                    //si el id no corresponde responde error y procedo a hacer logout en la app
+                    res.json({
+                        status: false,
+                        data: ""
+                    });
+                }
+            });
+
+
+
+
+    },
+
 
 
 

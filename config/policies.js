@@ -48,7 +48,8 @@ module.exports.policies = {
      pasajeroEventos: true,
      generateRank: true,
      findMyRank: true,
-     stateRank: true
+     stateRank: true,
+     driverEventos: true
 
   },
   DriverController: {

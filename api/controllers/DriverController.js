@@ -333,6 +333,7 @@ module.exports = {
 
                             return res.json({
                                 status: true,
+                                Appversion: "3",
                                 pos: pos,
                                 point: point,
 
@@ -346,6 +347,7 @@ module.exports = {
                             pos = "";
                             return res.json({
                                 status: true,
+                                Appversion: "3",
                                 pos: pos,
                                 point: point,
 
