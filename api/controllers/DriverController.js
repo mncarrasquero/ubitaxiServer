@@ -535,7 +535,7 @@ module.exports = {
     historialDriver: function(req, res) {
 
         //  fecha = new Date(req.param('y'), req.param('m'), req.param('d'));
-        var fecha = Date.parse(req.param('d') + "/" + req.param('d') + "/" + req.param('y'));
+        var fecha = Date.parse(req.param('m') + "/" + req.param('d') + "/" + req.param('y'));
 
 
         var driverId = req.param('driverId');
@@ -602,6 +602,9 @@ module.exports = {
                         '>=': inicio,
                         '<=': fin
                     },
+                      'dataDriver.driverId': {
+                        contains: driverId
+                    }
 
                 }).sort({
                     createdAt: 'desc'
