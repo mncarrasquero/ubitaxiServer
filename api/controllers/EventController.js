@@ -59,7 +59,7 @@ module.exports = {
                     response: "Evento creado.",
                     data: evento
                 });
-               // console.log("User created:", evento);
+                // console.log("User created:", evento);
             }
         });
 
@@ -588,27 +588,27 @@ module.exports = {
 
                             //send an e-mail to jim rubenstein
                             /*
-							mandrill('/messages/send', {
-								message: {
-									to: [{
-										email: pasajero.email,
-										name: evento.passengerName + " " + evento.passengerLastname
-									}],
-									name: 'cancelServicio',
-									from_email: 'hola@ubitaxi.net',
-									from_name: 'Ubitaxi Venezuela',
-									subject: "¿Ocurrió algun problema?",
-									text: "   Estimado " + evento.passengerName + ",\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con el conductor  " + evento.dataDriver.driverName + " Fecha:  " + moment(evento.createdAt).lang('es').zone('-0430').format('LLLL') + ".  identificador del servicio: " + evento.id + " \nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\nPor favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
-								}
-							}, function(error, response) {
-								//uh oh, there was an error
-								if (error) console.log(JSON.stringify(error));
-								//everything's good, lets see what mandrill said
-								else console.log(response);
+                            mandrill('/messages/send', {
+                                message: {
+                                    to: [{
+                                        email: pasajero.email,
+                                        name: evento.passengerName + " " + evento.passengerLastname
+                                    }],
+                                    name: 'cancelServicio',
+                                    from_email: 'hola@ubitaxi.net',
+                                    from_name: 'Ubitaxi Venezuela',
+                                    subject: "¿Ocurrió algun problema?",
+                                    text: "   Estimado " + evento.passengerName + ",\nEn Ubitaxi, nos esforzamos por ofrecer a los usuarios la mejor experiencia de taxis que hay.\n\nLe estamos enviando un correo electrónico después de notar que canceló su viaje con el conductor  " + evento.dataDriver.driverName + " Fecha:  " + moment(evento.createdAt).lang('es').zone('-0430').format('LLLL') + ".  identificador del servicio: " + evento.id + " \nNos preguntábamos si algo salió mal de nuestra parte; ¿tuvo algún tipo de problema con la aplicación y / o el conductor?\n\nTambién nos gustaría recordarle que todos los pasajeros que cancelen tres veces en una semana se prohibirá automáticamente nuestro servicio, por el plazo de un mes.\n\nPor favor, responda a este correo electrónico y háganos saber si hay algo que podamos hacer.\n\n\nGracias por su tiempo.\n\nAtt,\nEquipo Ubitaxi."
+                                }
+                            }, function(error, response) {
+                                //uh oh, there was an error
+                                if (error) console.log(JSON.stringify(error));
+                                //everything's good, lets see what mandrill said
+                                else console.log(response);
 
 
-								});
-									*/
+                                });
+                                    */
 
                             /// fin de send email por cancel
 
@@ -804,9 +804,9 @@ module.exports = {
                             point: data,
 
                         }).exec(function afterwards(err, updated) {
-                          
-                        
-                           
+
+
+
                         });
 
 
@@ -816,7 +816,7 @@ module.exports = {
 
                 if (experiencia == "negativo") {
                     Driver.findOne({
-                          id: evento.dataDriver['driverId'],
+                        id: evento.dataDriver['driverId'],
 
                     }).exec(function(err, driver) {
                         data = parseInt(driver.point) - 30;
@@ -826,9 +826,9 @@ module.exports = {
                             point: data,
 
                         }).exec(function afterwards(err, updated) {
-                          
-                        
-                           
+
+
+
                         });
 
 
@@ -907,11 +907,33 @@ module.exports = {
                             return;
                         }
                         //211 servicio penalizado si lo vuelve hacer 
-                        res.json({
+
+                        Driver.findOne({
+                            id: evento.dataDriver['driverId'],
+
+                        }).exec(function(err, driver) {
+                            data = parseInt(driver.point) - 10;
+                            Driver.update({
+                                id: evento.dataDriver['driverId']
+                            }, {
+                                point: data,
+
+                            }).exec(function afterwards(err, updated) {
+
+                                 res.json({
                             status: true,
                             code: "x211",
-                            mensaje: "Servicio cancelado"
+                            mensaje: "Servicio cancelado y penalizado"
                         });
+
+                            });
+
+
+                        })
+
+
+
+                       
                     });
 
 
