@@ -306,7 +306,7 @@ module.exports = {
                             status: true,
                             data: {
                                 isActive: false
-                            }
+                            },
 
                             code: "SUSPENDIDA",
                             message: 'Cuenta suspendida, contacta con tu oficina local',
