@@ -303,7 +303,10 @@ module.exports = {
                     if (driver.isActive == false) {
 
                         return res.json({
-                            status: false,
+                            status: true,
+                            data: {
+                                isActive: false
+                            }
 
                             code: "SUSPENDIDA",
                             message: 'Cuenta suspendida, contacta con tu oficina local',
