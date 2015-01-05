@@ -1180,7 +1180,9 @@ module.exports = {
                             res.json({
                                 status: true,
                                 code: "",
-                                response: evento,
+                                response: {
+                                    status: evento.status
+                                },
 
                             });
                         });
