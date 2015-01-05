@@ -44,6 +44,73 @@ module.exports = {
     },
 
 
+
+
+     updateDriverData: function(req, res, next) {
+        var valores = req.params.all();
+        var activo = true;
+        if (req.param('isActive') === "true") {
+            activo = true;
+        } else {
+            activo = false;
+
+        };
+    
+
+        Driver.update({
+            id: req.param('id')
+        }, {
+                isActive: activo,
+                uuid: req.param('uuid'),
+                name: req.param('name'),
+                lastname: req.param('lastname'),
+                email: req.param('email'),
+                picture: req.param('picture'),
+                dir_picture: req.param('dir_picture'),
+                password: req.param('password'),
+                phone: req.param('phone'),
+                ci: req.param('ci'),
+                birthday: req.param('birthday'),
+                address: req.param('address'),
+                
+                
+                point: req.param('point'),
+                
+                car: {
+                    brand: req.param('car-brand'),
+                    model: req.param('car-model'),
+                    year: req.param('car-year'),
+                    color: req.param('car-color'),
+                    type: req.param('car-type'),
+                    door: req.param('car-door'),
+                    cap: req.param('car-cap'),
+                    plate: req.param('car-plate'),
+                    serial: req.param('car-serial'),
+                    owner: req.param('car-owner'),
+                    rating: req.param('car-rating'),
+                }
+
+        }).exec(function afterwards(err, updated) {
+            if (err) {
+                // handle error here- e.g. `res.serverError(err);`
+                console.log(err);
+                return;
+            }
+            res.redirect('/listDriver');
+            return ;
+
+
+        });
+
+
+
+
+    },
+
+
+
+
+
     updatePassengerData: function(req, res, next) {
         var valores = req.params.all();
         var activo = true;
@@ -123,11 +190,11 @@ module.exports = {
     dashboard: function(req, res, next) {
 
 
+        var inicio = new Date(moment().zone('-0430').startOf('day').toISOString());
+        var fin =    new Date(moment().zone('-0430').endOf('day').toISOString());
 
 
-        var today = moment().zone('-0430').format('YYYY-MM-DD');
-        var _date = new Date(today);
-
+    
 
 
         Q.all([
@@ -147,8 +214,10 @@ module.exports = {
                 //cuantos eventos hoy
                 Event.count({
                     createdAt: {
-                        '>=': _date
-                    },
+                    '>=': inicio,
+                    '<=': fin
+                },
+
 
                 }).then(),
                 //fIN eventos hoy
@@ -156,8 +225,10 @@ module.exports = {
                 //cuantos eventos completados hoy
                 Event.count({
                     createdAt: {
-                        '>=': _date
-                    },
+                    '>=': inicio,
+                    '<=': fin
+                },
+
                     status: 7
                 }).then(),
                 //fIN 
@@ -166,9 +237,11 @@ module.exports = {
 
                 //cuantos eventos cancelados por parka
                 Event.count({
-                    createdAt: {
-                        '>=': _date
-                    },
+                     createdAt: {
+                    '>=': inicio,
+                    '<=': fin
+                },
+
                     status: 5
 
                 }).then(),
@@ -177,9 +250,11 @@ module.exports = {
 
                 //cuantos eventos cancelados pasajero
                 Event.count({
-                    createdAt: {
-                        '>=': _date
-                    },
+                     createdAt: {
+                    '>=': inicio,
+                    '<=': fin
+                },
+
                     status: 2
 
                 }).then(),
@@ -187,9 +262,11 @@ module.exports = {
 
                 //cuantos eventos cancelados taxista
                 Event.count({
-                    createdAt: {
-                        '>=': _date
-                    },
+                     createdAt: {
+                    '>=': inicio,
+                    '<=': fin
+                },
+
                     status: 4
 
                 }).then(),

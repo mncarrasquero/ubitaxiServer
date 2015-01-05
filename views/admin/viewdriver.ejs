@@ -1,125 +1,293 @@
   
+<link rel="stylesheet" href="linker/js/datepicker/datepicker.css" type="text/css" />
+<link rel="stylesheet" href="linker/js/slider/slider.css" type="text/css" />
+
+<section class="vbox">
+    <section class="scrollable bg-white">
+        <div class="wrapper-lg bg-light">
+            <div class="hbox">
+                <aside class="aside-md">
+                    <div class="text-center"> <img src=" http://app.ubitaxi.net:1337/<%- data.Driver.dir_picture %><%- data.Driver.picture %>    " alt="..." class="img-circle m-b">
+                        <div>Nivel de karma</div>
+                        <div class="">
+                            <div class="progress progress-xs progress-striped active inline m-b-none bg-white" style="width:128px">
+                                <div class="progress-bar bg-success" data-toggle="tooltip" data-original-title="<%- data.karma%>%" style="width: <%- data.karma%>%"></div>
+                            </div>
+                        </div>
+                        <p><%- data.karma%>%</p>
+                    </div>
+                </aside>
+                <aside>
+                    <p class="pull-right m-l inline"> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-info rounded m-b"><i class="fa fa-twitter"></i></a> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-primary rounded m-b"><i class="fa fa-facebook"></i></a> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-danger rounded m-b"><i class="fa fa-google-plus"></i></a> </p>
+                    <h3 class="font-bold m-b-none m-t-none"> <%- data.Driver.name%> <%- data.Driver.lastname %></h3>
+                    <p><%- data.Driver.phone %></p>
 
 
-  <section class="vbox">
-                        <section class="scrollable bg-white">
-                            <div class="wrapper-lg bg-light">
-                                <div class="hbox">
-                                    <aside class="aside-md">
-                                        <div class="text-center"> <img src=" http://app.ubitaxi.net:1337/<%- data.Driver.dir_picture %><%- data.Driver.picture %>    " alt="..." class="img-circle m-b">
-                                            <div>Nivel de karma</div>
-                                            <div class="">
-                                                <div class="progress progress-xs progress-striped active inline m-b-none bg-white" style="width:128px">
-                                                    <div class="progress-bar bg-success" data-toggle="tooltip" data-original-title="<%- data.karma%>%" style="width: <%- data.karma%>%"></div>
+                       <% if (data.Driver.isActive == true) {%>   
+                                <p><i class="fa fa-lg fa-circle-o text-success m-r-sm"></i><strong>Taxista</strong>
+                                <%  } %> 
+                                  <% if (data.Driver.isActive == false) {%>   
+                                <p><i class="fa fa-lg fa-circle-o text-warning m-r-sm"></i><strong>Taxista</strong>
+                                <%  } %> 
+
+
+
+                    </p>
+                    <ul class="nav nav-pills nav-stacked aside-lg">
+
+                        <li class="bg-light dk"><a href="http://flatfull.com/themes/scale/profile-2.html#"><i class="i i-mail m-r-sm"></i> Enviar Email</a>
+                        </li>
+                        <li class="bg-light dk"><a href="http://flatfull.com/themes/scale/profile-2.html#"><i class="i i-chat m-r-sm"></i> Enviar Mensaje</a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <ul class="nav nav-tabs m-b-n-xxs bg-light">
+            <li class="active"> <a href="#eventos" data-toggle="tab" class="m-l">Ultimos Eventos<span class="badge bg-primary badge-sm m-l-xs">
+                <%- data.eventos.length%></span></a> </li>
+
+                <li class=""> <a href="#edit" data-toggle="tab">Editar Perfil</a> </li>
+            </ul>
+            <div class="tab-content">
+                <div class="panel tab-pane active" id="eventos">
+                    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+
+                       <% for(var i=0; i < data.eventos.length; i++) { %>
+                       <li class="list-group-item" >
+
+                        <a href="#" class="clear"> <small class="pull-right" data-livestamp="<%-  moment(data.eventos[i].createdAt)  %>"></small> <strong class="block"><%- data.eventos[i].passengerName%> <%- data.eventos[i].passengerLastname%> <% if (data.eventos[i].status == 7) {%>
+                          <span class="label bg-success">Completado</span> 
+                          <%  } %> 
+                          <% if (data.eventos[i].status == 2) {%>
+                          <span class="label bg-danger">Cancelado - Pasajero</span> 
+                          <%  } %> 
+                          <% if (data.eventos[i].status == 4) {%>
+                          <span class="label bg-dark">Cancelado - TAXISTA</span> 
+                          <%  } %> </strong>
+                          <small> Origen: <%- data.eventos[i].eventSector%> - <%- data.eventos[i].eventCalle%> - <em class="h5 text-mute">  <%- data.eventos[i].eventExtra%>  </em>         </small> 
+                          <br>
+                          <% if (data.eventos[i].eventDestinoName != null && data.eventos[i].eventDestinoName != "" ) {%>
+                          <small> Destino:<em class="h5 text-mute"> <strong> <%- data.eventos[i].eventDestinoName%> </strong> </em>  <br>  Tarifa: <%- data.eventos[i].eventPrice[0]%>  - <%- data.eventos[i].eventPrice[1]%>        </small> 
+                          <%  } %> 
+
+                      </a>
+
+
+                  </li>
+                  <% } %>
+
+
+              </ul>
+          </div>
+
+          <div class="tab-pane wrapper-lg" id="edit">
+            <form class="form-horizontal" method="post" action="/updateDriverData">
+                <input type="hidden" name="id" value="<%- data.Driver.id%>" class="form-control"/>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <span class="h4">Datos de Personales</span>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Usuario Activo</label>
+                  <div class="col-sm-5">
+                     <select  name="isActive" class="form-control m-b">
+                      <option value="true" >Activo</option>
+                      <option value="false">Inactivo</option>
+
+                  </select>
+              </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Nombre:</label>
+            <div class="col-sm-5"> 
+                <input type="text" name="name" value="<%- data.Driver.name%>"  data-required="true" class="form-control"/> </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Apellido:</label>
+                <div class="col-sm-5"> 
+                    <input type="text" name="lastname" value="<%- data.Driver.lastname%>" data-required="true" class="form-control"/> </div>
+                </div>
+
+                <div class="form-group">
+                <label class="col-sm-3 control-label">Puntos:</label>
+                <div class="col-sm-5"> 
+                    <input type="text" name="point" value="<%- data.Driver.point%>" data-required="true" class="form-control"/> </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Cedula de identidad:</label>
+                    <div class="col-sm-5"> 
+                        <input type="text" name="ci" value="<%- data.Driver.ci%>" data-required="true" class="form-control"/> </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Correo electronico:</label>
+                        <div class="col-sm-5"> 
+                            <input type="email" name="email" value="<%- data.Driver.email%>" data-required="true" class="form-control"/> </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Contraseña:</label>
+                            <div class="col-sm-5"> 
+                                <input type="text" name="password" value="<%- data.Driver.password%>"  data-required="true"class="form-control"/> </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Numero Celular:</label>
+                                <div class="col-sm-5"> 
+                                    <input type="text" name="phone" value="<%- data.Driver.phone%>" data-required="true" class="form-control"/> </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">UUID:</label>
+                                    <div class="col-sm-5"> 
+                                        <input type="text" name="uuid" value="<%- data.Driver.uuid%>"  data-required="true" class="form-control"/> </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Fecha de nacimiento:</label>
+                                        <div class="col-sm-5"> 
+                                            <input type="text" name="birthday" value="<%- data.Driver.birthday%>"   data-date-format="dd-mm-yyyy" class="input-sm input-s datepicker-input form-control"/> </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Dirección de vivienda:</label>
+                                            <div class="col-sm-5"> 
+                                                <input type="address" name="address" value="<%- data.Driver.address%>"  data-required="true" class="form-control"/> </div>
+                                            </div>
+
+
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <span class="h4">Datos de Vehiculo</span>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+
+
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Marca del Vehiculo:</label>
+                                                <div class="col-sm-5"> 
+                                                    <input type="text" name="car-brand" value="<%- data.Driver.car.brand%>"  data-required="true" class="form-control"/> </div>
                                                 </div>
-                                            </div>
-                                            <p><%- data.karma%>%</p>
-                                        </div>
-                                    </aside>
-                                    <aside>
-                                        <p class="pull-right m-l inline"> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-info rounded m-b"><i class="fa fa-twitter"></i></a> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-primary rounded m-b"><i class="fa fa-facebook"></i></a> <a href="http://flatfull.com/themes/scale/profile-2.html#" class="btn btn-sm btn-icon btn-danger rounded m-b"><i class="fa fa-google-plus"></i></a> </p>
-                                        <h3 class="font-bold m-b-none m-t-none"> <%- data.Driver.name%> <%- data.Driver.lastname %></h3>
-                                        <p><%- data.Driver.phone %></p>
-                                        <p><i class="fa fa-lg fa-circle-o text-primary m-r-sm"></i><strong>Taxista</strong>
-                                        </p>
-                                        <ul class="nav nav-pills nav-stacked aside-lg">
-                                          
-                                            <li class="bg-light dk"><a href="http://flatfull.com/themes/scale/profile-2.html#"><i class="i i-mail m-r-sm"></i> Enviar Email</a>
-                                            </li>
-                                            <li class="bg-light dk"><a href="http://flatfull.com/themes/scale/profile-2.html#"><i class="i i-chat m-r-sm"></i> Enviar Mensaje</a>
-                                            </li>
-                                        </ul>
-                                    </aside>
-                                </div>
-                            </div>
-                            <ul class="nav nav-tabs m-b-n-xxs bg-light">
-                                <li class="active"> <a href="#eventos" data-toggle="tab" class="m-l">Ultimos Eventos<span class="badge bg-primary badge-sm m-l-xs">
-                                    <%- data.eventos.length%></span></a> </li>
-                               
-                                <li class=""> <a href="#edit" data-toggle="tab">Editar Perfil</a> </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="panel tab-pane active" id="eventos">
-                                    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-
-                                         <% for(var i=0; i < data.eventos.length; i++) { %>
-                                        <li class="list-group-item" >
-                                           
-                                            <a href="#" class="clear"> <small class="pull-right" data-livestamp="<%-  moment(data.eventos[i].createdAt)  %>"></small> <strong class="block"><%- data.eventos[i].passengerName%> <%- data.eventos[i].passengerLastname%> <% if (data.eventos[i].status == 7) {%>
-                                              <span class="label bg-success">Completado</span> 
-                                               <%  } %> 
-                                               <% if (data.eventos[i].status == 2) {%>
-                                              <span class="label bg-danger">Cancelado - Pasajero</span> 
-                                               <%  } %> 
-                                               <% if (data.eventos[i].status == 4) {%>
-                                              <span class="label bg-dark">Cancelado - TAXISTA</span> 
-                                               <%  } %> </strong>
-                                             <small> Origen: <%- data.eventos[i].eventSector%> - <%- data.eventos[i].eventCalle%> - <em class="h5 text-mute">  <%- data.eventos[i].eventExtra%>  </em>         </small> 
-                                             <br>
-                                              <% if (data.eventos[i].eventDestinoName != null && data.eventos[i].eventDestinoName != "" ) {%>
-                                               <small> Destino:<em class="h5 text-mute"> <strong> <%- data.eventos[i].eventDestinoName%> </strong> </em>  <br>  Tarifa: <%- data.eventos[i].eventPrice[0]%>  - <%- data.eventos[i].eventPrice[1]%>        </small> 
-                                               <%  } %> 
-
-                                         </a>
 
 
-                                        </li>
-                                            <% } %>
-                                       
-                                 
-                                    </ul>
-                                </div>
-                     
-                                <div class="tab-pane wrapper-lg" id="edit">
-                                    <form class="form-horizontal" method="get">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Name:</label>
-                                            <div class="col-sm-5">
-                                                <input type="text" class="form-control"> </div>
-                                        </div>
-                                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="input-id-1">Email:</label>
-                                            <div class="col-sm-5">
-                                                <input type="text" class="form-control" id="input-id-1" disabled="disabled" value="drew.willon@scale.com"> </div>
-                                        </div>
-                                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Password:</label>
-                                            <div class="col-sm-5">
-                                                <input type="password" class="form-control"> </div>
-                                        </div>
-                                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Password Again:</label>
-                                            <div class="col-sm-5">
-                                                <input type="password" class="form-control"> </div>
-                                        </div>
-                                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Phone:</label>
-                                            <div class="col-sm-5">
-                                                <input type="text" class="form-control"> </div>
-                                        </div>
-                                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Bio:</label>
-                                            <div class="col-sm-5">
-                                                <textarea class="form-control" rows="5"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-3 col-sm-5">
-                                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </section>
-                    </section>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Modelo del Vehiculo:</label>
+                                                    <div class="col-sm-5"> 
+                                                        <input type="text" name="car-model" value="<%- data.Driver.car.model%>"  data-required="true" class="form-control"/> </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Año del Vehiculo:</label>
+                                                        <div class="col-sm-5"> 
+                                                            <input type="text" name="car-year" value="<%- data.Driver.car.year%>"  data-required="true" class="form-control"/> </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">Color del Vehiculo:</label>
+                                                            <div class="col-sm-5"> 
+                                                                <input type="text" name="car-color" value="<%- data.Driver.car.color%>"  data-required="true" class="form-control"/> </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label">Tipo de Vehiculo:</label>
+                                                                <div class="col-sm-5"> 
+                                                                 <select name="car-type"  class="form-control m-b" >
+                                                                    <option >Sedan</option>
+                                                                    <option >Hatchbach</option>
+                                                                    <option >pickup</option>
+                                                                    <option >suv</option>
+                                                                    <option >van</option>
+                                                                </select>    
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">Cantidad de puertas:</label>
+                                                            <div class="col-sm-5"> 
+                                                                <input type="text" name="car-door" value="<%- data.Driver.car.door%>"  data-required="true" class="form-control"/> </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label">Capacidad de pasajeros:</label>
+                                                                <div class="col-sm-5"> 
+                                                                    <input type="text" name="car-cap" value="<%- data.Driver.car.cap%>"  data-required="true" class="form-control"/> </div>
+                                                                </div>
 
 
-                    <script src="/linker/js/moment.min.js"></script>
-    <script src="/linker/js/livestamp.min.js"></script>
- 
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 control-label">Placas del vehiculo:</label>
+                                                                    <div class="col-sm-5"> 
+                                                                        <input type="text" name="car-plate" value="<%- data.Driver.car.plate%>"  data-required="true" class="form-control"/> </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label">Serial del vehiculo:</label>
+                                                                        <div class="col-sm-5"> 
+                                                                            <input type="text" name="car-serial" value="<%- data.Driver.car.serial%>"  data-required="true" class="form-control"/> </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-3 control-label">Propietario del vehiculo:</label>
+                                                                            <div class="col-sm-5"> 
+                                                                                <input type="text" name="car-owner" value="<%- data.Driver.car.owner%>"  data-required="true" class="form-control"/> </div>
+                                                                            </div>
+
+
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">Calificacion de la inspección del vehiculo:</label>
+                                                                                <div class="col-sm-5"> 
+                                                                                    <input name="car-rating" value="<%- data.Driver.car.rating%>"  class="slider slider-horizontal form-control" type="text" data-slider-value="10" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider- data-slider-orientation="horizontal" /> </div>
+                                                                                </div>
+
+
+
+                                                                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                                                                <span class="h4">Foto de perfil</span>
+                                                                                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+
+                                                                                <div class="form-group">
+                                                                                    <label class="col-sm-3 control-label">Raiz del archivo:</label>
+                                                                                    <div class="col-sm-5"> 
+                                                                                        <input type="text" name="dir_picture" value="<%- data.Driver.dir_picture%>"  data-required="true" class="form-control"/> </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-sm-3 control-label">Nombre del archivo:</label>
+                                                                                        <div class="col-sm-5"> 
+                                                                                            <input type="text" name="picture" value="<%- data.Driver.picture%>"  data-required="true" class="form-control"/> </div>
+                                                                                        </div>
+
+
+
+                                                                                        <br>
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-sm-offset-3 col-sm-5">
+                                                                                                <button type="submit" class="btn btn-sm btn-primary">Actualizar Data</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </section>
+                                                                    </section>
+
+
+                                                                    <script src="/linker/js/moment.min.js"></script>
+                                                                    <script src="/linker/js/livestamp.min.js"></script>
+
+
+                                                                    <% script('linker/js/datepicker/bootstrap-datepicker.js') %>
+                                                                    <% script('linker/js/parsley/parsley.min.js') %>
+                                                                    <% script('linker/js/slider/bootstrap-slider.js') %>

@@ -42,7 +42,7 @@ module.exports = {
 
                                 res.json({
                                     status: true,
-                                    Appversion: "1.1",
+                                    Appversion: "2",
                                     error: '',
                                     mensaje: "Bienvenido",
                                     data: user,
@@ -58,7 +58,7 @@ module.exports = {
 
                                 res.json({
                                     status: true,
-                                    Appversion: "1.1",
+                                    Appversion: "2",
                                     error: '',
                                     mensaje: "Bienvenido",
                                     data: user,
@@ -75,7 +75,7 @@ module.exports = {
 
                                 res.json({
                                     status: true,
-                                    Appversion: "1.1",
+                                    Appversion: "2",
                                     error: '',
                                     mensaje: "Bienvenido",
                                     data: user,
@@ -92,7 +92,7 @@ module.exports = {
 
                             res.json({
                                 status: true,
-                                Appversion: "1.1",
+                                Appversion: "2",
                                 error: '',
                                 mensaje: "Bienvenido",
                                 code: "e00",
@@ -110,7 +110,7 @@ module.exports = {
                     //si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
                     res.json({
                         status: false,
-                        Appversion: "1.1",
+                        Appversion: "2",
                         error: 'X01',
                         mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
                         data: ""
@@ -121,7 +121,7 @@ module.exports = {
                 //si el id no corresponde responde error y procedo a hacer logout en la app
                 res.json({
                     status: false,
-                    Appversion: "1.1",
+                    Appversion: "2",
                     error: 'X02',
                     mensaje: "Cuenta no existe",
                     data: ""
@@ -299,6 +299,19 @@ module.exports = {
                 var point = "";
                 var pos = "";
                 if (driver.ci == req.param('ci')) {
+
+                    if (driver.isActive == false) {
+
+                        return res.json({
+                            status: false,
+
+                            code: "SUSPENDIDA",
+                            message: 'Cuenta suspendida, contacta con tu oficina local',
+                        });
+                    };
+
+
+
                     Driver.update({
                         emei: req.param('imei'),
                         ci: req.param('ci')
@@ -333,7 +346,7 @@ module.exports = {
 
                             return res.json({
                                 status: true,
-                                Appversion: "3",
+                                Appversion: "2",
                                 pos: pos,
                                 point: point,
 
@@ -347,7 +360,7 @@ module.exports = {
                             pos = "";
                             return res.json({
                                 status: true,
-                                Appversion: "3",
+                                Appversion: "2",
                                 pos: pos,
                                 point: point,
 
@@ -604,7 +617,7 @@ module.exports = {
                         '>=': inicio,
                         '<=': fin
                     },
-                      'dataDriver.driverId': {
+                    'dataDriver.driverId': {
                         contains: driverId
                     }
 
@@ -626,23 +639,23 @@ module.exports = {
                 var outputEvent = [];
                 var data = {};
 
-                 for (var i = 0; i < eventos.length; i++) {
-                       data = {
-                        eventCalle :  eventos[i].eventCalle,
-                        eventSector :  eventos[i].eventSector,
-                        eventCity :  eventos[i].eventCity,
-                        eventExtra :  eventos[i].eventExtra,
-                        eventDestinoName :  eventos[i].eventDestinoName,
-                        eventDestinoCoordinate :  eventos[i].eventDestinoCoordinate,
-                        eventPrice :  eventos[i].eventPrice,
-                        passengerId :  eventos[i].passengerId,
-                        passengerName :  eventos[i].passengerName,
-                        passengerLastname :  eventos[i].passengerLastname,
-                        createdAt :  eventos[i].createdAt,
-                        coment :  eventos[i].coment,
-                        exp :  eventos[i].exp,
-                        id :  eventos[i].id,
-                        cobrado :  eventos[i].cobrado,
+                for (var i = 0; i < eventos.length; i++) {
+                    data = {
+                        eventCalle: eventos[i].eventCalle,
+                        eventSector: eventos[i].eventSector,
+                        eventCity: eventos[i].eventCity,
+                        eventExtra: eventos[i].eventExtra,
+                        eventDestinoName: eventos[i].eventDestinoName,
+                        eventDestinoCoordinate: eventos[i].eventDestinoCoordinate,
+                        eventPrice: eventos[i].eventPrice,
+                        passengerId: eventos[i].passengerId,
+                        passengerName: eventos[i].passengerName,
+                        passengerLastname: eventos[i].passengerLastname,
+                        createdAt: eventos[i].createdAt,
+                        coment: eventos[i].coment,
+                        exp: eventos[i].exp,
+                        id: eventos[i].id,
+                        cobrado: eventos[i].cobrado,
 
 
 
@@ -651,9 +664,9 @@ module.exports = {
 
 
                     }
-                      outputEvent.push(data);
+                    outputEvent.push(data);
 
-                 };
+                };
 
 
 

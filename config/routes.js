@@ -21,6 +21,11 @@ module.exports.routes = {
 
 
 'post /updatePassengerData': 'AdminController.updatePassengerData',
+'post /updateDriverData': 'AdminController.updateDriverData',
+
+
+
+
 
 'post /api/historialDriver': 'DriverController.historialDriver',
 
