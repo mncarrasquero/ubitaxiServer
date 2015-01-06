@@ -415,8 +415,8 @@ module.exports = {
 
         var lat = parseFloat(req.param('lat'));
         var lng = parseFloat(req.param('lng'));
-        var maxDistance = parseInt(req.param('maxDistance')) || 2;
-        var limit = parseInt(req.param('limit')) || 3;
+        var maxDistance = parseInt(req.param('maxDistance')) || 5;
+        var limit = parseInt(req.param('limit')) || 30;
         //  console.log('   lat         ', lat, typeof lat);
         //  console.log('   lng         ', lng);
         //  console.log('   maxDistance ', maxDistance, typeof maxDistance);
@@ -425,7 +425,7 @@ module.exports = {
         Driver.native(function(err, collection) {
 
             collection.geoNear(lng, lat, {
-                maxDistance: 15 / 6378,
+                maxDistance: 30 / 6378,
                 limit: limit,
                 // in meters
                 query: {
@@ -459,7 +459,7 @@ module.exports = {
                             var hace = now.diff(date, 'minutes')
                                 //console.log(now.diff(date, 'minutes')); // 1
 
-                            if (hace <= 20) {
+                            if (hace <= 240) {
                                 nuevoArray.push(docs.results[i].obj.lastPosition.coordinates);
                             };
 
