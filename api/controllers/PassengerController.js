@@ -1,5 +1,6 @@
+
 /**
- * PassengerController
+     * PassengerController
  *
  * @description :: Server-side logic for managing passengers
  * @help        :: See http://links.sailsjs.org/docs/controllers
@@ -271,6 +272,24 @@ function deg2rad(deg) {
                          res.json({
                             status: true,
                             code: "TXON",
+                            type: "Especial Aeropuerto La Chinita",
+                            response: "",
+                            data: {
+                                precio1: parseInt(400) ,
+                                precio2: parseInt(600) ,
+                                extra: data[0].nocturno
+
+                            }
+                        });
+
+                         return;
+                    };
+                     ,
+                    //Aeropuerto segun fourscuare
+                     if (getDistanceFromLatLonInKm(10.64504,-71.637154 , req.param('latD') ,req.param('lngD') ).toFixed(1) <= 0.3) {
+                         res.json({
+                             status: false,
+                            code: "TXOFF",
                             type: "Especial Aeropuerto La Chinita",
                             response: "",
                             data: {
