@@ -270,8 +270,8 @@ function deg2rad(deg) {
                   
                       if (getDistanceFromLatLonInKm(10.555113,-71.723943 , req.param('latD') ,req.param('lngD') ).toFixed(1) <= 1) {
                          res.json({
-                            status: true,
-                            code: "TXON",
+                            status: false,
+                            code: "TXOFF",
                             type: "Especial Aeropuerto La Chinita",
                             response: "",
                             data: {
