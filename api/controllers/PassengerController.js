@@ -284,7 +284,7 @@ function deg2rad(deg) {
 
                          return;
                     };
-                     ,
+                     
                     //Aeropuerto segun fourscuare
                      if (getDistanceFromLatLonInKm(10.64504,-71.637154 , req.param('latD') ,req.param('lngD') ).toFixed(1) <= 0.3) {
                          res.json({
