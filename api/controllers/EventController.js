@@ -1117,7 +1117,7 @@ module.exports = {
                                         "content": pasajero.name
                                     }, {
                                         "name": "fecha",
-                                        "content": moment(evento.createdAt).lang('es').zone('-0430').format('llll')
+                                        "content": moment(evento.createdAt).lang('es').zone('-0430').format('lll')
                                     }, {
                                         "name": "conductor",
                                         "content": evento.dataDriver.driverName + " " + evento.dataDriver.driverLastname
