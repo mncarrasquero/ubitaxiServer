@@ -1117,7 +1117,7 @@ module.exports = {
                                         "content": pasajero.name
                                     }, {
                                         "name": "fecha",
-                                        "content": moment(evento.createdAt).lang('es').zone('-0430').format('LLLL')
+                                        "content": moment(evento.createdAt).lang('es').zone('-0430').format('llll')
                                     }, {
                                         "name": "conductor",
                                         "content": evento.dataDriver.driverName + " " + evento.dataDriver.driverLastname
@@ -1130,6 +1130,9 @@ module.exports = {
                                     }, {
                                         "name": "descripcion",
                                         "content": evento.eventCalle + " - " + evento.eventExtra
+                                    }, {
+                                        "name": "monto",
+                                        "content": evento.cobrado
                                     }
 
 
@@ -1139,7 +1142,7 @@ module.exports = {
 
                             }
 
-                             var async = false;
+                            var async = false;
 
                             mandrill_client.messages.sendTemplate({
                                 "template_name": template_name,
@@ -1156,7 +1159,7 @@ module.exports = {
                                 // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
                             });
 
-                            
+
 
                         });
 
