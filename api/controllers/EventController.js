@@ -1087,7 +1087,7 @@ module.exports = {
                             var message = {
                                 "html": "<p>Example HTML content</p>",
                                 "text": "Example text content",
-                                "subject": "Recibo de servicio Ubitaxi por " + evento.cobrado + " Bs.",
+                                "subject": "Recibo de servicio Ubitaxi por " + cobrado + " Bs.",
                                 "from_email": "noreply@ubitaxi.net",
                                 "from_name": "Ubitaxi Venezuela",
                                 "to": [{
@@ -1132,7 +1132,7 @@ module.exports = {
                                         "content": evento.eventCalle + " - " + evento.eventExtra
                                     }, {
                                         "name": "monto",
-                                        "content": evento.cobrado
+                                        "content": cobrado
                                     }
 
 
