@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Ubitaxi | Seguimiento de servicio</title>
+    <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="linker/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="linker/css/animate.css" type="text/css" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  
+    <link rel="stylesheet" href="linker/css/icon.css" type="text/css" />
+    <link rel="stylesheet" href="linker/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="linker/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="linker/js/chosen/chosen.css" type="text/css" />
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+
+<body class="">
+    <section class="vbox">
+        <header class="bg-white header header-md navbar navbar-fixed-top-xs box-shadow">
+            <div class="navbar-header aside-md dk">
+                <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <a href="index.html" class="navbar-brand">
+                    <img src="images/logo.png" class="m-r-sm" alt="scale">
+                    <span class="hidden-nav-xs">Ubitaxi</span>
+                </a>
+                <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+                    <i class="fa fa-cog"></i>
+                </a>
+            </div>
+
+
+            <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle text-lg">
+                       <%- data.nombreCliente %> esta usando Ubitaxi
+                    </a>
+
+                </li>
+            </ul>
+
+        </header>
+        <section>
+            <section class="hbox stretch">
+                <!-- .aside -->
+
+                <!-- /.aside -->
+                <section id="content">
+                    <section class="vbox bg-white">
+                        <section>
+                            <section class="hbox stretch">
+
+                                <aside class="wrapper col-lg-3 ">
+                                    <p class="text-lg font-thin">Mi conductor asignado</p>
+
+
+                                    <div class="clearfix">
+                                        <a href="#" class="pull-left thumb-md avatar b-3x m-r">
+                                            <img src="<%- data.fotoChofer %>">
+                                        </a>
+
+
+                                        <div class="clear">
+                                            <div class="h3 m-t-xs m-b-xs">
+                                               <%- data.nombreChofer %> 
+                                                <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                                            </div>
+                                            
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <ul class="nav  nav-stacked aside-lg">
+                                        <li class="bg-light dk"><a href="#"><i class="fa fa-cab m-r-sm"></i>  <%- data.carroChofer %> </a>
+                                        </li>
+                                        <li class="bg-light dk"><a href="#"><i class="i  i-landscape m-r-sm"></i> <%- data.palas %> </a></a>
+                                        </li>
+                                        
+                                    </ul>
+
+
+
+
+
+                                </aside>
+                                <section id="gmap_geocoding" style="min-height:240px;">
+                                </section>
+
+
+                            </section>
+                        </section>
+                    </section>
+                    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+                </section>
+            </section>
+        </section>
+    </section>
+    <script src="linker/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="linker/js/bootstrap.js"></script>
+    <!-- App -->
+    <script src="linker/js/app.js"></script>
+
+ 
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="linker/js/maps/gmaps.js"></script>
+
+ 
+
+    
+</body>
+
+<script type="text/javascript">
+! function($) {
+
+    $(function() {
+
+
+
+
+        map = new GMaps({
+            div: '#gmap_geocoding',
+            lat: <%- data.eventoOrigen[1] %> ,
+            lng: <%- data.eventoOrigen[0] %> ,
+            zoom: 16
+        });
+
+
+
+
+map.drawPolyline({
+  path: <%- data.posiciones9 %> ,
+  strokeColor: '#06a7e0',
+  strokeOpacity: 0.5,
+  strokeWeight: 7
+});
+
+
+        map.addMarker({
+             lat: <%- data.eventoOrigen[1] %> ,
+            lng: <%- data.eventoOrigen[0] %> ,
+              title: 'Lima',
+              click: function(e) {
+                alert('You clicked in this marker');
+              }
+        });
+
+     
+
+
+
+
+
+    });
+}(window.jQuery);
+</script>
+
+</html>

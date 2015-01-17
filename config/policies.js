@@ -38,7 +38,7 @@ module.exports.policies = {
   UserController: {
     '*': 'isAuthenticated',
     login: true,
-    signup: true,
+    signup: false,
     recoveryPass: true,
     changepass: true
   },
@@ -49,7 +49,9 @@ module.exports.policies = {
      generateRank: true,
      findMyRank: true,
      stateRank: true,
-     driverEventos: true
+     driverEventos: true,
+     sayHiToFriend: true,
+     detalleEventoPublico: true
 
   },
   DriverController: {

@@ -20,6 +20,8 @@ module.exports.bootstrap = function(cb) {
     uuid = require('node-uuid');
     Q = require('q');
     path = require('path');
+   // socket = req.socket;
+    io = sails.io;
 
 
 

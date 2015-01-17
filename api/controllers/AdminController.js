@@ -32,6 +32,32 @@ module.exports = {
 
     },
 
+
+    sayHiToFriend: function(req, res) {
+
+
+
+        io.sockets.emit('central', {
+            action: 'Point',
+            response: {
+                id: req.param('id'),
+                lat: req.param('lat'),
+                lng: req.param('lng'),
+                name: req.param('name'),
+                picture: req.param('picture'),
+                plate: req.param('plate'),
+                date: new Date(moment().zone('-0430').toISOString())
+            }
+        });
+
+        res.json({
+            message: 'Message sent!'
+        });
+    },
+
+
+
+
     test1: function(req, res, next) {
         var text = "";
         var possible = "abcdefghijklmnopqrstuvwxyz123456789";
@@ -46,7 +72,7 @@ module.exports = {
 
 
 
-     updateDriverData: function(req, res, next) {
+    updateDriverData: function(req, res, next) {
         var valores = req.params.all();
         var activo = true;
         if (req.param('isActive') === "true") {
@@ -55,40 +81,40 @@ module.exports = {
             activo = false;
 
         };
-    
+
 
         Driver.update({
             id: req.param('id')
         }, {
-                isActive: activo,
-                uuid: req.param('uuid'),
-                name: req.param('name'),
-                lastname: req.param('lastname'),
-                email: req.param('email'),
-                picture: req.param('picture'),
-                dir_picture: req.param('dir_picture'),
-                password: req.param('password'),
-                phone: req.param('phone'),
-                ci: req.param('ci'),
-                birthday: req.param('birthday'),
-                address: req.param('address'),
-                
-                
-                point: req.param('point'),
-                
-                car: {
-                    brand: req.param('car-brand'),
-                    model: req.param('car-model'),
-                    year: req.param('car-year'),
-                    color: req.param('car-color'),
-                    type: req.param('car-type'),
-                    door: req.param('car-door'),
-                    cap: req.param('car-cap'),
-                    plate: req.param('car-plate'),
-                    serial: req.param('car-serial'),
-                    owner: req.param('car-owner'),
-                    rating: req.param('car-rating'),
-                }
+            isActive: activo,
+            uuid: req.param('uuid'),
+            name: req.param('name'),
+            lastname: req.param('lastname'),
+            email: req.param('email'),
+            picture: req.param('picture'),
+            dir_picture: req.param('dir_picture'),
+            password: req.param('password'),
+            phone: req.param('phone'),
+            ci: req.param('ci'),
+            birthday: req.param('birthday'),
+            address: req.param('address'),
+
+
+            point: req.param('point'),
+
+            car: {
+                brand: req.param('car-brand'),
+                model: req.param('car-model'),
+                year: req.param('car-year'),
+                color: req.param('car-color'),
+                type: req.param('car-type'),
+                door: req.param('car-door'),
+                cap: req.param('car-cap'),
+                plate: req.param('car-plate'),
+                serial: req.param('car-serial'),
+                owner: req.param('car-owner'),
+                rating: req.param('car-rating'),
+            }
 
         }).exec(function afterwards(err, updated) {
             if (err) {
@@ -97,7 +123,7 @@ module.exports = {
                 return;
             }
             res.redirect('/listDriver');
-            return ;
+            return;
 
 
         });
@@ -185,16 +211,34 @@ module.exports = {
 
     },
 
+    central: function(req, res, next) {
 
+        console.log(req.session.passport.me);
+        res.view({
+            layout: 'admin/layoutCentral.ejs',
+            user: req.session.passport.me,
+            data: {
+
+            }
+        });
+
+    },
 
     dashboard: function(req, res, next) {
 
+        //console.log(req.session.passport.me);
+
+        if (req.session.passport.me.role == "central") {
+            res.redirect('/central');
+            return;
+
+        };
 
         var inicio = new Date(moment().zone('-0430').startOf('day').toISOString());
-        var fin =    new Date(moment().zone('-0430').endOf('day').toISOString());
+        var fin = new Date(moment().zone('-0430').endOf('day').toISOString());
 
 
-    
+
 
 
         Q.all([
@@ -214,9 +258,9 @@ module.exports = {
                 //cuantos eventos hoy
                 Event.count({
                     createdAt: {
-                    '>=': inicio,
-                    '<=': fin
-                },
+                        '>=': inicio,
+                        '<=': fin
+                    },
 
 
                 }).then(),
@@ -225,9 +269,9 @@ module.exports = {
                 //cuantos eventos completados hoy
                 Event.count({
                     createdAt: {
-                    '>=': inicio,
-                    '<=': fin
-                },
+                        '>=': inicio,
+                        '<=': fin
+                    },
 
                     status: 7
                 }).then(),
@@ -237,10 +281,10 @@ module.exports = {
 
                 //cuantos eventos cancelados por parka
                 Event.count({
-                     createdAt: {
-                    '>=': inicio,
-                    '<=': fin
-                },
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
 
                     status: 5
 
@@ -250,10 +294,10 @@ module.exports = {
 
                 //cuantos eventos cancelados pasajero
                 Event.count({
-                     createdAt: {
-                    '>=': inicio,
-                    '<=': fin
-                },
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
 
                     status: 2
 
@@ -262,10 +306,10 @@ module.exports = {
 
                 //cuantos eventos cancelados taxista
                 Event.count({
-                     createdAt: {
-                    '>=': inicio,
-                    '<=': fin
-                },
+                    createdAt: {
+                        '>=': inicio,
+                        '<=': fin
+                    },
 
                     status: 4
 
@@ -525,9 +569,9 @@ module.exports = {
                             //cancelado taxista
                     }]
                 }).then(),
-                    //eventos q partcipo
-                 Event.find({
-                   'dataDriver.driverId': {
+                //eventos q partcipo
+                Event.find({
+                    'dataDriver.driverId': {
                         contains: req.param('id')
                     },
                     or: [{
@@ -547,14 +591,14 @@ module.exports = {
                 // let's find one Lexus car
 
             ])
-            .spread(function(Driver, completadosDriver, canceladosDriver,eventos) {
+            .spread(function(Driver, completadosDriver, canceladosDriver, eventos) {
                 // Output results as json, but you can do whatever you want here
                 //res.json([user, car, phone]);
-               
+
                 var karma = completadosDriver / (completadosDriver + canceladosDriver);
                 karma = karma * 100;
-                karma =  karma.toFixed(0);
-      
+                karma = karma.toFixed(0);
+
 
                 res.view({
                     layout: 'admin/layoutAdmin.ejs',
@@ -563,7 +607,7 @@ module.exports = {
                         Driver: Driver,
                         completadosDriver: completadosDriver,
                         canceladosDriver: canceladosDriver,
-                        karma : karma,
+                        karma: karma,
                         eventos: eventos
 
 
@@ -931,6 +975,83 @@ module.exports = {
                 }
             });
 
+
+
+
+    },
+
+
+    detalleEventoPublico: function(req, res) {
+
+        //var maxDistance = parseInt(req.param('maxDistance')) || 2;
+        var limit = 1;
+
+        Event.findOne({
+            id: req.param('id')
+        }).exec(function(err, eventos) {
+
+            if (err) res.json({
+                error: 'DB error'
+            }, 500);
+            if (eventos) {
+                var posiciones8 = [];
+                var posiciones9 = [];
+                for (var i = 0; i < eventos.gpsDriverLocation.length; i++) {
+                    if (eventos.gpsDriverLocation[i].flag == 8) {
+                        var data = [eventos.gpsDriverLocation[i].lat, eventos.gpsDriverLocation[i].lng]
+                        posiciones8.push(data);
+                    };
+                    if (eventos.gpsDriverLocation[i].flag == 9) {
+                        var data = [eventos.gpsDriverLocation[i].lat, eventos.gpsDriverLocation[i].lng]
+                        posiciones9.push(data);
+                    };
+
+                };
+
+
+                var pasar = {
+
+                    nombreCliente: eventos.passengerName,
+                    nombreChofer: eventos.dataDriver.driverName + " " + eventos.dataDriver.driverLastname,
+                    fotoChofer: "http://app.ubitaxi.net:1337/" + eventos.dataDriver.driverPicture,
+                    carroChofer: eventos.dataDriver.carBrand + " " + eventos.dataDriver.carModel + " - " + eventos.dataDriver.carColor,
+                    palas: eventos.dataDriver.carPlate,
+                    eventoOrigen: eventos.eventLocation.coordinates,
+                    posiciones8: JSON.stringify(posiciones8),
+                    posiciones9: JSON.stringify(posiciones9)
+
+                };
+
+                res.view('admin/rastreoevento', {
+                    data: pasar,
+                });
+                /*
+                                 res.json({
+                                     status: true,
+                                     data: {
+
+                                         nombreCliente: eventos.passengerName,
+                                         nombreChofer: eventos.dataDriver.driverName + " " + eventos.dataDriver.driverLastname,
+                                         fotoChofer: "http://app.ubitaxi.net:1337/"+eventos.dataDriver.driverPicture,
+                                         carroChofer: eventos.dataDriver.carBrand + " "+ eventos.dataDriver.carModel + " - "+ eventos.dataDriver.carColor,
+                                         palas: eventos.dataDriver.carPlate,
+                                         pociciones: eventos.gpsDriverLocation
+
+
+
+
+               
+                                     }
+                                 });*/
+
+            } else {
+                //si el id no corresponde responde error y procedo a hacer logout en la app
+                res.json({
+                    status: false,
+                    data: ""
+                });
+            }
+        });
 
 
 

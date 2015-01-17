@@ -389,6 +389,21 @@ module.exports = {
                         if (err) {
                             // handle error here- e.g. `res.serverError(err);`
                             return;
+                        } else {
+
+                            io.sockets.emit('central', {
+                                action: 'Point',
+                                response: {
+                                    id: req.param('id'),
+                                    lat: parseFloat(req.param('lat')),
+                                    lng: parseFloat(req.param('lng')),
+                                    name: user.name+" "+ user.lastname,
+
+                                    picture: user.dir_picture+user.picture,
+                                    plate: user.car.plate,
+                                    date: new Date(moment().zone('-0430').toISOString())
+                                }
+                            });
                         }
 
 

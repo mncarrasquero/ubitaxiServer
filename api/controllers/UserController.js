@@ -138,14 +138,15 @@ module.exports = {
 
 
   login: function(req, res) {
-    console.log("hola mundo login");
+   // console.log("hola mundo login");
     // console.log(req._passport.session.user);
 
 
 
     res.locals.flash = _.clone(req.session.flash);
-
+    //console.log(req._passport.session.user);
     return res.login({
+
       successRedirect: '/dashboard'
     });
 

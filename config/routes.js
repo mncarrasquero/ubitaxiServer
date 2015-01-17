@@ -24,6 +24,11 @@ module.exports.routes = {
 'post /updateDriverData': 'AdminController.updateDriverData',
 
 
+///test///
+'post /sayHiToFriend': 'AdminController.sayHiToFriend',
+////
+
+    
 
 
 
@@ -42,6 +47,8 @@ module.exports.routes = {
     'get /api/test1': 'AdminController.test1',
 
     'get /mapa': 'AdminController.mapa',
+
+    'get /central': 'AdminController.central',
 
 
     'post /api/generateRank': 'AdminController.generateRank',
@@ -106,7 +113,11 @@ module.exports.routes = {
 
 
 
+//acceso pulbic
 
+'get /detalleEventoPublico': 'AdminController.detalleEventoPublico',
+    
+//fin acceso public
 
 
 

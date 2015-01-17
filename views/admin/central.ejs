@@ -1,0 +1,225 @@
+   <link rel="stylesheet" href="linker/js/chosen/chosen.css" type="text/css" />
+   <section class="vbox bg-white">
+    <section>
+        <section class="hbox stretch">
+
+            <aside class="wrapper col-lg-3">
+                <p class="text-lg font-thin">Datos personales</p>
+                <form method="post" id="geocoding_form" class="m-t-sm">
+
+
+                    <div class="form-group">
+                        <label>Nombre: </label>
+                        <input type="text" class="form-control" placeholder="Nombre del cliente">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefono:</label>
+                        <input type="number" class="form-control" placeholder="Numero de telefono celular">
+                    </div>
+                    <div class="form-group">
+                        <label>Direccion:</label>
+                        <input type="text" class="form-control" placeholder="Direccion de origen">
+                    </div>
+                    <div class="form-group">
+                        <label>Punto de referencia:</label>
+                        <input type="text" class="form-control" placeholder="Punto de referencia">
+                    </div>
+
+                    <div class="form-group">
+                        <label >Sector</label>
+                        <div class=" ">
+                            <select style="width:100%" class="chosen-select ">
+                                <optgroup label="Alaskan/Hawaiian Time Zone">
+                                    <option value="AK">Delicias</option>
+                                    <option value="HI">Hawaii</option>
+                                </optgroup>
+                                <optgroup label="Pacific Time Zone">
+                                    <option value="CA">California</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="WA">Washington</option>
+                                </optgroup>
+
+
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group">
+                        <label>Destino:</label>
+                        <input type="text" class="form-control" placeholder="Destino del cliente"> </div>
+
+
+                    </form>
+                    <br>
+                    <a id="boton1" class="btn btn-warning btn-rounded btn-sm m-t m-b">Genear solicitud</a>
+                    <ul id="instructions" class="list-unstyled fa-ul"></ul>
+                </aside>
+                <section id="map_canvas" style="min-height:240px;">
+                </section>
+
+                <aside class="aside-md bg-primary dker" id="sidebar">
+                    <section class="vbox animated fadeInRight">
+                        <section class="scrollable">
+                            <h4 class="font-thin text-white padder m-b-none m-t">Servicios generados</h4>
+                            <div class="wrapper text-u-c"><strong>Activos</strong>
+                            </div>
+                            <ul  id="activosList" class="list-group no-bg no-borders auto m-b-none">
+
+
+
+
+
+                            </ul>
+                            <div class="wrapper text-u-c"><strong>Finalizados</strong>
+                            </div>
+                            <ul class="list-group no-bg no-borders auto">
+
+
+                                <li class="list-group-item">
+                                    <div class="media"> <a href="#" class="pull-right m-t-sm"><i class="i i-phone"></i></a> <span class="pull-left thumb-sm avatar"> <img src="images/a4.png" alt="..." class="img-circle"> <i class="off b-white bottom"></i> </span>
+                                        <div class="media-body">
+                                            <div><a href="#">Julien Reowo</a>
+                                            </div> <small class="text-muted">14 sec ago</small> </div>
+                                        </div>
+                                    </li>
+
+
+
+
+                                </ul>
+                            </section>
+                        </section>
+                    </aside>
+
+
+
+
+                </section>
+            </section>
+        </section>
+        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+
+        <script type="text/javascript">
+        $( document ).ready(function() {
+
+            $('#map_canvas').gmap3({
+               map:{
+                options:{
+                   center:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
+                   zoom:14,
+
+                   navigationControl: true,
+                   scrollwheel: true,
+                   streetViewControl: false
+               }
+           },
+           marker:{
+            latLng:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
+        }
+    });
+
+
+
+
+
+
+
+
+
+            $( "#boton1" ).click(function() {
+               $('#activosList').append('  <li class="list-group-item"> <div class="media"> <a href="#" class="pull-right m-t-sm"> <span class="badge badge-empty">6</span> </a> <span class="pull-left thumb-sm avatar"> <img src="images/a0.png" alt="..."> <i class="away b-white bottom"></i> </span> <div class="media-body"> <div><span> Mario Carrasquero</span> </div> <small class="text-muted">40 min ago</small> </div> </div> </li>');
+
+
+           });
+
+
+
+
+            io.socket.on('central', function onServerSentEvent (data) {
+               //console.log(JSON.stringify(data) );
+               if (data.action == "Point") {
+                //acccion de crear marca en el mapa
+                //Creo la marca
+
+                console.log(JSON.stringify(data.response));
+
+                $("#map_canvas").gmap3({
+                  get: {
+                    name:"marker",
+                    tag: data.response.id,
+                    all: true,
+                    callback: function(objs){
+                        if (objs.length == 0) {
+                            console.log("maraca no existe");
+                            $('#map_canvas').gmap3({
+                               marker:{
+                                   latLng:[data.response.lat,data.response.lng],
+                                   name:"marker",
+                                   tag: data.response.id,
+                                   options:{icon: "../linker/images/taxiGreen.png"}
+                                    //icon : new google.maps.MarkerImage('/')
+
+                               }
+                           });
+
+
+                        } else{
+                            console.log("maraca SI existe");
+
+                           // $('#map_canvas').gmap3({action:'clear',  tag: data.response.id});
+                             //objs.setPosition(new google.maps.LatLng(data.response.lat, data.response.lng));
+                             //objs.setPosition(latLng[data.response.lat,data.response.lng]);
+                             console.log(data.response.id);
+                             //$('#map_canvas').gmap3({action:'clear', tag: data.response.id});
+
+                             $('#map_canvas').gmap3({
+                                clear: {
+                                  tag: data.response.id
+                              }
+                          });
+
+                               $('#map_canvas').gmap3({
+                               marker:{
+                                   latLng:[data.response.lat,data.response.lng],
+                                   name:"marker",
+                                   tag: data.response.id,
+                                   options:{icon: "../linker/images/taxiGreen.png"}
+                               }
+                           });
+
+
+
+                         };
+
+
+                     }
+                 }
+             });
+
+
+
+
+
+
+
+
+};
+
+
+});
+
+
+
+
+});
+   </script>
+
+
+
+
