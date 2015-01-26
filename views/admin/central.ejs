@@ -89,7 +89,7 @@
                <label>Sector:</label>
                <div class="input-group"> 
 
-                <input type="text" id="sector" name="sector" placeholder="Sector del servicio" class="form-control"> 
+                <input type="text" id="sector" style="z-index: 0;" name="sector" placeholder="Sector del servicio" class="form-control"> 
                 <span class="input-group-btn"> 
                   <button class="btn btn-default" id="btnBuscarSector" type="button">Buscar</button> 
                   <button class="btn btn-default"  id="btnDeleteSector"  type="button">Eliminar</button> 
@@ -98,10 +98,7 @@
               </div>    </div>
 
 
-              <div class="form-group">
-                <label>Destino:</label>
-                <input type="text" class="form-control"   id="destino" name="destino" placeholder="Destino del cliente"> 
-              </div>
+
 
               <div class="form-group">
                 <label>Nombre: </label>
@@ -128,7 +125,7 @@
             <div style="display: none" id="precioEstimado" class="col-xs-6"> <div class="h3 font-bold" id="rangoDePrecio"></div> <small id="detallePrecio" class="text-muted"></small> 
           </div>
           <br>
-         
+
           <br>
           <div  class=" col-lg-12">
             <a id="btnGenerar" class=" col-lg-6 btn btn-s-md btn-primary pull-left ">Genear solicitud</a>
@@ -194,7 +191,7 @@ $( document ).ready(function() {
     window.precioExtra = null;
     window.precioType = null;
     window.latOrigen = null;
- window.lngOrigen = null;
+    window.lngOrigen = null;
     //boorro   direccion 
     $('#map_canvas').gmap3({
       clear: {
@@ -224,6 +221,7 @@ $( document ).ready(function() {
     $("#telefono").val("");
     $("#origen").val("");
     $("#destino").val("");
+    $("#sector").val("");
 
     //focus en el referenci
     $( "#venue" ).focus();
@@ -238,8 +236,9 @@ $( document ).ready(function() {
   });
 
   $('#btnDeleteSector').click(function() {
-       window.latOrigen = null;
- window.lngOrigen = null;
+    $("#sector").val("");
+    window.latOrigen = null;
+    window.lngOrigen = null;
     $.fn.deleteSector();
 
 
@@ -548,6 +547,9 @@ $("#venue").foursquareAutocomplete({
     $("#venue-cityLine").html(ui.item.cityLine);
     $("#venue-icon").attr("src", ui.item.photo);
     $.fn.deleteAllMarca("origenMarker");
+    window.latOrigen =ui.item.lat;
+    window.lngOrigen = ui.item.lng;
+
     $('#map_canvas').gmap3({
      marker:{
        latLng:[ui.item.lat,ui.item.lng],
@@ -615,8 +617,8 @@ $.fn.sector = function(value) {
     callback: function(results){
       if ( !results ) return;
 
-          window.latOrigen = results[0].geometry.location.lat();
- window.lngOrigen = results[0].geometry.location.lng();
+      window.latOrigen = results[0].geometry.location.lat();
+      window.lngOrigen = results[0].geometry.location.lng();
       $(this).gmap3({
         marker:{
          tag: "sector",
@@ -630,12 +632,12 @@ $.fn.sector = function(value) {
           fillColor : "#008BB2",
           strokeColor : "#005BB7"
         }},
-         map:{
-      options:{
-       
-        center:results[0].geometry.location,
-      }
-    }
+        map:{
+          options:{
+
+            center:results[0].geometry.location,
+          }
+        }
       });
     }
   }

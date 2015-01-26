@@ -408,6 +408,212 @@ module.exports = {
 
     },
 
+
+    eventQuestV2: function(req, res) {
+
+
+        //evaluaar q  tipo de evento es movil o central
+
+        if (req.param('type') == "movil") {
+
+
+            //evaluar si el evento esta disponible
+
+
+            Event.findOne({
+                id: req.param('id')
+            }).exec(function(err, evento) {
+                if (err) res.json({
+                    error: 'DB error'
+                }, 500);
+                if (evento) {
+                    //evaluar el estatus del evento
+                    if (evento.status == 1) {
+                        //evento esta disponible
+                        //buscar datos del taxista solicitante
+                        Driver.findOne({
+                            id: req.param('driverId')
+                        }).exec(function(err, driver) {
+                            if (err) res.json({
+                                error: 'DB error'
+                            }, 500);
+                            if (driver) {
+
+
+                                Event.update({
+                                    id: req.param('id')
+                                }, {
+                                    status: 8,
+                                    isActive: true,
+                                    dataDriver: {
+                                        driverId: driver.id,
+                                        driverName: driver.name,
+                                        driverLastname: driver.lastname,
+                                        driverPhone: driver.phone,
+                                        driverPicture: driver.dir_picture + driver.picture,
+                                        carBrand: driver.car.brand,
+                                        carModel: driver.car.model,
+                                        carYear: driver.car.year,
+                                        carColor: driver.car.color,
+                                        carPlate: driver.car.plate,
+                                        lastPosition: {
+                                            lat: req.param('lat'),
+                                            lng: req.param('lng')
+                                        }
+                                    },
+
+
+                                }).exec(function afterwards(err, updated) {
+
+                                    if (err) {
+                                        res.json({
+                                            status: false,
+                                            mensaje: "error DB",
+                                            response: err
+                                        });
+                                        return;
+                                    }
+
+                                    res.json({
+                                        status: true,
+                                        mensaje: "avento asignado",
+                                        response: evento
+                                    });
+                                    //console.log('Updated user to have name ' + updated[0].name);
+                                });
+
+
+
+                            } else {
+                                res.json({
+                                    status: false,
+                                    mensaje: "Upps ocurrio un error"
+                                });
+                            };
+                        });
+
+                    } else {
+                        //evento no esta disponible
+                        res.json({
+                            status: false,
+                            error: "x206",
+                            mensaje: "Evento no disponible"
+                        });
+                    };
+
+
+
+                } else {
+                    //evento no existe
+                    res.json({
+                        status: false,
+                        error: "x205",
+                        mensaje: "Evento no existe"
+                    });
+                }
+            });
+
+        }else{
+  Central.findOne({
+                id: req.param('id')
+            }).exec(function(err, evento) {
+                if (err) res.json({
+                    error: 'DB error'
+                }, 500);
+                if (evento) {
+                    //evaluar el estatus del evento
+                    if (evento.status == 1) {
+                        //evento esta disponible
+                        //buscar datos del taxista solicitante
+                        Driver.findOne({
+                            id: req.param('driverId')
+                        }).exec(function(err, driver) {
+                            if (err) res.json({
+                                error: 'DB error'
+                            }, 500);
+                            if (driver) {
+
+
+                                Event.update({
+                                    id: req.param('id')
+                                }, {
+                                    status: 8,
+                                    isActive: true,
+                                    dataDriver: {
+                                        driverId: driver.id,
+                                        driverName: driver.name,
+                                        driverLastname: driver.lastname,
+                                        driverPhone: driver.phone,
+                                        driverPicture: driver.dir_picture + driver.picture,
+                                        carBrand: driver.car.brand,
+                                        carModel: driver.car.model,
+                                        carYear: driver.car.year,
+                                        carColor: driver.car.color,
+                                        carPlate: driver.car.plate,
+                                        lastPosition: {
+                                            lat: req.param('lat'),
+                                            lng: req.param('lng')
+                                        }
+                                    },
+
+
+                                }).exec(function afterwards(err, updated) {
+
+                                    if (err) {
+                                        res.json({
+                                            status: false,
+                                            mensaje: "error DB",
+                                            response: err
+                                        });
+                                        return;
+                                    }
+
+                                    res.json({
+                                        status: true,
+                                        mensaje: "avento asignado",
+                                        response: evento
+                                    });
+                                    //console.log('Updated user to have name ' + updated[0].name);
+                                });
+
+
+
+                            } else {
+                                res.json({
+                                    status: false,
+                                    mensaje: "Upps ocurrio un error"
+                                });
+                            };
+                        });
+
+                    } else {
+                        //evento no esta disponible
+                        res.json({
+                            status: false,
+                            error: "x206",
+                            mensaje: "Evento no disponible"
+                        });
+                    };
+
+
+
+                } else {
+                    //evento no existe
+                    res.json({
+                        status: false,
+                        error: "x205",
+                        mensaje: "Evento no existe"
+                    });
+                }
+            });
+
+
+
+
+        };
+
+    },
+
     eventSearchV2: function(req, res) {
 
         var lat = parseFloat(req.param('lat'));
@@ -496,7 +702,7 @@ module.exports = {
                                                 central = {
                                                     qty: docs1.results.length
                                                 }
-                                                
+
                                             } else {
 
                                                 central = {
@@ -504,30 +710,30 @@ module.exports = {
                                                     qty: docs1.results.length,
                                                     response: docs1.results
                                                 };
-                                                
+
                                             };
                                         }
 
-                                        if (docs.results.length + central.qty  == 0) {
-                                    res.json({
+                                        if (docs.results.length + central.qty == 0) {
+                                            res.json({
 
-                                        status: true,
+                                                status: true,
 
-                                        qty: docs.results.length + central.qty ,
-                                        central: central,
-                                        //response: docs.results
-                                    });
-                                } else {
-                                    res.json({
-                                        status: true,
+                                                qty: docs.results.length + central.qty,
+                                                central: central,
+                                                //response: docs.results
+                                            });
+                                        } else {
+                                            res.json({
+                                                status: true,
 
-                                        qty: docs.results.length + central.qty ,
-                                        response: docs.results,
-                                        central: central,
-                                    });
+                                                qty: docs.results.length + central.qty,
+                                                response: docs.results,
+                                                central: central,
+                                            });
 
 
-                                };
+                                        };
 
 
                                     });
