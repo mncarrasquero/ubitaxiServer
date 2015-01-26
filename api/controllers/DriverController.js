@@ -500,7 +500,7 @@ module.exports = {
         var lat = parseFloat(req.param('lat'));
         var lng = parseFloat(req.param('lng'));
         var maxDistance = parseInt(req.param('maxDistance')) || 5;
-        var limit = parseInt(req.param('limit')) || 30;
+        var limit = parseInt(req.param('limit')) || 8000;
         //  console.log('   lat         ', lat, typeof lat);
         //  console.log('   lng         ', lng);
         //  console.log('   maxDistance ', maxDistance, typeof maxDistance);
@@ -519,6 +519,7 @@ module.exports = {
                 distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
                 spherical: true
             }, function(mongoErr, docs) {
+
                 if (mongoErr) {
                     console.error(mongoErr);
                     res.json({
@@ -543,8 +544,8 @@ module.exports = {
                             var date = docs.results[i].obj.lastPosition.date
                             var hace = now.diff(date, 'minutes')
                                 //console.log(now.diff(date, 'minutes')); // 1
-
-                            if (hace <= 900) {
+                           
+                            if (hace <= 240) {
                                 temp = {
                                     'latlng': docs.results[i].obj.lastPosition.coordinates,
                                     'id': docs.results[i].obj.id,

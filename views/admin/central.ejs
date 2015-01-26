@@ -301,7 +301,7 @@ $( document ).ready(function() {
   });
 
 function hayTaxi() {
-  console.log("preguntando por taxi en el area");
+  console.log("preguntando por taxi en el area  <%- user.oficina[1] %>  <%- user.oficina[0] %>");
   $.post( "api/hayCondunctoresV2", {lat:<%- user.oficina[1] %>,lng:<%- user.oficina[0] %> })
   .done(function( data ) {
    console.log(JSON.stringify(data));
