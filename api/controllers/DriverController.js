@@ -416,7 +416,7 @@ module.exports = {
         var lat = parseFloat(req.param('lat'));
         var lng = parseFloat(req.param('lng'));
         var maxDistance = parseInt(req.param('maxDistance')) || 5;
-        var limit = parseInt(req.param('limit')) || 30;
+        var limit = parseInt(req.param('limit')) || 90000;
         //  console.log('   lat         ', lat, typeof lat);
         //  console.log('   lng         ', lng);
         //  console.log('   maxDistance ', maxDistance, typeof maxDistance);
