@@ -1,127 +1,295 @@
-   <link rel="stylesheet" href="linker/js/chosen/chosen.css" type="text/css" />
-   <section class="vbox bg-white">
-    <section>
-        <section class="hbox stretch">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="linker/js/jquery-ui.js"></script>
+<script type="text/javascript" src="linker/js/fq.js"></script>
 
-            <aside class="wrapper col-lg-3">
-                <p class="text-lg font-thin">Datos personales</p>
-                <form method="post" id="geocoding_form" class="m-t-sm">
-
-
-                    <div class="form-group">
-                        <label>Nombre: </label>
-                        <input type="text" class="form-control" placeholder="Nombre del cliente">
-                    </div>
-                    <div class="form-group">
-                        <label>Telefono:</label>
-                        <input type="number" class="form-control" placeholder="Numero de telefono celular">
-                    </div>
-                    <div class="form-group">
-                        <label>Direccion:</label>
-                        <input type="text" class="form-control" placeholder="Direccion de origen">
-                    </div>
-                    <div class="form-group">
-                        <label>Punto de referencia:</label>
-                        <input type="text" class="form-control" placeholder="Punto de referencia">
-                    </div>
-
-                    <div class="form-group">
-                        <label >Sector</label>
-                        <div class=" ">
-                            <select style="width:100%" class="chosen-select ">
-                                <optgroup label="Alaskan/Hawaiian Time Zone">
-                                    <option value="AK">Delicias</option>
-                                    <option value="HI">Hawaii</option>
-                                </optgroup>
-                                <optgroup label="Pacific Time Zone">
-                                    <option value="CA">California</option>
-                                    <option value="NV">Nevada</option>
-                                    <option value="OR">Oregon</option>
-                                    <option value="WA">Washington</option>
-                                </optgroup>
-
-
-                            </select>
-                        </div>
-                    </div>
+<script type="text/javascript" src="linker/js/slimscroll/jquery.slimscroll.min.js"></script>
 
 
 
+<style>
+.ui-autocomplete-loading { background: white url('linker/images/ui-anim_basic_16x16.gif') right center no-repeat; }
+
+#venue-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+#venue-icon {
+  float: left;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+}
+#venue-address {
+  margin: 0;
+  padding: 0;
+}
+#venue-city {
+  margin: 0;
+  padding: 0;
+}
+
+.ui-menu-item {
+  min-height:55px;
+}
+
+.categoryIconContainer {
+  border-radius: 3px 3px 3px 3px;
+  float: left;
+  height: 35px;
+  margin-right: 5px;
+  overflow: hidden;
+  width: 35px;
+  vertical-align: middle;
+}
+.autocomplete-name {
+  color: #333333;
+  font-weight: bold;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.autocomplete-detail {
+  color: #999999;
+  font-weight: normal;
+  font-size: 13px;
+  margin-left: 38px;<
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-autocomplete {
+  left: 0px;
+  padding-left: 0px;
+
+}
+</style>
+<section class="vbox bg-white">
+
+  <section class="hbox stretch  ">
+    <aside class="bg-whithe col-lg-3 hidden-print" id="nav">  
+      <section class="vbox " >
+        <section class="scrollable">
+          <br>
+          <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+            <div class=" col-lg-12">
+              <p class="text-lg font-thin">Datos personales</p>
+              <form method="post" id="geocoding_form" class="m-t-sm">
+               <div class="form-group">
+                <label>Punto de referencia:</label>
+                <input type="text" name="referencia" id="venue" class="form-control" autofocus >
+              </div>
+
+              <div class="form-group">
+                <label>Direccion:</label>
+                <input type="text"    id="origen" name="origen" class="form-control" placeholder="Direccion de origen">
+              </div>
+
+              <div class="form-group" id="divSector">
+               <label>Sector:</label>
+               <div class="input-group"> 
+
+                <input type="text" id="sector" name="sector" placeholder="Sector del servicio" class="form-control"> 
+                <span class="input-group-btn"> 
+                  <button class="btn btn-default" id="btnBuscarSector" type="button">Buscar</button> 
+                  <button class="btn btn-default"  id="btnDeleteSector"  type="button">Eliminar</button> 
+
+                </span> 
+              </div>    </div>
+
+
+              <div class="form-group">
+                <label>Destino:</label>
+                <input type="text" class="form-control"   id="destino" name="destino" placeholder="Destino del cliente"> 
+              </div>
+
+              <div class="form-group">
+                <label>Nombre: </label>
+                <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Nombre del cliente">
+              </div>
+              <div class="form-group">
+                <label>Telefono:</label>
+                <input type="number" class="form-control" id="telefono"  name="telefono" placeholder="Numero de telefono celular">
+              </div>
+              
+
+              <div id="prueba1"></div>
 
 
 
-                    <div class="form-group">
-                        <label>Destino:</label>
-                        <input type="text" class="form-control" placeholder="Destino del cliente"> </div>
-
-
-                    </form>
-                    <br>
-                    <a id="boton1" class="btn btn-warning btn-rounded btn-sm m-t m-b">Genear solicitud</a>
-                    <ul id="instructions" class="list-unstyled fa-ul"></ul>
-                </aside>
-                <section id="map_canvas" style="min-height:240px;">
-                </section>
-
-                <aside class="aside-md bg-primary dker" id="sidebar">
-                    <section class="vbox animated fadeInRight">
-                        <section class="scrollable">
-                            <h4 class="font-thin text-white padder m-b-none m-t">Servicios generados</h4>
-                            <div class="wrapper text-u-c"><strong>Activos</strong>
-                            </div>
-                            <ul  id="activosList" class="list-group no-bg no-borders auto m-b-none">
 
 
 
 
 
-                            </ul>
-                            <div class="wrapper text-u-c"><strong>Finalizados</strong>
-                            </div>
-                            <ul class="list-group no-bg no-borders auto">
 
 
-                                <li class="list-group-item">
-                                    <div class="media"> <a href="#" class="pull-right m-t-sm"><i class="i i-phone"></i></a> <span class="pull-left thumb-sm avatar"> <img src="images/a4.png" alt="..." class="img-circle"> <i class="off b-white bottom"></i> </span>
-                                        <div class="media-body">
-                                            <div><a href="#">Julien Reowo</a>
-                                            </div> <small class="text-muted">14 sec ago</small> </div>
-                                        </div>
-                                    </li>
+            </form>
+            <div style="display: none" id="precioEstimado" class="col-xs-6"> <div class="h3 font-bold" id="rangoDePrecio"></div> <small id="detallePrecio" class="text-muted"></small> 
+          </div>
+          <br>
+         
+          <br>
+          <div  class=" col-lg-12">
+            <a id="btnGenerar" class=" col-lg-6 btn btn-s-md btn-primary pull-left ">Genear solicitud</a>
+            <a id="btnReset" class=" col-lg-5 btn btn-s-md btn-default pull-right">Reset</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+</aside>
+<section id="map_canvas" style="min-height:240px;">
+</section>
 
 
 
 
-                                </ul>
-                            </section>
-                        </section>
-                    </aside>
+
+
+</section>
+
+</section>
+<a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
 
 
 
 
-                </section>
-            </section>
-        </section>
-        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
 
-        <script type="text/javascript">
-        $( document ).ready(function() {
+<script type="text/javascript">
+$( document ).ready(function() {
 
-            $('#map_canvas').gmap3({
-               map:{
-                options:{
-                   center:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
-                   zoom:14,
 
-                   navigationControl: true,
-                   scrollwheel: true,
-                   streetViewControl: false
-               }
-           },
-           marker:{
-            latLng:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
-        }
+
+
+  $('#map_canvas').gmap3({
+   map:{
+    options:{
+     center:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
+     zoom:14,
+
+     navigationControl: true,
+     scrollwheel: true,
+     streetViewControl: false
+   }
+ },
+ marker:{
+  latLng:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
+}
+});
+
+
+
+  function reseteo() {
+    //reseteo de sector
+    $.fn.deleteSector();
+
+    $( "#btnGenerar" ).removeClass( "disabled" );
+    console.log("boton de reseteo");
+    //reseteo de variables taximetro
+
+    window.precioBajo = null;
+    window.precioAlto = null;
+    window.precioExtra = null;
+    window.precioType = null;
+    window.latOrigen = null;
+ window.lngOrigen = null;
+    //boorro   direccion 
+    $('#map_canvas').gmap3({
+      clear: {
+        tag: ["directionsrenderer"]
+      }
+    });
+
+
+    $( "#precioEstimado" ).hide( "fast" );
+    $( "#rangoDePrecio" ).html( " " );
+    $.fn.deleteAllMarca("destinoMarker");
+    $.fn.deleteAllMarca("origenMarker");
+  //zoom a la central
+  $("#map_canvas").gmap3({
+   map:{
+    options: {
+     center:[<%- user.oficina[1] %>,<%- user.oficina[0] %>],
+     zoom: 14,
+                    //mapTypeId: google.maps.MapTypeId.ROADMAP
+                  }
+                },
+              });
+
+    //reseteo de imput
+    $("#venue").val("");
+    $("#cliente").val("");
+    $("#telefono").val("");
+    $("#origen").val("");
+    $("#destino").val("");
+
+    //focus en el referenci
+    $( "#venue" ).focus();
+
+  }
+
+
+  $('#btnBuscarSector').click(function() {
+    $.fn.sector( $("#sector").val() );
+
+
+  });
+
+  $('#btnDeleteSector').click(function() {
+       window.latOrigen = null;
+ window.lngOrigen = null;
+    $.fn.deleteSector();
+
+
+  });
+
+  
+
+  $('#btnReset').click(function() {
+
+    reseteo();
+  });
+
+
+
+  $( "#btnGenerar" ).click(function() {
+   $( "#btnGenerar" ).addClass( "disabled" );
+    //obtengo variables a enviar
+    var aEnviar = {};
+    aEnviar.origen =  $("#venue").val();
+    aEnviar.cliente = $("#cliente").val();
+    aEnviar.telefono = $("#telefono").val();
+    aEnviar.direccion =  $("#origen").val();
+    aEnviar.destino = $("#destino").val();
+    aEnviar.precioBajo = window.precioBajo ;
+    aEnviar.precioAlto = window.precioAlto ;
+    aEnviar.precioExtra = window.precioExtra;
+    aEnviar.precioType = window.precioType;
+    aEnviar.latOrigen =   window.latOrigen;
+    aEnviar.lngOrigen = window.lngOrigen;
+    aEnviar.latDestino = window.latDestino;
+    aEnviar.lngDestino = window.lngDestino;
+    aEnviar.type = "central";
+    aEnviar.operador = "<%- user.name %>  <%- user.lastname %>";
+
+    
+
+
+    $.post( "/api/eventCentral", aEnviar)
+    .done(function( data ) {
+      console.log(JSON.stringify(data));
+      if (data.status == true) {
+        reseteo();
+
+
+
+      }else{
+        reseteo();
+        alert("Problemas al crear el evento");
+      }
+
     });
 
 
@@ -131,15 +299,83 @@
 
 
 
+  });
 
-            $( "#boton1" ).click(function() {
-               $('#activosList').append('  <li class="list-group-item"> <div class="media"> <a href="#" class="pull-right m-t-sm"> <span class="badge badge-empty">6</span> </a> <span class="pull-left thumb-sm avatar"> <img src="images/a0.png" alt="..."> <i class="away b-white bottom"></i> </span> <div class="media-body"> <div><span> Mario Carrasquero</span> </div> <small class="text-muted">40 min ago</small> </div> </div> </li>');
+function hayTaxi() {
+  console.log("preguntando por taxi en el area");
+  $.post( "api/hayCondunctoresV2", {lat:<%- user.oficina[1] %>,lng:<%- user.oficina[0] %> })
+  .done(function( data ) {
+   console.log(JSON.stringify(data));
+
+   $('#map_canvas').gmap3({
+    clear: {
+      name: ["taxi"]
+    }
+  });
 
 
-           });
+
+   if (data.response.length >0) {
+     $.each(data.response, function(i, item) {
+
+      $('#map_canvas').gmap3({
+       marker:{
+         latLng:[item.latlng[1],item.latlng[0]],
+         name:"taxi",
+         data: item.name,
+         options:{icon: "../linker/images/taxiGreen.png"},
+         events:{
+          mouseover: function(marker, event, context){
+            var map = $(this).gmap3("get"),
+            infowindow = $(this).gmap3({get:{name:"infowindow"}});
+            if (infowindow){
+              infowindow.open(map, marker);
+              infowindow.setContent(context.data);
+            } else {
+              $(this).gmap3({
+                infowindow:{
+                  anchor:marker,  
+                  options:{content: context.data }
+                }
+              });
+            }
+          },
+          mouseout: function(){
+            var infowindow = $(this).gmap3({get:{name:"infowindow"}});
+            if (infowindow){
+              infowindow.close();
+            }
+          }
+        }
+      } 
+    });
+
+    });
+
+} else{
+
+                //sin taxi activos
+              }; 
+            });
+};
+hayTaxi();
+setTimeout(function() {
+
+ hayTaxi();
+}, 30000);
 
 
 
+
+
+
+
+
+
+
+
+
+            /*
 
             io.socket.on('central', function onServerSentEvent (data) {
                //console.log(JSON.stringify(data) );
@@ -151,7 +387,7 @@
 
                 $("#map_canvas").gmap3({
                   get: {
-                    name:"marker",
+                    name:"taxi",
                     tag: data.response.id,
                     all: true,
                     callback: function(objs){
@@ -160,13 +396,13 @@
                             $('#map_canvas').gmap3({
                                marker:{
                                    latLng:[data.response.lat,data.response.lng],
-                                   name:"marker",
+                                   name:"taxi",
                                    tag: data.response.id,
                                    options:{icon: "../linker/images/taxiGreen.png"}
                                     //icon : new google.maps.MarkerImage('/')
 
-                               }
-                           });
+                                }
+                            });
 
 
                         } else{
@@ -184,10 +420,10 @@
                               }
                           });
 
-                               $('#map_canvas').gmap3({
+                             $('#map_canvas').gmap3({
                                marker:{
                                    latLng:[data.response.lat,data.response.lng],
-                                   name:"marker",
+                                   name:"taxi",
                                    tag: data.response.id,
                                    options:{icon: "../linker/images/taxiGreen.png"}
                                }
@@ -203,7 +439,21 @@
              });
 
 
-
+   setTimeout(function() {
+     $("#map_canvas").gmap3({
+      get: {
+        name:"taxi",
+        all: true,
+        callback: function(objs){
+           $.each(objs, function(i, obj){
+                    
+                    alert(obj.tag);
+                });
+       }
+       }
+       
+   });
+ }, 30000);
 
 
 
@@ -213,12 +463,320 @@
 
 
 });
-
+*/
 
 
 
 });
-   </script>
+</script>
+<script type="text/javascript">
+
+
+$(function () {
+
+
+ $("#destino").foursquareAutocomplete({
+  'latitude': <%- user.oficina[1] %>,
+  'longitude': <%- user.oficina[0] %>,
+  'oauth_token': "5ZUQKQHRAP0GTNFK20YPG0X4OPFEU435IAXCTWL44Y21RLLJ",
+  'minLength': 4,
+  'search': function (event, ui) {
+
+  //  $("#venue-name").html(ui.item.name);
+   // $("#venue-id").val(ui.item.id);
+   // $("#origen").val(ui.item.address + " - " + ui.item.crossStreet );
+   // $("#venue-cityLine").html(ui.item.cityLine);
+   // $("#venue-icon").attr("src", ui.item.photo);
+
+
+
+
+
+
+   
+   $.fn.deleteAllMarca("destinoMarker");
+   $('#map_canvas').gmap3({
+     marker:{
+       latLng:[ui.item.lat,ui.item.lng],
+       tag: "destinoMarker",
+       name:"destinoMarker",
+       options:{
+
+        icon: new google.maps.MarkerImage(
+         ui.item.photo,
+         new google.maps.Size(32, 32, "px", "px")
+         )
+      }
+    },
+    map:{
+      options:{
+        zoom: 16,
+        center:[ui.item.lat,ui.item.lng],
+      }
+    }
+
+  });
+
+   //$.fn.showRoute();
+
+    //console.log(ui.item.lat + "  " + ui.item.lng) ;
+    return false;
+  },
+  'onError' : function (errorCode, errorType, errorDetail) {
+    conOrigen = false;
+    var message = "Foursquare Error: Code=" + errorCode + ", errorType= " + errorType + ", errorDetail= " + errorDetail;
+    log(message);
+  }
+
+});
+
+
+
+
+
+
+$("#venue").foursquareAutocomplete({
+  'latitude': <%- user.oficina[1] %>,
+  'longitude': <%- user.oficina[0] %>,
+  'oauth_token': "5ZUQKQHRAP0GTNFK20YPG0X4OPFEU435IAXCTWL44Y21RLLJ",
+  'minLength': 4,
+  'search': function (event, ui) {
+
+    $("#venue-name").html(ui.item.name);
+    $("#venue-id").val(ui.item.id);
+    $("#origen").val(ui.item.address + " - " + ui.item.crossStreet );
+    $("#venue-cityLine").html(ui.item.cityLine);
+    $("#venue-icon").attr("src", ui.item.photo);
+    $.fn.deleteAllMarca("origenMarker");
+    $('#map_canvas').gmap3({
+     marker:{
+       latLng:[ui.item.lat,ui.item.lng],
+       tag: "origenMarker",
+       name:"origenMarker",
+       options:{
+
+        icon: new google.maps.MarkerImage(
+         ui.item.photo,
+         new google.maps.Size(32, 32, "px", "px")
+         )
+      }
+    },
+    map:{
+      options:{
+        zoom: 16,
+        center:[ui.item.lat,ui.item.lng],
+      }
+    }
+
+  });
+
+
+
+    console.log(ui.item.lat + "  " + ui.item.lng) ;
+    return false;
+  },
+  'onError' : function (errorCode, errorType, errorDetail) {
+    var message = "Foursquare Error: Code=" + errorCode + ", errorType= " + errorType + ", errorDetail= " + errorDetail;
+    log(message);
+  }
+
+});
+});
+$.fn.deleteAllMarca = function(referenciaTemp) {
+  $('#map_canvas').gmap3({
+    clear: {
+      tag: [referenciaTemp]
+    }
+  });
+}
+
+$.fn.deleteSector = function(value) {
+  //falta borrar referencia de lat lng
+
+  $('#map_canvas').gmap3({
+    clear: {
+      tag: ["sector"]
+    }
+  });
+};
+
+
+$.fn.sector = function(value) {
+ $('#map_canvas').gmap3({
+  clear: {
+    tag: ["sector"]
+  }
+});
+
+
+ $("#map_canvas").gmap3({
+  getlatlng:{
+    address:  value+ ", maracaibo",
+    callback: function(results){
+      if ( !results ) return;
+
+          window.latOrigen = results[0].geometry.location.lat();
+ window.lngOrigen = results[0].geometry.location.lng();
+      $(this).gmap3({
+        marker:{
+         tag: "sector",
+         latLng:results[0].geometry.location
+       },
+       circle:{
+        tag: "sector",
+        options:{
+          center: results[0].geometry.location,
+          radius : 500,
+          fillColor : "#008BB2",
+          strokeColor : "#005BB7"
+        }},
+         map:{
+      options:{
+       
+        center:results[0].geometry.location,
+      }
+    }
+      });
+    }
+  }
+});
+
+}
+
+
+$.fn.showRoute = function() {
+
+
+ var origen1 = $("#map_canvas").gmap3({
+  get: {
+    name:"marker",
+    tag: "origenMarker",
+
+  }
+});
+ var destino1 = $("#map_canvas").gmap3({
+  get: {
+    name:"marker",
+    tag: "destinoMarker",
+
+  }
+});
+
+ console.log(destino1);
+ var lat1 = origen1.getPosition().lat();
+ var lng1= origen1.getPosition().lng();
+ var lat2 = destino1.getPosition().lat();
+ var lng2= destino1.getPosition().lng();
+
+ window.latOrigen = lat1;
+ window.lngOrigen = lng1;
+ window.latDestino = lat2;
+ window.lngDestino = lng2;
+
+ var distanceService = new google.maps.DistanceMatrixService();
+ distanceService.getDistanceMatrix({
+  origins: [lat1+","+lng1],
+  destinations: [lat2+","+lng2],
+  travelMode: google.maps.TravelMode.DRIVING,
+  unitSystem: google.maps.UnitSystem.METRIC,
+  durationInTraffic: true,
+  avoidHighways: false,
+  avoidTolls: false
+},
+function (response, status) {
+  if (status !== google.maps.DistanceMatrixStatus.OK) {
+    console.log('Error:', status);
+  } else {
+    var tiempoBase = response.rows[0].elements[0].duration.value;
+    var kmBase = response.rows[0].elements[0].distance.value;
+    tiempoBase = tiempoBase / 60;
+    kmBase = kmBase / 1000;
+
+
+
+
+    $.get( "/api/calcularPrecio", { min: tiempoBase, km: kmBase , ciudad: "Maracaibo" })
+    .done(function( data ) {
+      console.log( "Data Loaded: " + JSON.stringify(data));
+      if (data.status == true) {
+
+        //render tarifa referencial
+        $("#rangoDePrecio").html(data.data.precio1 +"  -  " +data.data.precio2 );
+
+        $( "#precioEstimado" ).show( "fast" );
+        window.precioBajo = data.data.precio1;
+        window.precioAlto = data.data.precio2;
+        window.precioExtra = data.data.extra;
+        window.precioType = data.type;
+
+
+      }else {
+ //render tarifa referencial
+ $("#rangoDePrecio").html("El taxista establecera la tarifa");
+
+ $( "#precioEstimado" ).show( "fast" );
+
+
+ 
+
+ window.precioBajo = null;
+ window.precioAlto = null;
+ window.precioExtra = null;
+ window.precioType = null;
+}
+});
+
+
+  }
+});
+
+
+
+
+
+$('#map_canvas').gmap3({
+  getroute: {
+    options: {
+      origin: {lat:lat1, lng: lng1},
+      destination: {lat:lat2, lng: lng2},
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+    },
+    callback: function(results) {
+      if (!results) return;
+      console.log(results);
+      $(this).gmap3({
+        directionsrenderer: {
+          tag: "directionsrenderer",
+          options: {
+            directions: results,
+            preserveViewport: false,
+            markerOptions: {
+              title: 'title',
+              clickable: true
+            }
+          }
+        }
+      });
+    }
+  },
+
+});
+
+}
+
+
+
+
+$.fn.calculateRoute = function(referenciaTemp) {
+  $('#map_canvas').gmap3({
+    clear: {
+      tag: [referenciaTemp]
+    }
+  });
+}
+
+
+</script>
 
 
 

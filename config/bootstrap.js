@@ -20,7 +20,7 @@ module.exports.bootstrap = function(cb) {
     uuid = require('node-uuid');
     Q = require('q');
     path = require('path');
-   // socket = req.socket;
+    // socket = req.socket;
     io = sails.io;
 
 
@@ -136,5 +136,62 @@ module.exports.bootstrap = function(cb) {
 
 
     }, 30000);
+
+
+
+    setInterval(function() {
+
+
+        var objFecha = new Date();
+        var milisegundos = objFecha.getTime();
+        // Restar 5 minutos . 
+        objFecha.setTime(milisegundos - (100.4 * 60000));
+
+        //date.toISOString(); //"2011-12-19T15:28:46.493Z"
+
+
+        Central.find()
+            .where({
+                createdAt: {
+                    '<=': new Date(objFecha.toISOString())
+                }
+            })
+            .where({
+                isActive: true
+            })
+
+
+        .exec(function(err, objects) {
+            if (objects) {
+                for (var i = 0; i < objects.length; i++) {
+                    Central.update({
+                        id: objects[i].id
+                    }, {
+                        status: 5,
+                        isActive: false,
+
+                    }).exec(function afterwards(err, updated) {
+                        var requestify = require('requestify');
+                        requestify.get('http://smsgateway.me/api/v3/messages/send?email=mncarrasquero@gmail.com&password=19177230&number=' + updated[0].telefono + '&message=No pudimos encontrarte un taxi te pedimos disculpas. te invitamos a descargar para android Ubitaxi  &device=8672')
+                            .then(function(response) {
+                                // Get the response body (JSON parsed or jQuery object for XMLs)
+                                
+                            });
+                    });
+                };
+
+            };
+
+
+
+        });
+
+
+
+
+        //   }, 30000);
+    }, 8000);
+
+
     cb();
 };

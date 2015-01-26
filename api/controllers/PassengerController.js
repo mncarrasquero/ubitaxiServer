@@ -191,12 +191,6 @@ function deg2rad(deg) {
 
 //Coordenadas Aeropuerto
 
-
-
-
-
-
-
         Ciudades.find({
                 name: req.param('ciudad')
             })

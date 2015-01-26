@@ -7,6 +7,75 @@
 
 module.exports = {
 
+
+    eventCentral: function(req, res, next) {
+        //req.params.all()
+        Central.create({
+            cliente: req.param('cliente'),
+            telefono: req.param('telefono'),
+            direccion: req.param('direccion'),
+            destino: req.param('destino'),
+            latDestino: req.param('latDestino'),
+            lngDestino: req.param('lngDestino'),
+            eventLocation: {
+                type: "Point",
+                coordinates: [parseFloat(req.param('lngOrigen')), parseFloat(req.param('latOrigen'))]
+            },
+
+
+            operador: req.param('operador'),
+            origen: req.param('origen'),
+            type: req.param('type'),
+            ciudad: "Maracaibo",
+            isActive: true,
+            status: 1
+        }, function passengerCreated(error, evento) {
+            if (error) {
+                res.json({
+                    status: false,
+                    code: "11001",
+                    response: "Error al crear Evento",
+
+                });
+
+            } else {
+                //req.session.user = user;
+                //res.send(user);
+                //notificar al usuario de q el evento fue creado
+                // http://smsgateway.me/api/v3/messages/send?email=mncarrasquero@gmail.com&password=19177230&number=04146208056&message=hola mundo&device=8672
+                var requestify = require('requestify');
+
+                requestify.get('http://smsgateway.me/api/v3/messages/send?email=mncarrasquero@gmail.com&password=19177230&number=' + req.param('telefono') + '&message=Hola ' + req.param('cliente') + ', Te estamos buscando un taxi te avisaremos en unos minutos el resultado de la busqueda &device=8672')
+                    .then(function(response) {
+                        // Get the response body (JSON parsed or jQuery object for XMLs)
+
+                    });
+
+
+
+
+
+
+
+                res.json({
+                    status: true,
+                    code: "",
+                    response: "Evento creado.",
+                    data: evento
+                });
+                // console.log("User created:", evento);
+            }
+        });
+
+    },
+
+
+
+
+
+
+
+
     create: function(req, res, next) {
         //req.params.all()
         Event.create({
@@ -62,7 +131,6 @@ module.exports = {
                 // console.log("User created:", evento);
             }
         });
-
     },
 
     myEvent: function(req, res, next) {
@@ -340,6 +408,172 @@ module.exports = {
 
     },
 
+    eventSearchV2: function(req, res) {
+
+        var lat = parseFloat(req.param('lat'));
+        var lng = parseFloat(req.param('lng'));
+        var trueHeading = parseFloat(req.param('trueHeading')) || 0;
+        var idDriver = req.param('id');
+        var maxDistance = parseInt(req.param('maxDistance')) || 7;
+        var limit = parseInt(req.param('limit')) || 50;
+
+        //Validar que driver este activo 
+        Driver.findOne({
+            id: req.param('id')
+        }).exec(function(err, user) {
+            if (err) res.json({
+                error: 'DB error'
+            }, 500);
+            if (user) {
+                // si existe el usuario procedo a validar el estatus en el sistema
+                //si es bien devuelvo la data 
+                if (user.isActive == true) {
+                    //el usuariu esta actuvo y validado
+                    //actualizo su posicion
+
+                    Driver.update({
+                        id: req.param('id')
+                    }, {
+                        lastPosition: {
+                            type: "Point",
+                            status: "disponible",
+                            trueHeading: trueHeading,
+                            date: new Date(),
+                            coordinates: [parseFloat(req.param('lng')), parseFloat(req.param('lat'))]
+                        },
+
+
+                    }).exec(function afterwards(err, updated) {
+                        if (err) {
+
+                            return;
+                        } else {
+
+                        }
+
+
+                    });
+
+                    //fin de actualizar poscicion
+                    Event.native(function(err, collection) {
+                        collection.geoNear(lng, lat, {
+                            maxDistance: 5 / 6378,
+                            limit: limit,
+                            query: {
+                                'status': 1,
+                                'isActive': true,
+                            },
+                            name: true, // allows filtering
+                            distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
+                            spherical: true
+                        }, function(mongoErr, docs) {
+                            if (mongoErr) {
+                                console.error(mongoErr);
+                                res.json({
+                                    status: false,
+                                });
+                            } else {
+                                var central;
+                                Central.native(function(err, collection) {
+                                    collection.geoNear(lng, lat, {
+                                        maxDistance: 5 / 6378,
+                                        limit: limit,
+                                        query: {
+                                            'status': 1,
+                                            'isActive': true,
+                                        },
+                                        name: true, // allows filtering
+                                        distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
+                                        spherical: true
+                                    }, function(mongoErr, docs1) {
+                                        if (mongoErr) {
+                                            console.error(mongoErr);
+                                            res.json({
+                                                status: false,
+                                            });
+                                        } else {
+                                            if (docs1.results.length == 0) {
+                                                central = {
+                                                    qty: docs1.results.length
+                                                }
+                                                
+                                            } else {
+
+                                                central = {
+
+                                                    qty: docs1.results.length,
+                                                    response: docs1.results
+                                                };
+                                                
+                                            };
+                                        }
+
+                                        if (docs.results.length + central.qty  == 0) {
+                                    res.json({
+
+                                        status: true,
+
+                                        qty: docs.results.length + central.qty ,
+                                        central: central,
+                                        //response: docs.results
+                                    });
+                                } else {
+                                    res.json({
+                                        status: true,
+
+                                        qty: docs.results.length + central.qty ,
+                                        response: docs.results,
+                                        central: central,
+                                    });
+
+
+                                };
+
+
+                                    });
+                                });
+
+
+
+                            }
+                        });
+                    });
+
+
+
+
+
+
+
+
+
+                } else {
+                    //si esta desabilitado respondo con el mensaje de error y procedo  a hacer logout en la app
+                    res.json({
+                        status: false,
+                        Appversion: "1.1",
+                        error: 'X007',
+                        mensaje: "Usuario Bloqueado contacta con soporte hola@ubitaxi.net",
+                        data: ""
+                    });
+
+                };
+            } else {
+                //si el id no corresponde responde error y procedo a hacer logout en la app
+                res.json({
+                    status: false,
+                    Appversion: "1.1",
+                    error: 'X03',
+                    mensaje: "Upppps... al parecer estamos presentando un problema tecnico pronto lo repararemos gracias.",
+                    data: ""
+                });
+            }
+        });
+
+
+
+    },
+
 
 
     eventSearch: function(req, res) {
@@ -390,7 +624,7 @@ module.exports = {
                             // handle error here- e.g. `res.serverError(err);`
                             return;
                         } else {
-
+                            /*
                             io.sockets.emit('central', {
                                 action: 'Point',
                                 response: {
@@ -404,6 +638,7 @@ module.exports = {
                                     date: new Date(moment().zone('-0430').toISOString())
                                 }
                             });
+                    */
                         }
 
 
@@ -623,7 +858,7 @@ module.exports = {
 
 
                                 });
-                                    */
+*/
 
                             /// fin de send email por cancel
 

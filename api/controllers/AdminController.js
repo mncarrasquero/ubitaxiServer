@@ -36,7 +36,7 @@ module.exports = {
     sayHiToFriend: function(req, res) {
 
 
-
+        /*
         io.sockets.emit('central', {
             action: 'Point',
             response: {
@@ -45,10 +45,11 @@ module.exports = {
                 lng: req.param('lng'),
                 name: req.param('name'),
                 picture: req.param('picture'),
-                plate: req.param('plate'),
-                date: new Date(moment().zone('-0430').toISOString())
+                plate: req.param('plate')
+
             }
         });
+        */
 
         res.json({
             message: 'Message sent!'

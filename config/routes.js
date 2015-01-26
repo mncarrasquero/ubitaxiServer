@@ -85,6 +85,7 @@ module.exports.routes = {
     'post /api/passengerCreate': 'PassengerController.create',
     'post /api/passengerLogin': 'PassengerController.login',
     'post /api/calcularPrecio': 'PassengerController.calcularPrecio',
+    'get /api/calcularPrecio': 'PassengerController.calcularPrecio',
 
     '/api/listpassengers': 'PassengerController.listpassengers',
     
@@ -127,6 +128,7 @@ module.exports.routes = {
     'post /api/olvidoPass': 'PassengerController.olvidoPass',
     //hay conductres api para passenger
     'post /api/hayCondunctores': 'DriverController.hayCondunctores',
+     'post /api/hayCondunctoresV2': 'DriverController.hayCondunctoresV2',
     //chequeo de estatus de pasaro inicial 
     'post /api/chequeoPasajero': 'PassengerController.chequeoPasajero',
 
@@ -145,6 +147,7 @@ module.exports.routes = {
 
     'post /api/addPoint': 'EventController.addPoint',
 
+    'post /api/eventCentral': 'EventController.eventCentral',
 
 
 
@@ -185,7 +188,11 @@ module.exports.routes = {
         action: 'cancelSearch'
     },
 
-
+    
+     'post /api/eventSearchV2': {
+        controller: 'event',
+        action: 'eventSearchV2'
+    },
     'post /api/eventSearch': {
         controller: 'event',
         action: 'eventSearch'

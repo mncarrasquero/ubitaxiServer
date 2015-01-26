@@ -489,6 +489,99 @@ module.exports = {
     },
 
 
+
+    hayCondunctoresV2: function(req, res) {
+
+        //  console.log('DriverUbiController: action=geoProximity ');
+        //  console.log(' req.isSocket ', req.isSocket);
+        // console.log(' req.isAjax   ', req.isAjax);
+        // console.log(' req.isJson   ', req.isJson);
+
+        var lat = parseFloat(req.param('lat'));
+        var lng = parseFloat(req.param('lng'));
+        var maxDistance = parseInt(req.param('maxDistance')) || 5;
+        var limit = parseInt(req.param('limit')) || 30;
+        //  console.log('   lat         ', lat, typeof lat);
+        //  console.log('   lng         ', lng);
+        //  console.log('   maxDistance ', maxDistance, typeof maxDistance);
+        //  console.log('   limit       ', limit);
+
+        Driver.native(function(err, collection) {
+
+            collection.geoNear(lng, lat, {
+                maxDistance: 30 / 6378,
+                limit: limit,
+                // in meters
+                query: {
+                    'lastPosition.status': 'disponible'
+                },
+                name: true, // allows filtering
+                distanceMultiplier: 6378, // converts radians to miles (use 6371 for km)
+                spherical: true
+            }, function(mongoErr, docs) {
+                if (mongoErr) {
+                    console.error(mongoErr);
+                    res.json({
+                        status: false,
+                    });
+                } else {
+                    //console.log('docs=', docs);
+                    // res.send('proximity successful, got '+docs.results.length+' results.');
+                    // res.json(docs.results);
+                    if (docs.results.length == 0) {
+                        res.json({
+                            status: false,
+                            //response: docs.results
+                        });
+                    } else {
+                        var nuevoArray = [];
+                        var temp = {};
+                        for (var i = 0; i < docs.results.length; i++) {
+
+
+                            var now = moment().add(15, 'minute');
+                            var date = docs.results[i].obj.lastPosition.date
+                            var hace = now.diff(date, 'minutes')
+                                //console.log(now.diff(date, 'minutes')); // 1
+
+                            if (hace <= 900) {
+                                temp = {
+                                    'latlng': docs.results[i].obj.lastPosition.coordinates,
+                                    'id': docs.results[i].obj.id,
+                                    'name': docs.results[i].obj.name + " " + docs.results[i].obj.lastname,
+                                    'phone': docs.results[i].obj.id,
+                                    'picture': docs.results[i].obj.dir_picture + docs.results[i].obj.picture,   
+                                }
+                                nuevoArray.push(temp);
+                            };
+
+
+
+                        }
+                        if (nuevoArray.length > 0) {
+                            res.json({
+                                status: true,
+                                response: nuevoArray
+                            });
+
+                        } else {
+                            res.json({
+                                status: false,
+                                response: nuevoArray
+                            });
+
+                        };
+
+
+                    };
+                }
+            });
+        });
+
+    },
+
+
+
     newProspecto: function(req, res, next) {
 
         var uuid = req.param('uuid');
